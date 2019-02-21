@@ -12,3 +12,37 @@ Some of the features Juan considers would benefit himself are:
 * a graph of the historical returns of:
     * all his portfolios combined
     * each portfolio by itself in order to compare them to each other
+
+### Persona #2: Sukhpreet Singh
+
+Sukhpreet is a senior at Iona College studying business. He is an avid forex/crypto trader and he now manages over $100,000 of his and his clients' funds.
+
+Sukhpreet currently has multiple brokers for forex (forex.com, Oanda, Nadex) and cryptocurrencies (Coinbase Pro, Binance) and multiple accounts in each broker.
+
+Sukhpreet would like to be able to manage his and his clients accounts in a dynamic way. Since he makes similar investments across all accounts he would like to see the total portfolio value, along with PnL charts. He would also like to use this application on his desktop or phone so that he can always monitor his performance.
+
+Some of the features Sukhpreet considers would benefit himself are: 
+* graph showing asset allocation of his portfolio with percentage breakdown of funds distributed to each
+* alerts for pricing, margin and completed orders
+* a breakdown for each client/account inside the total portfolio
+* api integration for real-time tradingview charts for important assets
+
+## Stakeholder Interviews
+
+We conducted stakeholder interviews with Amos Bloomberg (professor) and Wei-Kai (tutor). During the open ended conversation we touched upon these questions and the overall response is recorded:
+
+* Our project is meant to provide a dashboard (monitor) for trading accounts. Will this project fill up our timeline?
+	* Project is sufficient and we should be able to implement 1 brokerage by the 2nd sprint
+* Would people feel more comfortable with a desktop app (with a local config file) or a web-based platform?
+	* Stick with a web-based dashboard
+* Features include overall statistics, graphs, PnL charts. Should we include pricing charts? Or limit the dashboard to monitoring.
+	* focus on monitoring and the design (UI/UX)
+* Should we focus on designing alot the features, or create an MVP dashboard and add features later
+	* focus on an MVP and the features can come later
+* Do we focus on the professional trader or a beginner? The functionality and UI/UX would become more complicated for professionals.
+	* prioritize the design for beginner-average
+* We would like to leave brokerage connections for the open-source community
+	* create a template for adding brokerages (documentation) and keep the project closed but present it as open-source
+* Technologies we should consider
+	* D3 and DC, Crossfilter, and potentially Docker
+	
