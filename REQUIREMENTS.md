@@ -27,6 +27,8 @@ Some of the features Sukhpreet considers would benefit himself are:
 * a breakdown for each client/account inside the total portfolio
 * api integration for real-time tradingview charts for important assets
 
+
+
 ## Stakeholder Interviews
 
 We conducted stakeholder interviews with Amos Bloomberg (professor) and Wei-Kai (tutor). During the open ended conversation we touched upon these questions and the overall response is recorded:
@@ -34,9 +36,9 @@ We conducted stakeholder interviews with Amos Bloomberg (professor) and Wei-Kai 
 * Our project is meant to provide a dashboard (monitor) for trading accounts. Will this project fill up our timeline?
 	* Project is sufficient and we should be able to implement 1 brokerage by the 2nd sprint
 * Would people feel more comfortable with a desktop app (with a local config file) or a web-based platform?
-	* Stick with a web-based dashboard
+	* Stick with a web-based dashboard. Implement the MERN stack
 * Features include overall statistics, graphs, PnL charts. Should we include pricing charts? Or limit the dashboard to monitoring.
-	* focus on monitoring and the design (UI/UX)
+	* focus on monitoring of account information and the design (UI/UX)
 * Should we focus on designing alot the features, or create an MVP dashboard and add features later
 	* focus on an MVP and the features can come later
 * Do we focus on the professional trader or a beginner? The functionality and UI/UX would become more complicated for professionals.
@@ -44,7 +46,7 @@ We conducted stakeholder interviews with Amos Bloomberg (professor) and Wei-Kai 
 * We would like to leave brokerage connections for the open-source community
 	* create a template for adding brokerages (documentation) and keep the project closed but present it as open-source
 * Technologies we should consider
-	* D3 and DC, Crossfilter, and potentially Docker
+	* D3 and DC, Crossfilter, and potentially Docker  
 
 
 
