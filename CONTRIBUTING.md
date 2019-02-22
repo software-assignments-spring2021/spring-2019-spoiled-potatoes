@@ -1,3 +1,4 @@
+
 # Contributing
 
 When contributing to this repository, please check the issues tab for assignments, or submit your own issue that reflects the changes you would like to see.
@@ -138,3 +139,8 @@ For the purposes of the NYU Agile and DevOps course, this document was further b
 
 [homepage]: http://contributor-covenant.org
 [version]: http://contributor-covenant.org/version/1/4/
+
+## License
+Recourses:
+[Hershey Code of Conduct](https://www.thehersheycompany.com/content/dam/corporate-us/documents/investors/code-of-conduct.pdf)
+[Algorithmic Trading](https://www.investopedia.com/terms/a/algorithmictrading.asp)
