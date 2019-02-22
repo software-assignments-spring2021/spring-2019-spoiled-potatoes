@@ -46,3 +46,8 @@ We conducted stakeholder interviews with Amos Bloomberg (professor) and Wei-Kai 
 * Technologies we should consider
 	* D3 and DC, Crossfilter, and potentially Docker
 	
+## Domain Model
+
+This is a first draft of the domain model for our project. The plan is for this to be a living document, that can change when necessary to fit project growth and change.
+
+![domain model version 1](algo_trading_platform.jpg)
