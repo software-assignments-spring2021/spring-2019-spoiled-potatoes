@@ -1,4 +1,4 @@
-# Algorithmic Trading
+# Trading Dashboard
 #### A unique dashboard for all your investment portfolios
 
 ## Description
