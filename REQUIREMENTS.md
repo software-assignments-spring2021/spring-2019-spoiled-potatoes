@@ -73,8 +73,11 @@ We conducted stakeholder interviews with Amos Bloomberg (professor) and Wei-Kai 
 **Actor:** Trader, Application
 
 **Scenario1:**  Trader requests PNL information. System requests most recent numerical information on profit and losses.
+
 **Scenario2:**  Trader requests allocation graphs. System requests most recent numerical information on allocation of total assets and displays graphical information.
+
 **Scenario3:**  Trader requests data in a table format. System requests most recent data from APIs and displays them in a table format.
+
 **Scenario4:**  Trader requests general account information. System requests and displays account information directly from associated APIs.
 
 
