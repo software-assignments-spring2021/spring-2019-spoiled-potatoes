@@ -1,0 +1,23 @@
+{
+  "name": "algorithmic-trading",
+  "version": "1.0.0",
+  "description": "algorithmic trading dashboard",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nyu-software-engineering/algorithmic-trading.git"
+  },
+  "author": "maintainers",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nyu-software-engineering/algorithmic-trading/issues"
+  },
+  "homepage": "https://github.com/nyu-software-engineering/algorithmic-trading#readme"
+}
