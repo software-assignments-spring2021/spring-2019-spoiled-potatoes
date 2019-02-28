@@ -28,6 +28,7 @@ It is common practice for retail (non-institutional) traders to use multiple bro
 
 
 ## Building & Testing
+```npm install```
 
 ## Run Server
 ```npm start```
