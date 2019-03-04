@@ -27,8 +27,11 @@ It is common practice for retail (non-institutional) traders to use multiple bro
 ## Requirements
 
 
-## Building & Testing
+## Building
 ```npm install```
+
+## Testing
+```npm test```
 
 ## Run Server
 ```npm start```
