@@ -14,10 +14,11 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.12.4",
     "mocha": "^6.0.2",
-    "nodemon": "^1.18.10"
+    "nodemon": "^1.18.10",
+    "nyc": "^13.3.0"
   },
   "scripts": {
-    "test": "mocha",
+    "test": "nyc mocha --exit",
     "start": "nodemon src/app.js"
   },
   "repository": {
