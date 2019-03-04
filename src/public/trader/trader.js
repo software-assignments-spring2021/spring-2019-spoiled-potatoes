@@ -24,12 +24,11 @@ class TraderModel {
      portfolio has yet to be well defined, so for testing this will
      probably just add some object as described in portfolio info
     */
-    this.repo.addPortfolioItem(this.username, portItem);
+    return this.repo.addPortfolioItem(this.username, portItem);
   }
 
   accountInfo() {
-    // could be changed to
-    this.repo.findUser(this.username);
+    return this.repo.findUser(this.username);
   }
 
   portfolioInfo() {

@@ -13,24 +13,31 @@ class TraderRepository {
         if (err.name === 'UserExistsError') {
           console.log('Registration Error');
         }
-      } else {
-        console.log('New user ', usr, ' has been successfully registered');
+        console.log('Unknown Error Occurred');
+        return false;
       }
+      console.log('New user ', usr, ' has been successfully registered');
+      return true;
     });
   }
 
   getPortfolio(usr) {
+    // either returns portfolio or false; more granularity on error will be required
     this.Trader.findOne({ username: usr }, doc => doc.portfolio);
+    return false;
   }
 
   findUser(usr) {
+    // either returns user object or false; more granularity on error will be required
     this.Trader.findOne({ username: usr }, (doc) => {
       const retVal = { username: doc.username, email: doc.email };
       return retVal;
     });
+    return false;
   }
 
   addPortfolioItem(usr, portObj) {
+    // either returns updated portfolio object or false; more granularity on error will be required
     this.Trader.findOne({ username: usr }, (doc) => {
       const tempPort = doc.portfolio;
       Object.keys(portObj).forEach((key) => {
@@ -38,7 +45,9 @@ class TraderRepository {
       });
       doc.update({ $set: { portfolio: tempPort } });
       doc.save();
+      return (true, tempPort);
     });
+    return (false, {});
   }
 }
 
