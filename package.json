@@ -7,15 +7,17 @@
     "express": "^4.16.4"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "eslint": "^5.14.1",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.12.4",
+    "mocha": "^6.0.2",
     "nodemon": "^1.18.10"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "start": "nodemon src/app.js"
   },
   "repository": {
