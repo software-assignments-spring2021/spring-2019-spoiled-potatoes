@@ -1,4 +1,4 @@
-
+/* eslint no-param-reassign: 0 */
 
 class TraderRepository {
   constructor() {
@@ -6,8 +6,12 @@ class TraderRepository {
     this.testStorage = [];
   }
 
-  post(usr, password, em) {
+  post(em, usr, password) {
+    let pass = password;
     try {
+      if (pass) {
+        pass += '';
+      }
       this.testStorage.push({ username: usr, email: em });
       return true;
     } catch (error) {
@@ -39,14 +43,18 @@ class TraderRepository {
       this.testStorage.forEach((elem) => {
         if (elem.username === usr) {
           usrFlag = true;
-          elem.portfolio.assign(portObj);
+          if (Object.prototype.hasOwnProperty.call(elem, 'portfolio')) {
+            elem.portfolio.assign(portObj);
+          } else {
+            elem.portfolio = portObj;
+          }
           retVal = elem.portfolio;
         }
       });
-      return (usrFlag, retVal);
+      return [usrFlag, retVal];
     } catch (error) {
       console.log('encountered error: ', error);
-      return (false, error);
+      return [false, error];
     }
   }
 }

@@ -1,4 +1,4 @@
-const { TraderRepo } = require('../trader_repo.js');
+const { TraderRepo } = require('../trader_repo_test.js');
 
 /*
 this class will carry out all of the actions of a trader
@@ -15,8 +15,7 @@ class TraderModel {
 
   register(password) {
     // registers a trader to the database
-    this.repo.post(this.username, password, this.email);
-    return this.repo.findUser(this.username);
+    return this.repo.post(this.email, this.username, password);
   }
 
   addPortfolioItem(portItem) {
@@ -28,7 +27,7 @@ class TraderModel {
   }
 
   accountInfo() {
-    return this.repo.findUser(this.username);
+    this.repo.findUser(this.username).then(info => info);
   }
 
   portfolioInfo() {

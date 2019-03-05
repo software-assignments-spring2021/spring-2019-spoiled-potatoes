@@ -7,33 +7,39 @@ class TraderRepository {
     this.Trader = mongoose.model('Trader');
   }
 
-  post(usr, password, em) {
-    this.Trader.register(new this.Trader({ username: usr, email: em }), password, (err) => {
+  post(em, usr, password) {
+    return this.Trader.register(new this.Trader({ username: usr, email: em }), password, (err) => {
       if (err) {
         if (err.name === 'UserExistsError') {
           console.log('Registration Error');
+          return [false, 'UserExistsError'];
         }
-        console.log('Unknown Error Occurred');
-        return false;
+        console.log('Unknown Error Occurred: ', err);
+        return [false, 'Unknown Error'];
       }
-      console.log('New user ', usr, ' has been successfully registered');
-      return true;
+      return this.findUser(usr);
     });
   }
 
   getPortfolio(usr) {
     // either returns portfolio or false; more granularity on error will be required
-    this.Trader.findOne({ username: usr }, doc => doc.portfolio);
-    return false;
+    return this.Trader.findOne({ username: usr }, (doc, err) => {
+      if (err) {
+        return false;
+      }
+      return doc.portfolio;
+    });
   }
 
   findUser(usr) {
     // either returns user object or false; more granularity on error will be required
-    this.Trader.findOne({ username: usr }, (doc) => {
+    return this.Trader.findOne({ username: usr }, (doc, err) => {
+      if (err) {
+        return [false, {}];
+      }
       const retVal = { username: doc.username, email: doc.email };
-      return retVal;
+      return [true, retVal];
     });
-    return false;
   }
 
   addPortfolioItem(usr, portObj) {
@@ -45,9 +51,9 @@ class TraderRepository {
       });
       doc.update({ $set: { portfolio: tempPort } });
       doc.save();
-      return (true, tempPort);
+      return [true, tempPort];
     });
-    return (false, {});
+    return [false, {}];
   }
 }
 
