@@ -12,6 +12,13 @@ traderSchema.plugin(passportLocalMongoose);
 
 mongoose.model('Trader', traderSchema);
 
+const brokerSchema = new mongoose.Schema({
+  token: String,
+});
+brokerSchema.plugin(passportLocalMongoose);
+
+mongoose.model('Broker', brokerSchema);
+
 const fn = path.join(__dirname, 'config.json');
 const data = fs.readFileSync(fn);
 const conf = JSON.parse(data);
