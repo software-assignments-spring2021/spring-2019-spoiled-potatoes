@@ -3,3 +3,4 @@ config.json
 libs.txt
 .babelrc
 .DS_Store
+.nyc_output
