@@ -28,12 +28,7 @@ class TraderRepository {
   }
 
   findUser(usr) {
-    this.testStorage.forEach((elem) => {
-      if (elem.username === usr) {
-        return elem;
-      }
-      return false;
-    });
+    return this.testStorage.find(elem => elem.username === usr);
   }
 
   addPortfolioItem(usr, portObj) {
