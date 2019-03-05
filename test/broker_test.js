@@ -1,7 +1,7 @@
 const {request}  =  require('chai');
 const { Broker } = require('../src/public/broker/broker.js');
 
-describe('Broker.register(password)', () => {
+describe('Broker.register()',() => {
     it('should return ("UserExistsError", false) if a user already exists', () => {
         const name = 'testPass';
         const email = 'throwAway';
@@ -9,7 +9,7 @@ describe('Broker.register(password)', () => {
         const expectedErr = 'UserExistsError';
         const expectedBool = false;
 
-        const testTrader = new Broker(email, name);
+        const testBroker = new Broker(email, name);
         const result = testBroker.register(pass);
 
         expect(result[0]).to.be.equal(expectedBool);
