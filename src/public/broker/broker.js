@@ -1,7 +1,7 @@
 const { BrokerRepo } = require('../broker_repo.js');
 
 /*
-this class will carry out all of the actions of a broker
+this class will be the parent class for all broker objects. This will store connection parameters.
 
 it will interact with the broker_repo module in order to update the database
 */
@@ -12,9 +12,9 @@ class BrokerModel {
     this.repo = new BrokerRepo();
   }
 
-  register(password) {
-    // registers a trader to the database
-    return this.repo.post(this.token);
+  register() {
+    // registers a broker to the database
+    return this.repo.store(this.token);
   }
 }
 

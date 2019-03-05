@@ -7,16 +7,16 @@ class BrokerRepository {
     this.Broker = mongoose.model('Broker');
   }
 
-  post(tok) {
+  store(tok) {
     this.Broker.register(new this.Broker({ token: tok }), (err) => {
       if (err) {
         if (err.name === 'BrokerExistsError') {
-          console.log('Registration Error');
+          console.log('Store Error');
         }
         console.log('Unknown Error Occurred');
         return false;
       }
-      console.log('New broker has been successfully registered');
+      console.log('New broker has been successfully stored');
       return true;
     });
   }
