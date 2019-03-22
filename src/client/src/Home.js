@@ -7,16 +7,12 @@ class Home extends Component {
   componentDidMount(){
       console.log('in component did mount')
       fetch('/home', { credentials : 'same-origin' }).then((res) => {
-        console.log(res.text)})
-        /*.then((data) => {
-          if (data.user) {
-            console.log('success, welcome: ', data.user);
-          } else {
-            console.log('registration failure');
-          }
+        console.log(res.text);
+        res.json().then( (data) => {
+          console.log(data.user)
+          //can get user from server ^^^^^^^
         })
       })
-      */
 }
     
 

@@ -15,44 +15,44 @@ class App extends Component {
     e.preventDefault();
 
     const test = JSON.stringify({
-      "name": inputName,
-      "password": inputPass,
-      "email": inputEmail
+      'username': inputName,
+      'password': inputPass,
+      'email': inputEmail
     });
 
     console.log(test);
-    console.log('in handle');
 
-    fetch('/register', {  
-      credentials: 'same-origin',
-      method: 'post',
+    fetch('/register', {
+      credentials: 'include',
+      method: 'POST',
       body: test,
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
     }).then(function response(res) {
-      res.json().then(function loaded(data) {
+      console.log('res', res);
+      res.json().then((data) => {
+        console.log(data.message);
+        console.log(data.registration);
+
         if (data.registration) {
           console.log('registration success');
-          component.setState({loggedIn: true});
-        } else {
+          component.setState({ loggedIn: true });
+        }
+        else {
           console.log('registration failure');
         }
       })
     })
-    
   }
+
   render() {
     const isLoggedIn = this.state.loggedIn;
     return (
       <div>
         {isLoggedIn ? (<Home />) : (<Register component={this} handleSubmit={this.handleSubmit}/>)}
       </div>
-
-      
-
-      
     );
   }
 }

@@ -41,6 +41,10 @@ class Register extends Component {
 export default Register;
 
 /*
+
+
+
+
 this goes between ul w/ class="navbar-nav ml-auto" in body
 
                             {{#if username}}
