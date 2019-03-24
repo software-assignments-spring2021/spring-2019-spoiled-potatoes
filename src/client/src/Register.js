@@ -4,27 +4,27 @@ import logo from './logo.svg';
 import './App.css';
 
 class Register extends Component {
-    constructor(props){
-        super(props)
-        this.state = { name:"", pass:"", email:"" }
-        this.handleInputChange = this.handleInputChange.bind(this);
-    }
-    
-    handleInputChange(event) {
-        const target = event.target;
-        const value = target.value;
-        const name = target.name;
-    
-        this.setState({
-          [name]: value
-        });
-      }
+  constructor(props) {
+    super(props)
+    this.state = { name: "", pass: "", email: "" }
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
+
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
   render() {
     return (
-        <form onSubmit={(e) => this.props.handleSubmit(e, this.state.name, this.state.pass, this.state.email, this.props.component)}>
+      <form onSubmit={(e) => this.props.handleSubmit(e, this.state.name, this.state.pass, this.state.email, this.props.component)}>
         <h1>Register</h1>
         <label>
-          Name:
+          Username:
           <input type="text" name="name" value={this.state.name} onChange={this.handleInputChange} />
           Email:
           <input type="text" name="email" value={this.state.email} onChange={this.handleInputChange} />
@@ -33,7 +33,7 @@ class Register extends Component {
         </label>
         <input type="submit" value="Submit" />
 
-         </form>
+      </form>
     );
   }
 }
