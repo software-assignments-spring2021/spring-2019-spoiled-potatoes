@@ -62,8 +62,7 @@ app.get('/register', (req, res) => {
 });
 
 app.post('/register', (req, res) => {
-  const username = req.body.username;
-  const email = req.body.email;
+  const { username, email } = req.body;
   console.log('in register');
   Trader.register(new Trader({ username: username, email: email }), req.body.password, (err) => {
     if (err) {
@@ -74,6 +73,11 @@ app.post('/register', (req, res) => {
       passport.authenticate('local', { successRedirect: '/home', failureRedirect: '/fail' })(req, res);
     }
   });
+});
+
+app.post('/login', (req, res) => {
+  console.log('in login');
+  passport.authenticate('local', { successRedirect: '/home', failureRedirect: '/fail' })(req, res);
 });
 
 
