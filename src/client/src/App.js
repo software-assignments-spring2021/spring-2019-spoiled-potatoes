@@ -11,7 +11,7 @@ class App extends Component {
     this.state = { loggedIn: false }
   }
 
-  handleSubmit(e, inputName, inputPass, inputEmail, component){
+  handleSubmit(e, inputName, inputPass, inputEmail, component) {
     e.preventDefault();
 
     const test = JSON.stringify({
@@ -47,11 +47,49 @@ class App extends Component {
     })
   }
 
+  handleLoginSubmit(event, inputName, inputPass, component) {
+    event.preventDefault();
+
+    const userAndPass = JSON.stringify({
+      'username': inputName,
+      'password': inputPass
+    });
+
+    fetch('/login', {
+      credentials: 'include',
+      method: 'POST',
+      body: userAndPass,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }).then(function response(res) {
+      console.log('res', res);
+      res.json().then((data) => {
+        console.log(data.message);
+        console.log(data.registration);
+
+        if (data.registration) {
+          console.log('login success');
+          component.setState({ loggedIn: true });
+        }
+        else {
+          console.log('login failure');
+        }
+      })
+    })
+  }
+
   render() {
     const isLoggedIn = this.state.loggedIn;
     return (
       <div>
-        {isLoggedIn ? (<Home />) : (<Register component={this} handleSubmit={this.handleSubmit}/>)}
+        {isLoggedIn ? (<Home />) : (
+          <div>
+            <Register component={this} handleSubmit={this.handleSubmit} />
+            <Login component={this} handleLoginSubmit={this.handleLoginSubmit} />
+          </div>
+        )}
       </div>
     );
   }
