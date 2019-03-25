@@ -1,5 +1,6 @@
 
 import React, { Component } from 'react';
+import Cookies from 'js-cookie';
 import logo from './logo.svg';
 import './App.css';
 
@@ -19,9 +20,48 @@ class Register extends Component {
       [name]: value
     });
   }
+
+  handleSubmit(e, inputName, inputPass, inputEmail, component) {
+    e.preventDefault();
+
+    const test = JSON.stringify({
+      'username': inputName,
+      'password': inputPass,
+      'email': inputEmail
+    });
+
+    console.log(test);
+
+    fetch('/register', {
+      credentials: 'include',
+      method: 'POST',
+      body: test,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }).then(function response(res) {
+      console.log('res', res);
+      res.json().then((data) => {
+        console.log(data.message);
+        console.log(data.registration);
+
+        if (data.registration) {
+          Cookies.set('username', data.user.username);
+          component.setState({ username: Cookies.get('username') });
+        }
+        else {
+          console.log('registration failure');
+        }
+      })
+    })
+  }
+
+
   render() {
     return (
-      <form onSubmit={(e) => this.props.handleSubmit(e, this.state.name, this.state.pass, this.state.email, this.props.component)}>
+      <form onSubmit={(e) => this.handleSubmit(e, this.state.name, this.state.pass, this.state.email, this.props.component)}>
+      <div class="form-group">
         <h1>Register</h1>
         <label>
           Username:
@@ -32,7 +72,7 @@ class Register extends Component {
           <input type="password" name="pass" value={this.state.pass} onChange={this.handleInputChange} />
         </label>
         <input type="submit" value="Submit" />
-
+        </div>
       </form>
     );
   }
