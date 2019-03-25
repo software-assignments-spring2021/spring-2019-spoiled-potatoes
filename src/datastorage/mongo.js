@@ -26,7 +26,11 @@ mongoose.model('Broker', brokerSchema);
 const fn = path.join(__dirname, 'config.json');
 const data = fs.readFileSync(fn);
 const conf = JSON.parse(data);
-mongoose.connect(conf.dbconf);
+if (process.env.TRAVIS) {
+  mongoose.connect(process.env.TRAVIS_DB_STRING);
+} else {
+  mongoose.connect(conf.dbconf);
+}
 
 module.exports = mongoose.model('Trader', traderSchema);
 module.exports = mongoose.model('Broker', brokerSchema);
