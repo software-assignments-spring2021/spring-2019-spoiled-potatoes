@@ -1,4 +1,5 @@
 # Trading Dashboard
+[![Build Status](https://travis-ci.com/nyu-software-engineering/trading-dashboard.svg?branch=master)](https://travis-ci.com/nyu-software-engineering/trading-dashboard)
 #### A unique dashboard for all your investment portfolios
 
 ## Description
