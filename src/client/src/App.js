@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Cookies from 'js-cookie';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import Home from './Home'
 import Login from './Login'

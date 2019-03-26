@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Cookies from 'js-cookie';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
-import App from './App'
+// import App from './App'
 
 class Login extends Component {
   constructor(props) {

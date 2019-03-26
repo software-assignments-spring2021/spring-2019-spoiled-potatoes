@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Cookies from 'js-cookie';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import './AddAPI';
-import AddAPI from './AddAPI';
+// import AddAPI from './AddAPI';
 
 class Home extends Component {
   constructor(props) {
