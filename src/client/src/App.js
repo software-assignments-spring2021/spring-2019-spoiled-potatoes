@@ -1,94 +1,63 @@
 import React, { Component } from 'react';
+import Cookies from 'js-cookie';
 import logo from './logo.svg';
 import './App.css';
 import Home from './Home'
 import Login from './Login'
 import Register from './Register'
+import Navbar from './Navbar'
 
 class App extends Component {
+  
   constructor(props) {
     super(props);
-    this.state = { loggedIn: false }
+    this.state = { username: Cookies.get('username'), login: true, register: false }
   }
 
-  handleSubmit(e, inputName, inputPass, inputEmail, component) {
+  renderLogin(e) {
     e.preventDefault();
-
-    const test = JSON.stringify({
-      'username': inputName,
-      'password': inputPass,
-      'email': inputEmail
+    //this.set
+    //return <Login component={this} />;
+    //this.setState();
+    this.setState(() => {
+      return {login:true, register: false};
     });
+  }
 
-    console.log(test);
-
-    fetch('/register', {
-      credentials: 'include',
-      method: 'POST',
-      body: test,
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-    }).then(function response(res) {
-      console.log('res', res);
-      res.json().then((data) => {
-        console.log(data.message);
-        console.log(data.registration);
-
-        if (data.registration) {
-          console.log('registration success');
-          component.setState({ loggedIn: true });
-        }
-        else {
-          console.log('registration failure');
-        }
+  renderRegister(e) {
+    e.preventDefault();
+    //this.set
+    //return <Login component={this} />;
+    //this.setState({login:false, register: true});
+    this.setState(() => {
+      return {login:false, register: true};
+    });
+  }
+  logout(e){
+    e.preventDefault();
+    fetch('/fail', { credentials : 'same-origin' }).then((res) => {
+      console.log(res.text);
+      res.json().then( (data) => {
+        console.log(data.user);
+        Cookies.set('username','');
+        //this.props.component.setState({ username: Cookies.get('username') });
+        this.setState(() => {
+          return { username: Cookies.get('username') };
+        });
       })
     })
   }
-
-  handleLoginSubmit(event, inputName, inputPass, component) {
-    event.preventDefault();
-
-    const userAndPass = JSON.stringify({
-      'username': inputName,
-      'password': inputPass
-    });
-
-    fetch('/login', {
-      credentials: 'include',
-      method: 'POST',
-      body: userAndPass,
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-    }).then(function response(res) {
-      console.log('res', res);
-      res.json().then((data) => {
-        console.log(data.message);
-        console.log(data.registration);
-
-        if (data.registration) {
-          console.log('login success');
-          component.setState({ loggedIn: true });
-        }
-        else {
-          console.log('login failure');
-        }
-      })
-    })
-  }
-
   render() {
-    const isLoggedIn = this.state.loggedIn;
+    //const isLoggedIn = this.state.loggedIn;
+    console.log(this.state.username)
     return (
-      <div>
-        {isLoggedIn ? (<Home />) : (
-          <div>
-            <Register component={this} handleSubmit={this.handleSubmit} />
-            <Login component={this} handleLoginSubmit={this.handleLoginSubmit} />
-          </div>
+      <div class="container">
+        <Navbar logout={this.logout.bind(this)} renderRegister={this.renderRegister.bind(this)} renderLogin={this.renderLogin.bind(this)} component={this}/>
+        { this.state.username ? (<div class="container"><Home component={this}/></div>) : (
+          <div class="container">
+           { this.state.register ? <Register component={this} /> : null}
+           { this.state.login ? <Login component={this} /> : null}
+        </div>
         )}
       </div>
     );
@@ -96,3 +65,10 @@ class App extends Component {
 }
 
 export default App;
+
+/*
+          <div>
+            <Register component={this} />
+            <Login component={this} />
+          </div>
+*/
