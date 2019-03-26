@@ -23,7 +23,6 @@ brokerSchema.plugin(passportLocalMongoose);
 
 mongoose.model('Broker', brokerSchema);
 
-console.log('pass: ', process.env.TRAVIS_PASS);
 
 if (process.env.TRAVIS) {
   const pass = process.env.TRAVIS_PASS;
