@@ -23,10 +23,20 @@ brokerSchema.plugin(passportLocalMongoose);
 
 mongoose.model('Broker', brokerSchema);
 
-const fn = path.join(__dirname, 'config.json');
-const data = fs.readFileSync(fn);
-const conf = JSON.parse(data);
-mongoose.connect(conf.dbconf);
+console.log('pass: ', process.env.TRAVIS_PASS);
+
+if (process.env.TRAVIS) {
+  const pass = process.env.TRAVIS_PASS;
+  const connection = 'mongodb://nyu_agile_test_admin:';
+  const cluster = '@cluster0-shard-00-00-l3dcg.mongodb.net:27017,cluster0-shard-00-01-l3dcg.mongodb.net:27017,cluster0-shard-00-02-l3dcg.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true';
+  const connString = connection + pass + cluster;
+  mongoose.connect(connString);
+} else {
+  const fn = path.join(__dirname, 'config.json');
+  const data = fs.readFileSync(fn);
+  const conf = JSON.parse(data);
+  mongoose.connect(conf.dbconf);
+}
 
 module.exports = mongoose.model('Trader', traderSchema);
 module.exports = mongoose.model('Broker', brokerSchema);
