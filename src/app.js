@@ -42,7 +42,14 @@ passport.deserializeUser((id, done) => {
 
 
 app.use(express.static(publicPath));
-app.use(session({ secret: 'itsfreerealestate', resave: false, saveUninitialized: false }));
+app.use(session({
+  secret: 'itsfreerealestate',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 * 365,
+  },
+}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
@@ -58,7 +65,7 @@ function getBrokerID(brokerName) {
 }
 /*
 function getAllAPI() {
-  
+
 }
 */
 app.get('/home', (req, res) => {
