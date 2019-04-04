@@ -3,26 +3,13 @@ const passportLocalMongoose = require('passport-local-mongoose');
 const fs = require('fs');
 const path = require('path');
 
-const traderSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   username: String,
   email: String,
-  portfolio: [{ id: String, key: String }],
-  // portfolio is a list of ids to supported APIs and the user's key (will have to be hashed)
 });
-traderSchema.plugin(passportLocalMongoose);
+userSchema.plugin(passportLocalMongoose);
 
-mongoose.model('Trader', traderSchema);
-
-const brokerSchema = new mongoose.Schema({
-  name: String,
-  endpoints: [{ function: String, endpoint: String }],
-  // endpoints is a list of objects that describe the various endpoints and corresponding
-  // functionalities of a supported API
-});
-brokerSchema.plugin(passportLocalMongoose);
-
-mongoose.model('Broker', brokerSchema);
-
+mongoose.model('User', userSchema);
 
 if (process.env.TRAVIS) {
   const pass = process.env.TRAVIS_PASS;
@@ -37,5 +24,4 @@ if (process.env.TRAVIS) {
   mongoose.connect(conf.dbconf);
 }
 
-module.exports = mongoose.model('Trader', traderSchema);
-module.exports = mongoose.model('Broker', brokerSchema);
+module.exports = mongoose.model('User', userSchema);
