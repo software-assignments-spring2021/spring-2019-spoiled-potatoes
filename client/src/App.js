@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Cookies from 'js-cookie';
+import axios from 'axios';
 // import logo from './logo.svg';
 import './App.css';
 import Home from './Home'
@@ -8,67 +8,105 @@ import Register from './Register'
 import Navbar from './Navbar'
 
 class App extends Component {
-  
+
   constructor(props) {
     super(props);
-    this.state = { username: Cookies.get('username'), login: true, register: false }
+    this.state = {
+      loggedIn: false,
+      username: null,
+      login: true,
+      register: false
+    }
+
+    this.getUser = this.getUser.bind(this)
+    this.componentWillMount = this.componentWillMount.bind(this)
+    this.updateUser = this.updateUser.bind(this)
+  }
+
+  componentWillMount() {
+    this.getUser();
   }
 
   renderLogin(e) {
     e.preventDefault();
-    //this.set
-    //return <Login component={this} />;
-    //this.setState();
     this.setState(() => {
-      return {login:true, register: false};
+      return { login: true, register: false };
     });
   }
 
   renderRegister(e) {
     e.preventDefault();
-    //this.set
-    //return <Login component={this} />;
-    //this.setState({login:false, register: true});
     this.setState(() => {
-      return {login:false, register: true};
+      return { login: false, register: true };
     });
   }
-  logout(e){
+
+  logout(e) {
     e.preventDefault();
-    fetch('/fail', { credentials : 'same-origin' }).then((res) => {
+    fetch('/logout', { credentials: 'same-origin' }).then((res) => {
       console.log(res.text);
-      res.json().then( (data) => {
+      res.json().then((data) => {
         console.log(data.user);
-        Cookies.set('username','');
-        //this.props.component.setState({ username: Cookies.get('username') });
         this.setState(() => {
-          return { username: Cookies.get('username') };
+          return {
+            loggedIn: false,
+            username: null,
+            login: true,
+            register: false
+          };
         });
       })
     })
   }
+
+  getUser() {
+    axios.get('/user/').then(response => {
+      console.log('Get user response: ')
+      console.log(response.data)
+      if (response.data.user) {
+        console.log('Get User: There is a user saved in the server session: ')
+
+        this.setState({
+          loggedIn: true,
+          username: response.data.user.username,
+          readyToRender: true
+        })
+      } else {
+        console.log('Get user: no user');
+        this.setState({
+          loggedIn: false,
+          username: null,
+          readyToRender: true
+        })
+      }
+    })
+  }
+
+  updateUser(userObject) {
+    this.setState(userObject)
+  }
+
   render() {
-    //const isLoggedIn = this.state.loggedIn;
     console.log(this.state.username)
-    return (
-      <div class="container">
-        <Navbar logout={this.logout.bind(this)} renderRegister={this.renderRegister.bind(this)} renderLogin={this.renderLogin.bind(this)} component={this}/>
-        { this.state.username ? (<div class="container"><Home component={this}/></div>) : (
-          <div class="container">
-           { this.state.register ? <Register component={this} /> : null}
-           { this.state.login ? <Login component={this} /> : null}
+    if (this.state.readyToRender) {
+      return (
+        <div class="container">
+          <Navbar logout={this.logout.bind(this)} renderRegister={this.renderRegister.bind(this)} renderLogin={this.renderLogin.bind(this)} component={this} />
+          {this.state.loggedIn ? (<div class="container"><Home username={this.state.username} /></div>) : (
+            <div class="container">
+              {this.state.register ? <Register updateUser={this.updateUser} /> : null}
+              {this.state.login ? <Login updateUser={this.updateUser} /> : null}
+            </div>
+          )}
         </div>
-        )}
-      </div>
-    );
+      );
+    }
+    else {
+      return (
+        null
+      );
+    }
   }
 }
 
 export default App;
-
-/*
-          <div>
-            <Register component={this} />
-            <Login component={this} />
-          </div>
-*/
