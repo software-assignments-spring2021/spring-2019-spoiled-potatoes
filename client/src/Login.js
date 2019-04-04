@@ -41,32 +41,6 @@ class Login extends Component {
         console.log(error);
 
       })
-
-    // fetch('/login', {
-    //   credentials: 'include',
-    //   method: 'POST',
-    //   body: userAndPass,
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json',
-    //   },
-    // }).then((res) => {
-    //   console.log('res', res);
-    //   res.json().then((data) => {
-    //     console.log(data.message);
-    //     console.log(data.registration);
-
-    //     if (data.registration) {
-    //       this.updateUser({
-    //         loggedIn: true,
-    //         username: res.data.username
-    //       })
-    //     }
-    //     else {
-    //       console.log('login failure');
-    //     }
-    //   })
-    // })
   }
 
 
@@ -99,20 +73,3 @@ class Login extends Component {
 }
 
 export default Login;
-
-/*
-this goes between ul w/ class="navbar-nav ml-auto" in body
-
-                            {{#if username}}
-                            <li class="nav-item">
-                                Welcome, {{username}}
-                            </li>
-                            {{else}}
-                            <li class="nav-item">
-                                <a class="nav-link" href="/register">Register</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/login">Login</a>
-                            </li>
-                            {{/if}}
-*/

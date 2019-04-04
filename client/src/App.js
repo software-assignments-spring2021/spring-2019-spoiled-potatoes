@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
-// import { Route } from "react-router-dom";
 // import logo from './logo.svg';
 import './App.css';
 import Home from './Home'
@@ -30,15 +29,8 @@ class App extends Component {
     this.getUser();
   }
 
-  // componentDidMount() {
-  //   this.getUser();
-  // }
-
   renderLogin(e) {
     e.preventDefault();
-    //this.set
-    //return <Login component={this} />;
-    //this.setState();
     this.setState(() => {
       return { login: true, register: false };
     });
