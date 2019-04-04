@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Cookies from 'js-cookie';
 import axios from 'axios';
 // import logo from './logo.svg';
 import './App.css';
@@ -7,7 +6,6 @@ import Home from './Home'
 import Login from './Login'
 import Register from './Register'
 import Navbar from './Navbar'
-import { watchFile } from 'fs';
 
 class App extends Component {
 

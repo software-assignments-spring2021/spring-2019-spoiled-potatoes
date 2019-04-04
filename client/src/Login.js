@@ -15,11 +15,6 @@ class Login extends Component {
   handleLoginSubmit(event, inputName, inputPass, component) {
     event.preventDefault();
 
-    const userAndPass = JSON.stringify({
-      'username': inputName,
-      'password': inputPass
-    });
-
     axios
       .post('/login', {
         username: inputName,
