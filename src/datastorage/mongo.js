@@ -16,7 +16,11 @@ const albumSchema = new mongoose.Schema({
   artist: String,
   mbid: String,
   tags: [String],
-  votes: [mongoose.Schema.Types.Mixed],
+  votes: [{
+    username: String,
+    timestamp: { type: Date, default: Date.now },
+    sentiment: { type: Number, min: 0, max: 1 }, // 0 if dislike, 1 if like
+  }],
 });
 
 mongoose.model('Album', albumSchema);
