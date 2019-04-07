@@ -11,6 +11,20 @@ userSchema.plugin(passportLocalMongoose);
 
 mongoose.model('User', userSchema);
 
+const albumSchema = new mongoose.Schema({
+  name: String,
+  artist: String,
+  mbid: String,
+  tags: [String],
+  votes: [{
+    username: String,
+    timestamp: { type: Date, default: Date.now },
+    sentiment: { type: Number, min: 0, max: 1 }, // 0 if dislike, 1 if like
+  }],
+});
+
+mongoose.model('Album', albumSchema);
+
 if (process.env.TRAVIS) {
   const pass = process.env.TRAVIS_PASS;
   const connection = 'mongodb://nyu_agile_test_admin:';
@@ -25,3 +39,4 @@ if (process.env.TRAVIS) {
 }
 
 module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('Album', albumSchema);
