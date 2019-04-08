@@ -15,6 +15,10 @@ const albumSchema = new mongoose.Schema({
   name: String,
   artist: String,
   mbid: String,
+  image: [{
+    '#text': String,
+    size: String,
+  }],
   tags: [String],
   votes: [{
     username: String,
