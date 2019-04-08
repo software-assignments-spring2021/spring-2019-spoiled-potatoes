@@ -19,6 +19,7 @@ const mongoose = require('mongoose');
 require('./datastorage/mongo.js');
 
 const User = mongoose.model('User');
+const Album = mongoose.model('Album');
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -55,19 +56,6 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
-// function getBrokerID(brokerName) {
-//   Broker.findOne({ name: brokerName }, (err, broker) => {
-//     if (err) {
-//       return false;
-//     }
-//     return broker._id;
-//   });
-// }
-/*
-function getAllAPI() {
-
-}
-*/
 app.get('/user', (req, res) => {
   console.log('USER');
   console.log(req.user);
@@ -103,22 +91,6 @@ app.get('/register', (req, res) => {
   res.send({ message: 'register get view' });
 });
 
-// app.get('/listAPI', (req, res) => {
-//   console.log('listAPI');
-//   if (req.user) {
-//     console.log('send it listAPI');
-//     Broker.find({}, (err, brokers) => {
-//       if (err) { res.redirect('/fail'); }
-//       const retArr = [];
-//       brokers.forEach((element) => {
-//         retArr.push(element.name);
-//       });
-//       console.log('before res.send: ', retArr);
-//       res.send({ brokers: retArr });
-//     });
-//   }
-// });
-
 app.post('/register', (req, res) => {
   const { username, email } = req.body;
   console.log('in register');
@@ -133,31 +105,27 @@ app.post('/register', (req, res) => {
   });
 });
 
-// app.post('/addAPI', (req, res) => {
-//   User.findOne({ name: req.user.username }, (err, usr) => {
-//     if (err) {
-//       res.redirect('/fail');
-//     } else {
-//       console.log(req);
-//       const brokerID = getBrokerID(req.body.brokerName);
-//       if (!brokerID) { res.redirect('/fail'); }
-//       const hiddenKey = CryptoJS.AES.encrypt(req.body.key, cryptKey);
-//       const newAPI = { id: brokerID, key: hiddenKey };
-//       usr.portfolio.push(newAPI);
-//       usr.markModified('portfolio');
-//       usr.save((error) => {
-//         if (error) {
-//           return false;
-//         }
-//         return true;
-//       });
-//     }
-//   });
-// });
-
 app.post('/login', (req, res) => {
   console.log('in login');
   passport.authenticate('local', { successRedirect: '/home', failureRedirect: '/fail' })(req, res);
+});
+
+app.post('/add_album', (req, res) => {
+  const {
+    name, artist, mbid, tags,
+  } = req.body;
+
+  const newAlbum = new Album({
+    name: name, artist: artist, mbid: mbid, tags: tags,
+  });
+
+  newAlbum.save((err) => {
+    if (err) {
+      res.send({ added: false, message: 'Album add failed' });
+    } else {
+      res.send({ added: true });
+    }
+  });
 });
 
 server.listen(process.env.PORT || 3001);
