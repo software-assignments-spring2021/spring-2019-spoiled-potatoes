@@ -112,11 +112,11 @@ app.post('/login', (req, res) => {
 
 app.post('/add_album', (req, res) => {
   const {
-    name, artist, mbid, tags,
+    name, artist, mbid, tags, image,
   } = req.body;
 
   const newAlbum = new Album({
-    name: name, artist: artist, mbid: mbid, tags: tags,
+    name: name, artist: artist, mbid: mbid, tags: tags, image: image,
   });
 
   newAlbum.save((err) => {
