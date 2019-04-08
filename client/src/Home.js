@@ -1,18 +1,48 @@
 import React, { Component } from 'react';
+import { Jumbotron,Button,Container,Row,Col } from 'react-bootstrap';
 // import logo from './logo.svg';
 import './App.css';
 import './AddAPI';
+import DummyListComponent from './DummyListComponent'
 // import AddAPI from './AddAPI';
 
 class Home extends Component {
 
   render() {
     console.log(this.props.username)
-    return (
-      <div class="container">
-        <h1>Welcome {this.props.username}</h1>
-      </div>
-
+    
+    return (  	
+      <Container>
+        <Jumbotron>
+          <h1>Welcome to Spoiled Potatoes {this.props.username}!</h1>
+          <p>
+            Review and explore more music!
+          </p>
+        </Jumbotron>
+        
+        <Row>
+          <Col>
+            <Row><h3>Most Popular</h3></Row>
+            <Row><DummyListComponent /></Row>
+            <Row><Button variant="primary">More...</Button></Row>
+          </Col>
+          <Col>
+            <Row><h3>Trending</h3></Row>
+            <Row><DummyListComponent /></Row>
+            <Row><Button variant="primary">More...</Button></Row>
+          </Col>
+          <Col>
+            <Row><h3>Last Added</h3></Row>
+            <Row><DummyListComponent /></Row>
+            <Row><Button variant="primary">More...</Button></Row>
+          </Col>
+          <Col>
+            <Row><h3>Random</h3></Row>
+            <Row><DummyListComponent /></Row>
+            <Row><Button variant="primary">More...</Button></Row>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }
