@@ -1,5 +1,5 @@
 # Spoiled Potatoes
-[![Build Status](https://travis-ci.com/nyu-software-engineering/trading-dashboard.svg?branch=master)](https://travis-ci.com/nyu-software-engineering/trading-dashboard)
+[![Build Status](https://travis-ci.com/nyu-software-engineering/spoiled-potatoes.svg?branch=master)](https://travis-ci.com/nyu-software-engineering/spoiled-potatoes)
 #### A music review site
 
 ## Description
