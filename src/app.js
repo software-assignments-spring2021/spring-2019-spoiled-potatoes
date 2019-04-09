@@ -128,4 +128,14 @@ app.post('/add_album', (req, res) => {
   });
 });
 
+app.get('/search_album', (req, res) => {
+  Album.find(req.query, (err, docs) => {
+    if (err) {
+      res.send({ status: 'failure', message: 'failed to find album' });
+    } else {
+      res.send({ status: 'success', docs });
+    }
+  });
+});
+
 server.listen(process.env.PORT || 3001);
