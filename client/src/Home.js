@@ -21,7 +21,7 @@ class Home extends Component {
             Review and explore more music!
           </p>
         </Jumbotron>
-        
+        <AlbumSearch/>
         <Row>
           <Col>
             <Row><h3>Most Popular</h3></Row>

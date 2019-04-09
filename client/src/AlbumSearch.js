@@ -17,14 +17,20 @@ class AlbumSearch extends Component {
   }
   
 
-  searchDB(mid, artist, album){
-    const postObj = {
-      mid: mid,
-      artist: artist,
-      album: album
-    }
-
-    axios.post("");
+  searchDB(mbid, albumName){
+    axios.get('/search_album',{params: {mbid: mbid, name: albumName}}).then(response => {
+      if (response.status){
+        if (response.data.docs.length) {
+          console.log(mbid);
+          console.log(response.data.docs);
+          console.log('albums found, ready to vote?');
+        } else {
+          console.log('album not found, ')
+        }
+      } else {
+        console.log('failure');
+      }
+    });
   }
   
 
@@ -64,13 +70,14 @@ class AlbumSearch extends Component {
       .then(response => {
         if (response.status === 200) {
           // update App.js state
-          if (paramObj['method'] == "album.getinfo"){
+          console.log(response.data);
+          if (paramObj['method'] === "album.getinfo"){
             this.setState({
-              results: [<li>{response.data.album.name}</li>]
+              results: [<li onClick={() => this.searchDB(response.data.album.mbid)}>{response.data.album.name}</li>]
             });
           } else  {
             this.setState({
-              results: response.data.topalbums.album.map(item => <li>{item['name']}</li>)
+              results: response.data.topalbums.album.map(item => <li onClick={() => this.searchDB(item.mbid)}>{item['name']}</li>)
             });
           }
         }
