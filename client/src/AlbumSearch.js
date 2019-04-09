@@ -18,7 +18,18 @@ class AlbumSearch extends Component {
   
 
   searchDB(mbid, albumName){
-    axios.get('/search_album',{params: {mbid: mbid, name: albumName}}).then(response => {
+    let paramObj = {};
+    if (mbid) {
+      paramObj = {
+        mbid: mbid
+      }
+    } else {
+      paramObj = {
+        name: albumName
+      }
+    }
+    console.log(paramObj);
+    axios.get('/search_album',{params: paramObj}).then(response => {
       if (response.status){
         if (response.data.docs.length) {
           console.log('albums found, ready to vote?');
@@ -75,11 +86,11 @@ class AlbumSearch extends Component {
             });
           } else if (paramObj['method'] === "artist.gettopalbums") {
             this.setState({
-              results: response.data.topalbums.album.map(item => <li onClick={() => this.searchDB(item.mbid)}>{item['name']}</li>)
+              results: response.data.topalbums.album.map(item => <li onClick={() => this.searchDB(item.mbid, item.name)}>{item['name']}</li>)
             });
           } else {
             this.setState({
-              results: response.data.results.albummatches.album.map(item => <li onClick={() => this.searchDB(item.mbid)}>{item['name']}</li>)
+              results: response.data.results.albummatches.album.map(item => <li onClick={() => this.searchDB(item.mbid, item.name)}>{item['name']}</li>)
             });
           }
         }
