@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Jumbotron,Button,Container,Row,Col } from 'react-bootstrap';
 // import logo from './logo.svg';
 import './App.css';
+import AlbumSearch from './AlbumSearch';
 import './AddAPI';
 import DummyListComponent from './DummyListComponent'
 // import AddAPI from './AddAPI';
@@ -19,7 +20,7 @@ class Home extends Component {
             Review and explore more music!
           </p>
         </Jumbotron>
-        
+        <AlbumSearch/>
         <Row>
           <Col>
             <Row><h3>Most Popular</h3></Row>
