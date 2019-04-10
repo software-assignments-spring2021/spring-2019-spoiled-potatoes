@@ -27,7 +27,7 @@ const albumSchema = new mongoose.Schema({
   }],
 });
 
-mongoose.model('Album', albumSchema);
+const Album = mongoose.model('Album', albumSchema);
 
 if (process.env.TRAVIS) {
   const pass = process.env.TRAVIS_PASS;
@@ -43,4 +43,4 @@ if (process.env.TRAVIS) {
 }
 
 module.exports = mongoose.model('User', userSchema);
-module.exports = mongoose.model('Album', albumSchema);
+module.exports = Album;
