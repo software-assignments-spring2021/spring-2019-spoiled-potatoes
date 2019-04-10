@@ -39,13 +39,13 @@ class Register extends Component {
     })
       .then(response => {
         console.log(response)
-        if (!response.data.errmsg) {
+        if (response.data.loggedIn) {
           console.log('successful signup')
           this.props.updateUser({
             loggedIn: true,
             username: response.data.username
           })
-        } else {
+        } else if (!response.data.registration) {
           console.log('username already taken')
         }
       }).catch(error => {

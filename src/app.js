@@ -69,7 +69,7 @@ app.get('/user', (req, res) => {
 app.get('/home', (req, res) => {
   console.log('HOME');
   console.log(req.session);
-  res.send({ message: 'home', registration: true, username: req.user.username });
+  res.send({ message: 'home', loggedIn: true, username: req.user.username });
 });
 
 app.get('/logout', (req, res) => {
@@ -84,7 +84,7 @@ app.get('/logout', (req, res) => {
 app.get('/fail', (req, res) => {
   console.log('FAIL');
   console.log(req.session);
-  res.send({ message: 'fail', registration: false });
+  res.send({ message: 'fail', loggedIn: false });
 });
 
 app.get('/register', (req, res) => {
