@@ -20,14 +20,27 @@ const albumSchema = new mongoose.Schema({
     size: String,
   }],
   tags: [String],
-  votes: [{
-    username: String,
-    timestamp: { type: Date, default: Date.now },
-    sentiment: { type: Number, min: 0, max: 1 }, // 0 if dislike, 1 if like
-  }],
 });
 
 mongoose.model('Album', albumSchema);
+
+const voteSchema = new mongoose.Schema({
+  username: String,
+  timestamp: { type: Date, default: Date.now },
+  albumObjectId: String,
+  sentiment: { type: Number, min: 0, max: 1 }, // 0 if dislike, 1 if like
+});
+
+mongoose.model('Vote', voteSchema);
+
+const commentSchema = new mongoose.Schema({
+  username: String,
+  timestamp: { type: Date, default: Date.now },
+  albumObjectId: String,
+  text: String,
+});
+
+mongoose.model('Comment', commentSchema);
 
 if (process.env.TRAVIS) {
   const pass = process.env.TRAVIS_PASS;
@@ -41,6 +54,3 @@ if (process.env.TRAVIS) {
   const conf = JSON.parse(data);
   mongoose.connect(conf.dbconf, { useNewUrlParser: true });
 }
-
-module.exports = mongoose.model('User', userSchema);
-module.exports = mongoose.model('Album', albumSchema);
