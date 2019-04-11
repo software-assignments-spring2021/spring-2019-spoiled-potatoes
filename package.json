@@ -9,7 +9,7 @@
     "connect-flash": "^0.1.1",
     "connect-mongo": "^2.0.3",
     "core-js": "^3.0.1",
-    "create-react-app": "^2.1.5",
+    "create-react-app": "^2.1.8",
     "crypto-js": "^3.1.9-1",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
@@ -27,7 +27,7 @@
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.12.4",
-    "mocha": "^6.0.2",
+    "mocha": "^6.1.2",
     "nodemon": "^1.18.10",
     "nyc": "^13.3.0"
   },
@@ -35,7 +35,7 @@
     "test": "nyc mocha --exit",
     "start": "nodemon src/app.js",
     "dev": "concurrently \"npm start\" \"cd client && npm start\"",
-    "build": "npm install && cd client && npm install"
+    "dev-build": "npm install && cd client && npm install"
   },
   "repository": {
     "type": "git",

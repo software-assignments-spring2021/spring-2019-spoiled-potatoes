@@ -12,13 +12,13 @@ class Login extends Component {
     this.updateUser = this.props.updateUser.bind(this);
   }
 
-  handleLoginSubmit(event, inputName, inputPass, component) {
+  handleLoginSubmit(event) {
     event.preventDefault();
 
     axios
       .post('/login', {
-        username: inputName,
-        password: inputPass
+        username: this.state.name,
+        password: this.state.password
       })
       .then(response => {
         console.log('login response: ')
@@ -30,25 +30,27 @@ class Login extends Component {
             loggedIn: true,
             username: response.data.username
           })
+        } else {
+          alert('Wrong username or password. Try again.')
         }
       }).catch(error => {
         console.log('login error: ')
         console.log(error);
-
+        alert('Error logging in. Try again.')
       })
   }
 
 
   render() {
     return (
-      <form onSubmit={(event) => this.handleLoginSubmit(event, this.state.name, this.state.password, this.props.component)}>
+      <form onSubmit={(event) => this.handleLoginSubmit(event)}>
         <div class="form-group">
           <h1>Login</h1>
           <label>
             Username:
-          <input type="text" name="name" value={this.state.name} onChange={this.handleInputChange} />
+          <input type="text" name="name" required value={this.state.name} onChange={this.handleInputChange} />
             Password:
-          <input type="password" name="password" value={this.state.password} onChange={this.handleInputChange} />
+          <input type="password" name="password" required value={this.state.password} onChange={this.handleInputChange} />
           </label>
           <input type="submit" value="Submit" />
         </div>
