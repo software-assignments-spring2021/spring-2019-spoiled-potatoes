@@ -81,12 +81,6 @@ app.get('/logout', (req, res) => {
   }
 });
 
-app.get('/fail', (req, res) => {
-  console.log('FAIL');
-  console.log(req.session);
-  res.send({ message: 'fail', loggedIn: false });
-});
-
 app.get('/register', (req, res) => {
   res.send({ message: 'register get view' });
 });
@@ -100,14 +94,14 @@ app.post('/register', (req, res) => {
         res.send({ message: 'Username already exists', registration: false });
       }
     } else {
-      passport.authenticate('local', { successRedirect: '/home', failureRedirect: '/fail' })(req, res);
+      passport.authenticate('local', { successRedirect: '/home', failureRedirect: '/' })(req, res);
     }
   });
 });
 
 app.post('/login', (req, res) => {
   console.log('in login');
-  passport.authenticate('local', { successRedirect: '/home', failureRedirect: '/fail' })(req, res);
+  passport.authenticate('local', { successRedirect: '/home', failureRedirect: '/' })(req, res);
 });
 
 app.post('/add_album', (req, res) => {
