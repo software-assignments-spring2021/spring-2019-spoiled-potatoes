@@ -26,5 +26,8 @@ It is increasingly common for music fans to want to share their opinion. We are 
 ## Test
 ```npm test```
 
-## Run
+## Dev Build
+```npm run dev-build
+
+## Dev Run
 ```npm run dev```
