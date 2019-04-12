@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Image,Jumbotron,Button,Container,Row,Col } from 'react-bootstrap';
 // import logo from './logo.svg';
 import './App.css';
+import CommentSection from './CommentSection';
 
 class AlbumPage extends Component {
 
@@ -30,15 +31,8 @@ class AlbumPage extends Component {
         </Container>
         
         <Container>
-          <Row>
-              <Col>
-              <div className="album">
-              <Jumbotron >
-                <h1>Comments</h1>
-              </Jumbotron>
-              </div>
-              </Col>
-            </Row>
+        <CommentSection username={this.props.location.username} albumQuery={this.props.location.state.mbid ? 
+          this.props.location.state.mbid : this.props.location.state.name}/>
         </Container>
         </div>
       );

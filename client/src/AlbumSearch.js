@@ -86,7 +86,9 @@ class AlbumSearch extends Component {
               results: [<li><Link to={{
                 pathname: "/album/"+response.data.album.name,
                 state: response.data.album,
-              }} onClick={() => this.searchDB(response.data.album.mbid)}>{response.data.album.name}</Link></li>]
+                username: this.props.username
+              }} onClick={() => this.searchDB(response.data.album.mbid)}>{response.data.album.name}
+              </Link></li>]
             });
           } else if (paramObj['method'] === "artist.gettopalbums") {
             this.setState({
@@ -94,7 +96,9 @@ class AlbumSearch extends Component {
                 item => <li><Link to={{
                   pathname: "/album/"+item['name'],
                   state: item,
-                }} onClick={() => this.searchDB(item.mbid, item.name)}>{item['name']}</Link></li>
+                  username: this.props.username
+                }} onClick={() => this.searchDB(item.mbid, item.name)}>{item['name']}
+                </Link></li>
               )
             });
           } else {
@@ -103,7 +107,9 @@ class AlbumSearch extends Component {
                 item => <li><Link to={{
                   pathname: "/album/"+item['name'],
                   state: item,
-                }} onClick={() => this.searchDB(item.mbid, item.name)}>{item['name']}</Link></li>
+                  username: this.props.username
+                }} onClick={() => this.searchDB(item.mbid, item.name)}>{item['name']}
+                </Link></li>
                 )
             });
           }

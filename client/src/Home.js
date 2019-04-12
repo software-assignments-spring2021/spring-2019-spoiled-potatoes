@@ -20,7 +20,7 @@ class Home extends Component {
             Review and explore more music!
           </p>
         </Jumbotron>
-        <AlbumSearch/>
+        <AlbumSearch username={this.props.username}/>
         <Row>
           <Col>
             <Row><h3>Most Popular</h3></Row>
