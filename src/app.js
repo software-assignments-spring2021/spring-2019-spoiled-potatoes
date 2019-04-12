@@ -1,3 +1,5 @@
+/* eslint-disable guard-for-in */
+/* eslint-disable no-restricted-syntax */
 /* eslint no-unused-expressions: 0 */
 /* eslint no-sequences: 0 */
 /* eslint no-underscore-dangle:0 */
@@ -20,6 +22,8 @@ require('./datastorage/mongo.js');
 
 const User = mongoose.model('User');
 const Album = mongoose.model('Album');
+const Vote = mongoose.model('Vote');
+const Comment = mongoose.model('Comment');
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -110,7 +114,7 @@ app.post('/add_album', (req, res) => {
   } = req.body;
 
   const newAlbum = new Album({
-    name: name, artist: artist, mbid: mbid, tags: tags, image: image,
+    name, artist, mbid, tags, image,
   });
 
   newAlbum.save((err) => {
@@ -130,6 +134,69 @@ app.get('/search_album', (req, res) => {
       res.send({ status: 'failure', message: 'failed to find album' });
     } else {
       res.send({ status: 'success', docs });
+    }
+  });
+});
+
+app.post('/vote', (req, res) => {
+  const {
+    username, albumObjectId, sentiment,
+  } = req.body;
+
+  const newVote = new Vote({
+    username, albumObjectId, sentiment,
+  });
+
+  newVote.save((err) => {
+    if (err) {
+      res.send({ success: false, message: 'Vote failed' });
+    } else {
+      res.send({ success: true, message: 'Vote registered' });
+    }
+  });
+});
+
+app.get('/get_votes', (req, res) => {
+  console.log(req.query);
+  Vote.find(req.query, (err, docs) => {
+    if (err) {
+      res.send({ success: false });
+    } else {
+      let scoreCounter = 0;
+      for (const vote in docs) {
+        scoreCounter += docs[vote].sentiment;
+      }
+      const score = scoreCounter / docs.length;
+      res.send({ success: true, docs, score });
+    }
+  });
+});
+
+app.post('/comment', (req, res) => {
+  const {
+    username, albumObjectId, text,
+  } = req.body;
+
+  const newComment = new Comment({
+    username, albumObjectId, text,
+  });
+
+  newComment.save((err) => {
+    if (err) {
+      res.send({ success: false, message: 'Comment failed' });
+    } else {
+      res.send({ success: true, message: 'Comment registered' });
+    }
+  });
+});
+
+app.get('/get_comments', (req, res) => {
+  console.log(req.query);
+  Comment.find(req.query, (err, docs) => {
+    if (err) {
+      res.send({ success: false });
+    } else {
+      res.send({ success: true, docs });
     }
   });
 });
