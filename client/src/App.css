@@ -19,6 +19,11 @@
   color: white;
 }
 
+.album {
+  padding-top: 25px
+}
+
+
 .App-link {
   color: #61dafb;
 }

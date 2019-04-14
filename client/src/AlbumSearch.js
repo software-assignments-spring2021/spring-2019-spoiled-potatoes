@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 // import logo from './logo.svg';
 import './App.css';
+import { Link } from 'react-router-dom'
 // import App from './App'
 
 
@@ -82,15 +83,34 @@ class AlbumSearch extends Component {
           console.log(response.data);
           if (paramObj['method'] === "album.getinfo"){
             this.setState({
-              results: [<li onClick={() => this.searchDB(response.data.album.mbid)}>{response.data.album.name}</li>]
+              results: [<li><Link to={{
+                pathname: "/album/"+response.data.album.name,
+                state: response.data.album,
+                username: this.props.username
+              }} onClick={() => this.searchDB(response.data.album.mbid)}>{response.data.album.name}
+              </Link></li>]
             });
           } else if (paramObj['method'] === "artist.gettopalbums") {
             this.setState({
-              results: response.data.topalbums.album.map(item => <li onClick={() => this.searchDB(item.mbid, item.name)}>{item['name']}</li>)
+              results: response.data.topalbums.album.map(
+                item => <li><Link to={{
+                  pathname: "/album/"+item['name'],
+                  state: item,
+                  username: this.props.username
+                }} onClick={() => this.searchDB(item.mbid, item.name)}>{item['name']}
+                </Link></li>
+              )
             });
           } else {
             this.setState({
-              results: response.data.results.albummatches.album.map(item => <li onClick={() => this.searchDB(item.mbid, item.name)}>{item['name']}</li>)
+              results: response.data.results.albummatches.album.map(
+                item => <li><Link to={{
+                  pathname: "/album/"+item['name'],
+                  state: item,
+                  username: this.props.username
+                }} onClick={() => this.searchDB(item.mbid, item.name)}>{item['name']}
+                </Link></li>
+                )
             });
           }
         }
