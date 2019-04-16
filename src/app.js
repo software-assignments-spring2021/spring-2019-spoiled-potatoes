@@ -30,6 +30,12 @@ const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const bodyParser = require('body-parser');
+const axios = require('axios');
+const fs = require('fs');
+
+const fn = path.join(__dirname, 'config.json');
+const data = fs.readFileSync(fn);
+const conf = JSON.parse(data);
 
 
 passport.use(new LocalStrategy(User.authenticate()));
@@ -199,6 +205,28 @@ app.get('/get_comments', (req, res) => {
       res.send({ success: true, docs });
     }
   });
+});
+
+app.get('/get_lastfm', (req, res) => {
+  const paramsObj = req.query;
+  paramsObj.api_key = conf.lastfm_api_key;
+  axios
+    .get('http://ws.audioscrobbler.com/2.0/', {
+      params: paramsObj,
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        res.send(response.data);
+      } else {
+        res.status(400);
+        res.send();
+      }
+    }).catch((error) => {
+      console.log('album search error: ');
+      console.log(error);
+      res.status(400);
+      res.send();
+    });
 });
 
 server.listen(process.env.PORT || 3001);
