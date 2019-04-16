@@ -33,7 +33,7 @@ const bodyParser = require('body-parser');
 const axios = require('axios');
 const fs = require('fs');
 
-const fn = path.join(__dirname, '/datastorage/config.json');
+const fn = path.join(__dirname, 'config.json');
 const data = fs.readFileSync(fn);
 const conf = JSON.parse(data);
 
