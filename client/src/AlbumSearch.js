@@ -10,15 +10,14 @@ import { Link } from 'react-router-dom'
 class AlbumSearch extends Component {
   constructor(props) {
     super(props)
-    this.apiKey = process.env.REACT_APP_ALBUM_API_KEY;
-    this.state = {  name: "", artist:"",results:[] }
+    this.state = { name: "", artist: "", results: [] }
     this.handleAlbumSearch = this.handleAlbumSearch.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.searchDB = this.searchDB.bind(this);
   }
-  
 
-  searchDB(mbid, albumName){
+
+  searchDB(mbid, albumName) {
     let paramObj = {};
     if (mbid) {
       paramObj = {
@@ -30,8 +29,8 @@ class AlbumSearch extends Component {
       }
     }
     console.log(paramObj);
-    axios.get('/search_album',{params: paramObj}).then(response => {
-      if (response.status){
+    axios.get('/search_album', { params: paramObj }).then(response => {
+      if (response.status) {
         if (response.data.docs.length) {
           console.log('albums found, ready to vote?');
         } else {
@@ -42,17 +41,16 @@ class AlbumSearch extends Component {
       }
     });
   }
-  
+
 
   handleAlbumSearch(event, inputName, inputArtist) {
     event.preventDefault();
 
-    let paramObj ={};
+    let paramObj = {};
 
     if (inputName && inputArtist) {
       paramObj = {
         method: "album.getinfo",
-        api_key: this.apiKey,
         artist: inputArtist,
         album: inputName,
         format: "json",
@@ -61,30 +59,28 @@ class AlbumSearch extends Component {
       paramObj = {
         method: "artist.gettopalbums",
         artist: inputArtist,
-        api_key: this.apiKey,
         format: "json",
-    }
+      }
     } else {
       paramObj = {
         method: "album.search",
         album: inputName,
-        api_key: this.apiKey,
         format: "json",
       }
     }
     console.log(paramObj);
     axios
-      .get('http://ws.audioscrobbler.com/2.0/', {
+      .get('/get_lastfm', {
         params: paramObj
       })
       .then(response => {
         if (response.status === 200) {
           // update App.js state
           console.log(response.data);
-          if (paramObj['method'] === "album.getinfo"){
+          if (paramObj['method'] === "album.getinfo") {
             this.setState({
               results: [<li><Link to={{
-                pathname: "/album/"+response.data.album.name,
+                pathname: "/album/" + response.data.album.name,
                 state: response.data.album,
                 username: this.props.username
               }} onClick={() => this.searchDB(response.data.album.mbid)}>{response.data.album.name}
@@ -94,7 +90,7 @@ class AlbumSearch extends Component {
             this.setState({
               results: response.data.topalbums.album.map(
                 item => <li><Link to={{
-                  pathname: "/album/"+item['name'],
+                  pathname: "/album/" + item['name'],
                   state: item,
                   username: this.props.username
                 }} onClick={() => this.searchDB(item.mbid, item.name)}>{item['name']}
@@ -105,12 +101,12 @@ class AlbumSearch extends Component {
             this.setState({
               results: response.data.results.albummatches.album.map(
                 item => <li><Link to={{
-                  pathname: "/album/"+item['name'],
+                  pathname: "/album/" + item['name'],
                   state: item,
                   username: this.props.username
                 }} onClick={() => this.searchDB(item.mbid, item.name)}>{item['name']}
                 </Link></li>
-                )
+              )
             });
           }
         }
@@ -124,19 +120,19 @@ class AlbumSearch extends Component {
   render() {
     return (
       <div>
-      <form onSubmit={(event) => this.handleAlbumSearch(event, this.state.name, this.state.artist)}>
-        <div class="form-group">
-          <h1>Search for an album to start reviewing</h1>
-          <label>
-            Album Name:
+        <form onSubmit={(event) => this.handleAlbumSearch(event, this.state.name, this.state.artist)}>
+          <div class="form-group">
+            <h1>Search for an album to start reviewing</h1>
+            <label>
+              Album Name:
           <input type="text" name="name" value={this.state.name} onChange={this.handleInputChange} />
-            Artist:
+              Artist:
           <input type="text" name="artist" value={this.state.artist} onChange={this.handleInputChange} />
-          </label>
-          <input type="submit" disabled={!(this.state.name || this.state.artist)} value="Search" />
-        </div>
-      </form>
-      <ul>{this.state.results}</ul>
+            </label>
+            <input type="submit" disabled={!(this.state.name || this.state.artist)} value="Search" />
+          </div>
+        </form>
+        <ul>{this.state.results}</ul>
       </div>
     );
   }
