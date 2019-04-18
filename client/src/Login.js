@@ -28,7 +28,8 @@ class Login extends Component {
           // update App.js state
           this.props.updateUser({
             loggedIn: true,
-            username: response.data.username
+            username: response.data.username,
+            login: false
           })
         } else {
           alert('Wrong username or password. Try again.')
@@ -47,12 +48,10 @@ class Login extends Component {
         <div class="form-group">
           <h1>Login</h1>
           <label>
-            Username:
-          <input type="text" name="name" required value={this.state.name} onChange={this.handleInputChange} />
-            Password:
-          <input type="password" name="password" required value={this.state.password} onChange={this.handleInputChange} />
+            <input type="text" name="name" placeholder="Username" required value={this.state.name} onChange={this.handleInputChange} />
+            <input type="password" name="password" placeholder="Password" required value={this.state.password} onChange={this.handleInputChange} />
           </label>
-          <input type="submit" value="Submit" />
+          <input type="submit" value="Log In" />
         </div>
       </form>
     );
