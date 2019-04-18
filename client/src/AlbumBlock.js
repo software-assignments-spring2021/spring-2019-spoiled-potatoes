@@ -4,6 +4,7 @@ import { Image,Button,Container,Row,Col } from 'react-bootstrap';
 import './App.css';
 //import DummyListComponent from "./DummyListComponent";
 // import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 
 
@@ -19,9 +20,9 @@ class AlbumBlock extends Component {
                 <Image src={this.props.image}/>
                 </Col>
                 <Col>
-                <h4> 
+                <Link to="AlbumPage">
                   {this.props.name}
-                </h4>
+                </Link>
                 <h5> 
                   {this.props.artist}
                 </h5>
