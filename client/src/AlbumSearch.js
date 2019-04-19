@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 // import logo from './logo.svg';
 import './App.css';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import {Modal, Button } from 'react-bootstrap';
 // import App from './App'
 
 
@@ -10,14 +11,26 @@ import { Link } from 'react-router-dom'
 class AlbumSearch extends Component {
   constructor(props) {
     super(props)
-    this.state = { name: "", artist: "", results: [] }
+    this.state = { name: "", artist: "", results: [], show: false, }
     this.handleAlbumSearch = this.handleAlbumSearch.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.searchDB = this.searchDB.bind(this);
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+
+
   }
 
+  handleClose(obj) {
+    this.setState({ show: false });
+    this.props.history.push(obj);
+  }
 
-  searchDB(mbid, albumName) {
+  handleShow() {
+    this.setState({ show: true });
+  }
+
+  searchDB(mbid, albumName, resObj) {
     let paramObj = {};
     if (mbid) {
       paramObj = {
@@ -35,6 +48,8 @@ class AlbumSearch extends Component {
           console.log('albums found, ready to vote?');
         } else {
           console.log('album not found, ')
+          this.handleShow();
+          //sleep(1000);
         }
       } else {
         console.log('failure');
@@ -79,18 +94,19 @@ class AlbumSearch extends Component {
           console.log(response.data);
           if (paramObj['method'] === "album.getinfo") {
             this.setState({
-              results: [<li><Link to={{
-                pathname: "/album/" + response.data.album.name,
-                state: response.data.album,
-                username: this.props.username
-              }} onClick={() => this.searchDB(response.data.album.mbid)}>{response.data.album.name}
+              results: [<li><Link onClick={() => this.searchDB(response.data.album.mbid, response.data.album.name,
+                {
+                  pathname: "/album/" + response.data.album.name,
+                  state: response.data.album,
+                  username: this.props.username
+                })}>{response.data.album.name}
               </Link></li>]
             });
           } else if (paramObj['method'] === "artist.gettopalbums") {
             this.setState({
               results: response.data.topalbums.album.map(
                 item => <li><Link to={{
-                  pathname: "/album/" + item['name'],
+                  //pathname: "/album/" + item['name'],
                   state: item,
                   username: this.props.username
                 }} onClick={() => this.searchDB(item.mbid, item.name)}>{item['name']}
@@ -101,7 +117,7 @@ class AlbumSearch extends Component {
             this.setState({
               results: response.data.results.albummatches.album.map(
                 item => <li><Link to={{
-                  pathname: "/album/" + item['name'],
+                  //pathname: "/album/" + item['name'],
                   state: item,
                   username: this.props.username
                 }} onClick={() => this.searchDB(item.mbid, item.name)}>{item['name']}
@@ -119,6 +135,7 @@ class AlbumSearch extends Component {
 
   render() {
     return (
+      <>
       <div>
         <form onSubmit={(event) => this.handleAlbumSearch(event, this.state.name, this.state.artist)}>
           <div class="form-group">
@@ -134,6 +151,21 @@ class AlbumSearch extends Component {
         </form>
         <ul>{this.state.results}</ul>
       </div>
+      <Modal show={this.state.show} onHide={this.handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>Modal heading</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={this.handleClose}>
+          Close
+        </Button>
+        <Button variant="primary" onClick={this.handleClose}>
+          Save Changes
+        </Button>
+      </Modal.Footer>
+    </Modal>
+    </>
     );
   }
 
