@@ -16,12 +16,12 @@ class Navbar extends Component {
           <div class="navbar-nav">
             <li class="nav-item">
               {!this.props.component.state.loggedIn ?
-                <a class="nav-item nav-link" href="/" onClick={(e) => this.props.renderLogin(e)}>Login</a>
+                <a class="nav-item nav-link" href="/" onClick={(e) => this.props.renderLogin(e)}>Log In</a>
                 : null}
             </li>
             <li class="nav-item">
               {!this.props.component.state.loggedIn ?
-                <a class="nav-item nav-link" href="/" onClick={(e) => this.props.renderRegister(e)}>Register</a>
+                <a class="nav-item nav-link" href="/" onClick={(e) => this.props.renderRegister(e)}>Sign Up</a>
                 : null}
             </li>
             <li class="nav-item">

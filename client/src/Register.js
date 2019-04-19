@@ -38,7 +38,8 @@ class Register extends Component {
             console.log('successful signup')
             this.props.updateUser({
               loggedIn: true,
-              username: response.data.username
+              username: response.data.username,
+              register: false
             })
           } else if (!response.data.registration) {
             console.log('username already taken')
@@ -58,16 +59,12 @@ class Register extends Component {
         <div className="form-group">
           <h1>Register</h1>
           <label>
-            Username:
-          <input type="text" name="name" required value={this.state.name} onChange={this.handleInputChange} />
-            Email:
-          <input type="email" name="email" required value={this.state.email} onChange={this.handleInputChange} />
-            Password:
-          <input type="password" name="pass" required value={this.state.pass} onChange={this.handleInputChange} />
-            Confirm Password:
-          <input type="password" name="confirmPass" required value={this.state.confirmPass} onChange={this.handleInputChange} />
+            <input type="text" name="name" placeholder="Username" required value={this.state.name} onChange={this.handleInputChange} />
+            <input type="email" name="email" placeholder="Email" required value={this.state.email} onChange={this.handleInputChange} />
+            <input type="password" name="pass" placeholder="Password" required value={this.state.pass} onChange={this.handleInputChange} />
+            <input type="password" name="confirmPass" placeholder="Confirm Password" required value={this.state.confirmPass} onChange={this.handleInputChange} />
           </label>
-          <input type="submit" value="Submit" />
+          <input type="submit" value="Sign Up" />
         </div>
       </form>
     );
