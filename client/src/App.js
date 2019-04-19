@@ -14,7 +14,7 @@ class App extends Component {
     this.state = {
       loggedIn: false,
       username: null,
-      login: true,
+      login: false,
       register: false
     }
 
@@ -51,7 +51,7 @@ class App extends Component {
           return {
             loggedIn: false,
             username: null,
-            login: true,
+            login: false,
             register: false
           };
         });
@@ -89,17 +89,28 @@ class App extends Component {
   render() {
     console.log(this.state.username)
     if (this.state.readyToRender) {
-      return (
-        <div class="container">
-          <Navbar logout={this.logout.bind(this)} renderRegister={this.renderRegister.bind(this)} renderLogin={this.renderLogin.bind(this)} component={this} />
-          {this.state.loggedIn ? (<div class="container"><Home username={this.state.username} /></div>) : (
-            <div class="container">
-              {this.state.register ? <Register updateUser={this.updateUser} /> : null}
-              {this.state.login ? <Login updateUser={this.updateUser} /> : null}
-            </div>
-          )}
-        </div>
-      );
+      if (this.state.login) {
+        return (
+          <div class="container">
+            <Navbar logout={this.logout.bind(this)} renderRegister={this.renderRegister.bind(this)} renderLogin={this.renderLogin.bind(this)} component={this} />
+            <div class="container"><Login updateUser={this.updateUser} /></div>
+          </div>
+        );
+      } else if (this.state.register) {
+        return (
+          <div class="container">
+            <Navbar logout={this.logout.bind(this)} renderRegister={this.renderRegister.bind(this)} renderLogin={this.renderLogin.bind(this)} component={this} />
+            <div class="container"><Register updateUser={this.updateUser} /></div>
+          </div>
+        );
+      } else {
+        return (
+          <div class="container">
+            <Navbar logout={this.logout.bind(this)} renderRegister={this.renderRegister.bind(this)} renderLogin={this.renderLogin.bind(this)} component={this} />
+            <div class="container"><Home username={this.state.username} /></div>
+          </div>
+        );
+      }
     }
     else {
       return (
