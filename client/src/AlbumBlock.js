@@ -3,58 +3,44 @@ import { Image,Button,Container,Row,Col } from 'react-bootstrap';
 // import logo from './logo.svg';
 import './App.css';
 // import axios from 'axios';
-
-
+import { Link } from 'react-router-dom';
 
 class AlbumBlock extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-        name: "" , artist: "", img: ""
-    };
-    this.selectImage = this.selectImage.bind(this);
-  };
 
-  
-    selectImage(mbid, name){
+  render() {
+    console.log(this.state)
+    return (  	
+      <Container fluid>
+          <Row>
+              <Col xs>
+              <Image src={this.props.image} thumbnail/>
+              </Col>
+              <Col>
+              <h4>
+                <Link to="AlbumPage">
+                  {this.props.name}
+                </Link>
+              </h4>
+              <h5> 
+                {this.props.artist}
+              </h5>
+              </Col>
+          </Row>
+          <Row>
+              <Col xs={{ offset: 2 }}>
 
-    }
+                  <Button variant="success" size="sm"> Upvote </Button>
 
+                  <Button variant="danger" size="sm">Downvote</Button>
 
+                  <h5> {this.props.vote} </h5>
 
-    componentDidMount(){
-      
-
-    }
-
-
-    render() {
-      console.log(this.state)
-      return (  	
-        <Container fluid>
-            <Row>
-                <Col xs>
-                <Image src={this.state.img}/>
-                </Col>
-                <Col>
-                <h4> 
-                  {this.state.name}
-                </h4>
-                <h5> 
-                  {this.state.artist}
-                </h5>
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                <Button variant="success">Upvote</Button>
-                <Button variant="danger">Downvote</Button>
-                </Col>
-            </Row>
-        </Container>
-      );
-    }
+              </Col>
+          </Row>
+      </Container>
+    );
   }
-  
-  export default AlbumBlock;
+}
+
+export default AlbumBlock; 
