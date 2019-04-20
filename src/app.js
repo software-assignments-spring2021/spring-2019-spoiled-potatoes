@@ -251,4 +251,20 @@ app.get('/get_random', (req, res) => {
   });
 });
 
+// app.get('/get_most_popular', (req, res) => {
+
+// });
+
+// Gets most recently added albums
+app.get('/get_last_added', (req, res) => {
+  Album.find().sort({ timestamp: -1 }).limit(listMax).exec((err, docs) => {
+    if (!err) {
+      res.send(docs);
+    } else {
+      res.status(400);
+      res.send();
+    }
+  });
+});
+
 server.listen(process.env.PORT || 3001);
