@@ -22,6 +22,7 @@ const albumSchema = new mongoose.Schema({
     size: String,
   }],
   tags: [String],
+  timestamp: { type: Date, default: Date.now },
 });
 albumSchema.plugin(random);
 
