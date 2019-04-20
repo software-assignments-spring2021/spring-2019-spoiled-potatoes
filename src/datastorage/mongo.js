@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
 const fs = require('fs');
 const path = require('path');
+const random = require('mongoose-simple-random');
 
 const userSchema = new mongoose.Schema({
   username: String,
@@ -13,6 +14,7 @@ mongoose.model('User', userSchema);
 
 const albumSchema = new mongoose.Schema({
   name: String,
+  username: String,
   artist: String,
   mbid: String,
   image: [{
@@ -21,6 +23,7 @@ const albumSchema = new mongoose.Schema({
   }],
   tags: [String],
 });
+albumSchema.plugin(random);
 
 mongoose.model('Album', albumSchema);
 
