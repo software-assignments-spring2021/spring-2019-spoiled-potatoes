@@ -161,7 +161,18 @@ app.post('/vote', (req, res) => {
     if (err) {
       res.send({ success: false, message: 'Vote failed' });
     } else {
-      res.send({ success: true, message: 'Vote registered' });
+      Album.findOneAndUpdate({ _id: albumObjectId },
+        { $inc: { votesCount: 1, reactionsCount: 1, rawScore: sentiment } },
+        { new: true }).exec((error, doc) => {
+        if (!error) {
+          // eslint-disable-next-line no-param-reassign
+          doc.score = doc.rawScore / doc.votesCount;
+          doc.save();
+          res.send({ success: true, message: 'Vote registered' });
+        } else {
+          res.send({ success: false, message: 'Vote failed' });
+        }
+      });
     }
   });
 });
@@ -197,7 +208,14 @@ app.post('/comment', (req, res) => {
     if (err) {
       res.send({ success: false, message: 'Comment failed' });
     } else {
-      res.send({ success: true, message: 'Comment registered' });
+      Album.findOneAndUpdate({ _id: albumObjectId },
+        { $inc: { commentsCount: 1, reactionsCount: 1 } }).exec((error) => {
+        if (!error) {
+          res.send({ success: true, message: 'Comment registered' });
+        } else {
+          res.send({ success: false, message: 'Comment failed' });
+        }
+      });
     }
   });
 });
@@ -253,13 +271,33 @@ app.get('/get_random', (req, res) => {
   });
 });
 
-// app.get('/get_most_popular', (req, res) => {
-
-// });
+// Gets most popular albums, defined as albums with most reactions (comments + votes)
+app.get('/get_most_popular', (req, res) => {
+  Album.find().sort({ reactionsCount: -1 }).limit(listMax).exec((err, docs) => {
+    if (!err) {
+      res.send(docs);
+    } else {
+      res.status(400);
+      res.send();
+    }
+  });
+});
 
 // Gets most recently added albums
 app.get('/get_last_added', (req, res) => {
   Album.find().sort({ timestamp: -1 }).limit(listMax).exec((err, docs) => {
+    if (!err) {
+      res.send(docs);
+    } else {
+      res.status(400);
+      res.send();
+    }
+  });
+});
+
+// Gets most liked albums (best scores)
+app.get('/get_most_liked', (req, res) => {
+  Album.find().sort({ score: -1, rawScore: -1 }).limit(listMax).exec((err, docs) => {
     if (!err) {
       res.send(docs);
     } else {

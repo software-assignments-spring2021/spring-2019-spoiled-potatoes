@@ -7,6 +7,7 @@ const random = require('mongoose-simple-random');
 const userSchema = new mongoose.Schema({
   username: String,
   email: String,
+  timeSignedUp: { type: Date, default: Date.now },
 });
 userSchema.plugin(passportLocalMongoose);
 
@@ -23,6 +24,11 @@ const albumSchema = new mongoose.Schema({
   }],
   tags: [String],
   timestamp: { type: Date, default: Date.now },
+  commentsCount: { type: Number, default: 0 },
+  votesCount: { type: Number, default: 0 },
+  reactionsCount: { type: Number, default: 0 },
+  rawScore: { type: Number, default: 0 },
+  score: Number,
 });
 albumSchema.plugin(random);
 
