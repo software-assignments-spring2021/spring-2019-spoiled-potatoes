@@ -13,10 +13,12 @@
     "crypto-js": "^3.1.9-1",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
+    "history": "^4.9.0",
     "mongoose": "^5.4.16",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^5.0.1",
+    "prop-types": "^15.7.2",
     "react-bootstrap": "^1.0.0-beta.6"
   },
   "devDependencies": {
