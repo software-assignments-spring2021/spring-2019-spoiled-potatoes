@@ -3,16 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import AlbumPage from './AlbumPage'
+//import history from './history'
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
+//import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
+import { Route,  BrowserRouter as Router } from 'react-router-dom';
+
 
 const routing = (
     <Router>
-        <Switch>
           <Route exact path="/" component={App} />
           <Route exact path="/album/:id" component={AlbumPage} />
-        </Switch>
     </Router>
   )
 
