@@ -21,7 +21,7 @@ class lastfmIter {
     return (this.res + this.chunk <= total);
   }
   hasPrev(){
-    return (this.index - 1 > 1);
+    return (this.index - 1 > 0);
   }
 
   next(){
@@ -36,10 +36,9 @@ class lastfmIter {
 
   prev(){
     this.res -= this.chunk;
-    this.component.state.searchParams['page'] = this.index--;
-    this.buildList(this.component.state.searchParams);
-  }
-
+    this.component.state.searchParams['page'] = this.index - 1;
+    this.index--;
+    this.component.buildList(this.component.state.searchParams);  }
 }
 
 class AlbumSearch extends Component {
@@ -123,7 +122,8 @@ class AlbumSearch extends Component {
         if (response.status === 200) {
           //response.
           // update App.js state
-          this.setState({currTotal: parseInt(response.data.results['opensearch:totalResults'])});
+          console.log(response.data);
+          
           if (paramObj['method'] === "album.getinfo") {
             this.setState({
               results: [<li onClick={() => this.searchDB(response.data.album.mbid, response.data.album.name,
@@ -136,6 +136,7 @@ class AlbumSearch extends Component {
               ></li>]
             });
           } else if (paramObj['method'] === "artist.gettopalbums") {
+            this.setState({currTotal: parseInt(response.data.topalbums['@attr'].totalPages)});
             this.setState({
               results: response.data.topalbums.album.map(
                 item => <li onClick={() => this.searchDB(item.mbid, item.name, {
@@ -197,10 +198,16 @@ class AlbumSearch extends Component {
     this.buildList(paramObj);
   }
 
-  printTotal(e){
+  nextList(e){
     e.preventDefault();
     console.log(this.state.currTotal)
     this.lastfmIter.next();
+  }
+
+  prevList(e){
+    e.preventDefault();
+    console.log(this.state.currTotal)
+    this.lastfmIter.prev();
   }
 
   render() {
@@ -222,7 +229,8 @@ class AlbumSearch extends Component {
           </div>
         </form>
         <ul>{this.state.results}</ul>
-        {this.lastfmIter.hasNext(this.state.currTotal) ? <button onClick={(e) => this.printTotal(e)}>test</button> : null}
+        {this.lastfmIter.hasPrev() ? <button onClick={(e) => this.prevList(e)}>prev</button> : null}
+        {this.lastfmIter.hasNext(this.state.currTotal) ? <button onClick={(e) => this.nextList(e)}>next</button> : null}
         
       </div>
       <Modal show={this.state.show} onHide={this.handleClose}>
