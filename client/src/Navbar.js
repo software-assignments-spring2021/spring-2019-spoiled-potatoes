@@ -27,6 +27,11 @@ class Navbar extends Component {
             </li>
             <li class="nav-item">
               {this.props.component.state.loggedIn ?
+                <a class="nav-item nav-link" href="/">Your Profile</a>
+                : null}
+            </li>
+            <li class="nav-item">
+              {this.props.component.state.loggedIn ?
                 <a class="nav-item nav-link" href="/" onClick={(e) => this.props.logout(e)}>Logout</a>
                 : null}
             </li>
