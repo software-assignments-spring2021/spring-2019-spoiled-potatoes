@@ -9,7 +9,37 @@ import {
   withRouter
 } from 'react-router-dom';
 
+class lastfmIter {
+  constructor(chunk, component){
+    this.component = component;
+    this.chunk = chunk;
+    this.res = 0;
+    this.index = 1;
+  }
 
+  hasNext(total){
+    return (this.res + this.chunk <= total);
+  }
+  hasPrev(){
+    return (this.index - 1 > 0);
+  }
+
+  next(){
+    console.log('in next');
+    console.log(this.component.state.searchParams);
+    this.res += this.chunk;
+    this.component.state.searchParams['page'] = this.index + 1;//state.searchParams['page'] = this.index++;
+    console.log(this.component.state.searchParams);
+    this.index++;
+    this.component.buildList(this.component.state.searchParams);
+  }
+
+  prev(){
+    this.res -= this.chunk;
+    this.component.state.searchParams['page'] = this.index - 1;
+    this.index--;
+    this.component.buildList(this.component.state.searchParams);  }
+}
 
 class AlbumSearch extends Component {
   static propTypes = {
@@ -18,13 +48,15 @@ class AlbumSearch extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { name: "", artist: "", results: [], show: false, add: {}, modalFill:"", }
+    this.state = { name: "", artist: "", results: [], show: false, add: {}, modalFill:"", searchParams: {}, currTotal: 0, }
     this.handleAlbumSearch = this.handleAlbumSearch.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.buildList = this.buildList.bind(this);
     this.searchDB = this.searchDB.bind(this);
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.lastfmIter = new lastfmIter(50, this);
   }
 
   handleClose() {
@@ -81,41 +113,17 @@ class AlbumSearch extends Component {
     });
   }
 
-
-  handleAlbumSearch(event, inputName, inputArtist) {
-    event.preventDefault();
-
-    let paramObj = {};
-
-    if (inputName && inputArtist) {
-      paramObj = {
-        method: "album.getinfo",
-        artist: inputArtist,
-        album: inputName,
-        format: "json",
-      }
-    } else if (inputArtist) {
-      paramObj = {
-        method: "artist.gettopalbums",
-        artist: inputArtist,
-        format: "json",
-      }
-    } else {
-      paramObj = {
-        method: "album.search",
-        album: inputName,
-        format: "json",
-      }
-    }
-    console.log(paramObj);
+  buildList(paramObj){
     axios
       .get('/get_lastfm', {
         params: paramObj
       })
       .then(response => {
         if (response.status === 200) {
+          //response.
           // update App.js state
           console.log(response.data);
+          
           if (paramObj['method'] === "album.getinfo") {
             this.setState({
               results: [<li onClick={() => this.searchDB(response.data.album.mbid, response.data.album.name,
@@ -128,6 +136,7 @@ class AlbumSearch extends Component {
               ></li>]
             });
           } else if (paramObj['method'] === "artist.gettopalbums") {
+            this.setState({currTotal: parseInt(response.data.topalbums['@attr'].totalPages)});
             this.setState({
               results: response.data.topalbums.album.map(
                 item => <li onClick={() => this.searchDB(item.mbid, item.name, {
@@ -159,7 +168,51 @@ class AlbumSearch extends Component {
       })
   }
 
+  handleAlbumSearch(event, inputName, inputArtist) {
+    event.preventDefault();
+
+    let paramObj = {};
+
+    if (inputName && inputArtist) {
+      paramObj = {
+        method: "album.getinfo",
+        artist: inputArtist,
+        album: inputName,
+        format: "json",
+      }
+    } else if (inputArtist) {
+      paramObj = {
+        method: "artist.gettopalbums",
+        artist: inputArtist,
+        format: "json",
+      }
+    } else {
+      paramObj = {
+        method: "album.search",
+        album: inputName,
+        format: "json",
+      }
+    }
+    console.log(paramObj);
+    this.setState({searchParams: paramObj});
+    this.buildList(paramObj);
+  }
+
+  nextList(e){
+    e.preventDefault();
+    console.log(this.state.currTotal)
+    this.lastfmIter.next();
+  }
+
+  prevList(e){
+    e.preventDefault();
+    console.log(this.state.currTotal)
+    this.lastfmIter.prev();
+  }
+
   render() {
+    //const test = lastfmIter(50,this);
+    
     return (
       <>
       <div>
@@ -176,6 +229,9 @@ class AlbumSearch extends Component {
           </div>
         </form>
         <ul>{this.state.results}</ul>
+        {this.lastfmIter.hasPrev() ? <button onClick={(e) => this.prevList(e)}>prev</button> : null}
+        {this.lastfmIter.hasNext(this.state.currTotal) ? <button onClick={(e) => this.nextList(e)}>next</button> : null}
+        
       </div>
       <Modal show={this.state.show} onHide={this.handleClose}>
       <Modal.Header closeButton>
