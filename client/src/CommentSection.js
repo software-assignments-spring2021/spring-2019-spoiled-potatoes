@@ -14,13 +14,14 @@ class CommentSection extends Component {
         this.state = {
           comments:[],
         }
-        this.componentWillMount = this.componentWillMount.bind(this)
+        this.componentWillMount = this.componentWillMount.bind(this);
       }
 
+
     componentWillMount(){
-        console.log('album query: ', this.props.albumQuery);
+        console.log('album query: ', this.props.album);
         axios.get('/get_comments', {
-            params: this.props.albumQuery
+            params: this.props.album
           }).then(response => {
               console.log('component will mount response');
               console.log(response.data.docs);
@@ -49,15 +50,17 @@ class CommentSection extends Component {
             </Row>
         </Container>
         
-
         :
         
         <div className="album">
         <Jumbotron fluid>No Comments</Jumbotron>
         </div>
         }
-
-        <AddComment username={this.props.username}></AddComment>
+        {this.props.username ? 
+          <AddComment parent={this} album={this.props.album} username={this.props.username}></AddComment>
+          :
+          null
+        }
     </div>
       );
     }

@@ -1,29 +1,49 @@
-import React, { Component } from 'react';
+import React, { Component} from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 // import logo from './logo.svg';
 import './App.css';
-import { Link } from 'react-router-dom';
 import {Modal, Button } from 'react-bootstrap';
 // import App from './App'
+import {
+  withRouter
+} from 'react-router-dom';
 
 
 
 class AlbumSearch extends Component {
+  static propTypes = {
+    history: PropTypes.object.isRequired
+  }
+
   constructor(props) {
     super(props)
-    this.state = { name: "", artist: "", results: [], show: false, }
+    this.state = { name: "", artist: "", results: [], show: false, add: {}, modalFill:"", }
     this.handleAlbumSearch = this.handleAlbumSearch.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.searchDB = this.searchDB.bind(this);
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
-
-
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleClose(obj) {
+  handleClose() {
+    console.log(this);
     this.setState({ show: false });
-    this.props.history.push(obj);
+  }
+
+  handleSubmit(){
+    axios.post('/add_album', {
+      name: this.state.add.state.name, 
+      artist: this.state.add.state.artist, 
+      mbid: this.state.add.state.mbid, 
+      tags: this.state.add.state.tags, 
+      image: this.state.add.state.image,
+    }).then(() => {
+        this.handleClose();
+        this.props.history.push(this.state.add);
+      }
+    );
   }
 
   handleShow() {
@@ -31,6 +51,7 @@ class AlbumSearch extends Component {
   }
 
   searchDB(mbid, albumName, resObj) {
+    //const self = this;
     let paramObj = {};
     if (mbid) {
       paramObj = {
@@ -45,11 +66,14 @@ class AlbumSearch extends Component {
     axios.get('/search_album', { params: paramObj }).then(response => {
       if (response.status) {
         if (response.data.docs.length) {
-          console.log('albums found, ready to vote?');
+          //console.log('albums found, ready to vote?');
+          //console.log(response.data.docs);
+          console.log(resObj)
+          resObj.state['db_id'] = response.data.docs[0]._id;
+          this.props.history.push(resObj);
         } else {
-          console.log('album not found, ')
+          this.setState({add: resObj, modalFill: resObj.state.name})
           this.handleShow();
-          //sleep(1000);
         }
       } else {
         console.log('failure');
@@ -94,34 +118,36 @@ class AlbumSearch extends Component {
           console.log(response.data);
           if (paramObj['method'] === "album.getinfo") {
             this.setState({
-              results: [<li><Link onClick={() => this.searchDB(response.data.album.mbid, response.data.album.name,
+              results: [<li onClick={() => this.searchDB(response.data.album.mbid, response.data.album.name,
                 {
                   pathname: "/album/" + response.data.album.name,
                   state: response.data.album,
                   username: this.props.username
-                })}>{response.data.album.name}
-              </Link></li>]
+                }
+                )}>{response.data.album.name}
+              ></li>]
             });
           } else if (paramObj['method'] === "artist.gettopalbums") {
             this.setState({
               results: response.data.topalbums.album.map(
-                item => <li><Link to={{
-                  //pathname: "/album/" + item['name'],
+                item => <li onClick={() => this.searchDB(item.mbid, item.name, {
+                  pathname: "/album/" + item['name'],
                   state: item,
                   username: this.props.username
-                }} onClick={() => this.searchDB(item.mbid, item.name)}>{item['name']}
-                </Link></li>
+                }
+                )}>{item['name']}
+                </li>
               )
             });
           } else {
             this.setState({
               results: response.data.results.albummatches.album.map(
-                item => <li><Link to={{
-                  //pathname: "/album/" + item['name'],
+                item => <li onClick={() => this.searchDB(item.mbid, item.name,{
+                  pathname: "/album/" + item['name'],
                   state: item,
                   username: this.props.username
-                }} onClick={() => this.searchDB(item.mbid, item.name)}>{item['name']}
-                </Link></li>
+                })} >{item['name']}
+                </li>
               )
             });
           }
@@ -153,18 +179,24 @@ class AlbumSearch extends Component {
       </div>
       <Modal show={this.state.show} onHide={this.handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Start the discussion about {this.state.modalFill}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+      <Modal.Body>Looks like {this.state.modalFill} hasn't been reviewed yet. {this.props.username ? "Hit 'submit' to add it!":"Register or Log in to add reviews!"}</Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={this.handleClose}>
+          <Button variant="secondary" onClick={this.handleClose}>
           Close
-        </Button>
-        <Button variant="primary" onClick={this.handleClose}>
-          Save Changes
-        </Button>
+          </Button>
+          {
+            this.props.username ? 
+            <Button variant="primary" onClick={this.handleSubmit}>
+            Submit
+            </Button>
+            :
+            null
+          }
+          
       </Modal.Footer>
-    </Modal>
+      </Modal>
     </>
     );
   }
@@ -181,4 +213,4 @@ class AlbumSearch extends Component {
   }
 }
 
-export default AlbumSearch;
+export default withRouter(AlbumSearch);
