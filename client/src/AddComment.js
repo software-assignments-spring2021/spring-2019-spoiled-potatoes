@@ -23,7 +23,8 @@ class Login extends Component {
     axios.post('/comment',{username:this.props.username, albumObjectId: this.props.album, text:this.state.text,}).then( response => {
       console.log(response.data);
       this.setState({text: ""});
-      this.props.parent.forceUpdate();
+      //this.props.parent.forceUpdate();
+      window.location.reload();
     });
   }
 
