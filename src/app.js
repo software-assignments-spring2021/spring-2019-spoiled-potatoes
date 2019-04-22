@@ -215,6 +215,7 @@ app.get('/get_lastfm', (req, res) => {
       params: paramsObj,
     })
     .then((response) => {
+      console.log(response.data);
       if (response.status === 200) {
         res.send(response.data);
       } else {

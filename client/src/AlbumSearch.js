@@ -5,15 +5,44 @@ import './App.css';
 import { Link } from 'react-router-dom'
 // import App from './App'
 
+class lastfmIter {
+  constructor(chunk, component){
+    this.component = component;
+    this.chunk = chunk;
+    this.res = 0;
+    this.index = 1;
+  }
 
+  hasNext(total){
+    return (this.res + this.chunk <= total);
+  }
+  hasPrev(total){
+    return (this.index - 1 > 1);
+  }
+
+  next(){
+    this.res += this.chunk;
+    this.component.state.searchParams['page'] = this.index++;
+    this.buildList(this.component.state.searchParams);
+  }
+
+  prev(){
+    this.res -= this.chunk;
+    this.component.state.searchParams['page'] = this.index--;
+    this.buildList(this.component.state.searchParams);
+  }
+
+}
 
 class AlbumSearch extends Component {
   constructor(props) {
     super(props)
-    this.state = { name: "", artist: "", results: [] }
+    this.state = { name: "", artist: "", results: [], searchParams: {} }
     this.handleAlbumSearch = this.handleAlbumSearch.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.searchDB = this.searchDB.bind(this);
+    this.buildList = this.buildList.bind(this);
+    this.lastfmIter = lastfmIter(50, this);
   }
 
 
@@ -42,39 +71,14 @@ class AlbumSearch extends Component {
     });
   }
 
-
-  handleAlbumSearch(event, inputName, inputArtist) {
-    event.preventDefault();
-
-    let paramObj = {};
-
-    if (inputName && inputArtist) {
-      paramObj = {
-        method: "album.getinfo",
-        artist: inputArtist,
-        album: inputName,
-        format: "json",
-      }
-    } else if (inputArtist) {
-      paramObj = {
-        method: "artist.gettopalbums",
-        artist: inputArtist,
-        format: "json",
-      }
-    } else {
-      paramObj = {
-        method: "album.search",
-        album: inputName,
-        format: "json",
-      }
-    }
-    console.log(paramObj);
+  buildList(paramObj){
     axios
       .get('/get_lastfm', {
         params: paramObj
       })
       .then(response => {
         if (response.status === 200) {
+          response.
           // update App.js state
           console.log(response.data);
           if (paramObj['method'] === "album.getinfo") {
@@ -115,6 +119,36 @@ class AlbumSearch extends Component {
         console.log(error);
 
       })
+  }
+
+  handleAlbumSearch(event, inputName, inputArtist) {
+    event.preventDefault();
+
+    let paramObj = {};
+
+    if (inputName && inputArtist) {
+      paramObj = {
+        method: "album.getinfo",
+        artist: inputArtist,
+        album: inputName,
+        format: "json",
+      }
+    } else if (inputArtist) {
+      paramObj = {
+        method: "artist.gettopalbums",
+        artist: inputArtist,
+        format: "json",
+      }
+    } else {
+      paramObj = {
+        method: "album.search",
+        album: inputName,
+        format: "json",
+      }
+    }
+    console.log(paramObj);
+    this.setState({searchParams: paramObj});
+    this.buildList(paramObj);
   }
 
   render() {
