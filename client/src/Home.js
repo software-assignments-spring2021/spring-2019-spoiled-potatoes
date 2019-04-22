@@ -6,10 +6,13 @@ import AlbumSearch from './AlbumSearch';
 import AlbumListComponent from './AlbumListComponent'
 
 const albums = [
-    {name:"Name", artist:"Artist", image:"https://static1.squarespace.com/static/5755a35501dbae3c6d1ba03e/t/5aa962b371c10bfea1ee9dca/1521050296074/Awaken_My_Love.jpg/120x120"},
-    {name:"Name", artist:"Artist", image:"https://static1.squarespace.com/static/5755a35501dbae3c6d1ba03e/t/5aa962b371c10bfea1ee9dca/1521050296074/Awaken_My_Love.jpg/120x120"},
-    {name:"Name", artist:"Artist", image:"https://static1.squarespace.com/static/5755a35501dbae3c6d1ba03e/t/5aa962b371c10bfea1ee9dca/1521050296074/Awaken_My_Love.jpg/120x120"},
-   ]
+    {name:"Name", artist:"Artist", image:[{'#text': "0", size: "small"},
+                                          {'#text': "0", size: "medium"},
+                                          {'#text': "0", size: "large"},
+                                          {'#text': "https://static1.squarespace.com/static/5755a35501dbae3c6d1ba03e/t/5aa962b371c10bfea1ee9dca/1521050296074/Awaken_My_Love.jpg/120x120", size: "extra large"},
+                                          ]
+    }
+]
 
 class Home extends Component {
 
