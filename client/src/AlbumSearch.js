@@ -16,14 +16,18 @@ class lastfmIter {
   hasNext(total){
     return (this.res + this.chunk <= total);
   }
-  hasPrev(total){
+  hasPrev(){
     return (this.index - 1 > 1);
   }
 
   next(){
+    console.log('in next');
+    console.log(this.component.state.searchParams);
     this.res += this.chunk;
-    this.component.state.searchParams['page'] = this.index++;
-    this.buildList(this.component.state.searchParams);
+    this.component.state.searchParams['page'] = this.index + 1;//state.searchParams['page'] = this.index++;
+    console.log(this.component.state.searchParams);
+    this.index++;
+    this.component.buildList(this.component.state.searchParams);
   }
 
   prev(){
@@ -37,12 +41,12 @@ class lastfmIter {
 class AlbumSearch extends Component {
   constructor(props) {
     super(props)
-    this.state = { name: "", artist: "", results: [], searchParams: {} }
+    this.state = { name: "", artist: "", results: [], searchParams: {}, currTotal: 0 }
     this.handleAlbumSearch = this.handleAlbumSearch.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.searchDB = this.searchDB.bind(this);
     this.buildList = this.buildList.bind(this);
-    this.lastfmIter = lastfmIter(50, this);
+    this.lastfmIter = new lastfmIter(50, this);
   }
 
 
@@ -78,9 +82,9 @@ class AlbumSearch extends Component {
       })
       .then(response => {
         if (response.status === 200) {
-          response.
+          //response.
           // update App.js state
-          console.log(response.data);
+          this.setState({currTotal: parseInt(response.data.results['opensearch:totalResults'])});
           if (paramObj['method'] === "album.getinfo") {
             this.setState({
               results: [<li><Link to={{
@@ -151,7 +155,15 @@ class AlbumSearch extends Component {
     this.buildList(paramObj);
   }
 
+  printTotal(e){
+    e.preventDefault();
+    console.log(this.state.currTotal)
+    this.lastfmIter.next();
+  }
+
   render() {
+    //const test = lastfmIter(50,this);
+    
     return (
       <div>
         <form onSubmit={(event) => this.handleAlbumSearch(event, this.state.name, this.state.artist)}>
@@ -167,6 +179,8 @@ class AlbumSearch extends Component {
           </div>
         </form>
         <ul>{this.state.results}</ul>
+        {this.lastfmIter.hasNext(this.state.currTotal) ? <button onClick={(e) => this.printTotal(e)}>test</button> : null}
+        
       </div>
     );
   }
