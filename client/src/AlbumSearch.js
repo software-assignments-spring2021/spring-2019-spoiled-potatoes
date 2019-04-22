@@ -149,6 +149,7 @@ class AlbumSearch extends Component {
               )
             });
           } else {
+            this.setState({currTotal: parseInt(response.data.results['opensearch:totalResults'])});
             this.setState({
               results: response.data.results.albummatches.album.map(
                 item => <li onClick={() => this.searchDB(item.mbid, item.name,{
@@ -212,7 +213,7 @@ class AlbumSearch extends Component {
 
   render() {
     //const test = lastfmIter(50,this);
-    
+    console.log(this.lastfmIter.hasNext(this.state.currTotal));
     return (
       <>
       <div>
