@@ -6,7 +6,7 @@ import './App.css';
 class Comment extends Component {
 
     render() {
-      console.log(this.props);
+      console.log(this.props.comment.timestamp.split(':'));
       return (  	
         <div className="album">
         <Container>
@@ -23,7 +23,7 @@ class Comment extends Component {
                 {this.props.comment.text}
                 </p>
                 </div>
-                <small>{this.props.comment.timestamp}</small>
+                <small>{this.props.comment.timestamp.split(':')[0].split('T')[0]} at {this.props.comment.timestamp.split(':')[0].split('T')[1]}:{this.props.comment.timestamp.split(':')[1]}</small>
             </Jumbotron>
             </Col>
             </Row>
