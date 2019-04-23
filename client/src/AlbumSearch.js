@@ -1,30 +1,30 @@
-import React, { Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 // import logo from './logo.svg';
 import './App.css';
-import {Modal, Button } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 // import App from './App'
 import {
   withRouter
 } from 'react-router-dom';
 
 class lastfmIter {
-  constructor(chunk, component){
+  constructor(chunk, component) {
     this.component = component;
     this.chunk = chunk;
     this.res = 0;
     this.index = 1;
   }
 
-  hasNext(total){
+  hasNext(total) {
     return (this.res + this.chunk <= total);
   }
-  hasPrev(){
+  hasPrev() {
     return (this.index - 1 > 0);
   }
 
-  next(){
+  next() {
     console.log('in next');
     console.log(this.component.state.searchParams);
     this.res += this.chunk;
@@ -34,11 +34,12 @@ class lastfmIter {
     this.component.buildList(this.component.state.searchParams);
   }
 
-  prev(){
+  prev() {
     this.res -= this.chunk;
     this.component.state.searchParams['page'] = this.index - 1;
     this.index--;
-    this.component.buildList(this.component.state.searchParams);  }
+    this.component.buildList(this.component.state.searchParams);
+  }
 }
 
 class AlbumSearch extends Component {
@@ -48,7 +49,7 @@ class AlbumSearch extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { name: "", artist: "", results: [], show: false, add: {}, modalFill:"", searchParams: {}, currTotal: 0, }
+    this.state = { name: "", artist: "", results: [], show: false, add: {}, modalFill: "", searchParams: {}, currTotal: 0, }
     this.handleAlbumSearch = this.handleAlbumSearch.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.buildList = this.buildList.bind(this);
@@ -64,17 +65,18 @@ class AlbumSearch extends Component {
     this.setState({ show: false });
   }
 
-  handleSubmit(){
+  handleSubmit() {
     axios.post('/add_album', {
-      name: this.state.add.state.name, 
-      artist: this.state.add.state.artist, 
-      mbid: this.state.add.state.mbid, 
-      tags: this.state.add.state.tags, 
+      name: this.state.add.state.name,
+      artist: this.state.add.state.artist,
+      mbid: this.state.add.state.mbid,
+      tags: this.state.add.state.tags,
       image: this.state.add.state.image,
+      username: this.props.username,
     }).then(() => {
-        this.handleClose();
-        this.props.history.push(this.state.add);
-      }
+      this.handleClose();
+      this.props.history.push(this.state.add);
+    }
     );
   }
 
@@ -104,7 +106,7 @@ class AlbumSearch extends Component {
           resObj.state['db_id'] = response.data.docs[0]._id;
           this.props.history.push(resObj);
         } else {
-          this.setState({add: resObj, modalFill: resObj.state.name})
+          this.setState({ add: resObj, modalFill: resObj.state.name })
           this.handleShow();
         }
       } else {
@@ -113,7 +115,7 @@ class AlbumSearch extends Component {
     });
   }
 
-  buildList(paramObj){
+  buildList(paramObj) {
     axios
       .get('/get_lastfm', {
         params: paramObj
@@ -123,7 +125,7 @@ class AlbumSearch extends Component {
           //response.
           // update App.js state
           console.log(response.data);
-          
+
           if (paramObj['method'] === "album.getinfo") {
             this.setState({
               results: [<li onClick={() => this.searchDB(response.data.album.mbid, response.data.album.name,
@@ -132,11 +134,11 @@ class AlbumSearch extends Component {
                   state: response.data.album,
                   username: this.props.username
                 }
-                )}>{response.data.album.name}
-              ></li>]
+              )}>{response.data.album.name}
+                ></li>]
             });
           } else if (paramObj['method'] === "artist.gettopalbums") {
-            this.setState({currTotal: parseInt(response.data.topalbums['@attr'].totalPages)});
+            this.setState({ currTotal: parseInt(response.data.topalbums['@attr'].totalPages) });
             this.setState({
               results: response.data.topalbums.album.map(
                 item => <li onClick={() => this.searchDB(item.mbid, item.name, {
@@ -151,7 +153,7 @@ class AlbumSearch extends Component {
           } else {
             this.setState({
               results: response.data.results.albummatches.album.map(
-                item => <li onClick={() => this.searchDB(item.mbid, item.name,{
+                item => <li onClick={() => this.searchDB(item.mbid, item.name, {
                   pathname: "/album/" + item['name'],
                   state: item,
                   username: this.props.username
@@ -194,17 +196,17 @@ class AlbumSearch extends Component {
       }
     }
     console.log(paramObj);
-    this.setState({searchParams: paramObj});
+    this.setState({ searchParams: paramObj });
     this.buildList(paramObj);
   }
 
-  nextList(e){
+  nextList(e) {
     e.preventDefault();
     console.log(this.state.currTotal)
     this.lastfmIter.next();
   }
 
-  prevList(e){
+  prevList(e) {
     e.preventDefault();
     console.log(this.state.currTotal)
     this.lastfmIter.prev();
@@ -212,48 +214,48 @@ class AlbumSearch extends Component {
 
   render() {
     //const test = lastfmIter(50,this);
-    
+
     return (
       <>
-      <div>
-        <form onSubmit={(event) => this.handleAlbumSearch(event, this.state.name, this.state.artist)}>
-          <div class="form-group">
-            <h1>Search for an album to start reviewing</h1>
-            <label>
-              Album Name:
+        <div>
+          <form onSubmit={(event) => this.handleAlbumSearch(event, this.state.name, this.state.artist)}>
+            <div class="form-group">
+              <h1>Search for an album to start reviewing</h1>
+              <label>
+                Album Name:
           <input type="text" name="name" value={this.state.name} onChange={this.handleInputChange} />
-              Artist:
+                Artist:
           <input type="text" name="artist" value={this.state.artist} onChange={this.handleInputChange} />
-            </label>
-            <input type="submit" disabled={!(this.state.name || this.state.artist)} value="Search" />
-          </div>
-        </form>
-        <ul>{this.state.results}</ul>
-        {this.lastfmIter.hasPrev() ? <button onClick={(e) => this.prevList(e)}>prev</button> : null}
-        {this.lastfmIter.hasNext(this.state.currTotal) ? <button onClick={(e) => this.nextList(e)}>next</button> : null}
-        
-      </div>
-      <Modal show={this.state.show} onHide={this.handleClose}>
-      <Modal.Header closeButton>
-          <Modal.Title>Start the discussion about {this.state.modalFill}</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>Looks like {this.state.modalFill} hasn't been reviewed yet. {this.props.username ? "Hit 'submit' to add it!":"Register or Log in to add reviews!"}</Modal.Body>
-      <Modal.Footer>
-          <Button variant="secondary" onClick={this.handleClose}>
-          Close
+              </label>
+              <input type="submit" disabled={!(this.state.name || this.state.artist)} value="Search" />
+            </div>
+          </form>
+          <ul>{this.state.results}</ul>
+          {this.lastfmIter.hasPrev() ? <button onClick={(e) => this.prevList(e)}>prev</button> : null}
+          {this.lastfmIter.hasNext(this.state.currTotal) ? <button onClick={(e) => this.nextList(e)}>next</button> : null}
+
+        </div>
+        <Modal show={this.state.show} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Start the discussion about {this.state.modalFill}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Looks like {this.state.modalFill} hasn't been reviewed yet. {this.props.username ? "Hit 'submit' to add it!" : "Register or Log in to add reviews!"}</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.handleClose}>
+              Close
           </Button>
-          {
-            this.props.username ? 
-            <Button variant="primary" onClick={this.handleSubmit}>
-            Submit
+            {
+              this.props.username ?
+                <Button variant="primary" onClick={this.handleSubmit}>
+                  Submit
             </Button>
-            :
-            null
-          }
-          
-      </Modal.Footer>
-      </Modal>
-    </>
+                :
+                null
+            }
+
+          </Modal.Footer>
+        </Modal>
+      </>
     );
   }
 
