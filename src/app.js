@@ -33,10 +33,13 @@ const bodyParser = require('body-parser');
 const axios = require('axios');
 const fs = require('fs');
 
+const { computeTrending, getTrendingList } = require('./computeTrending.js');
+
 const fn = path.join(__dirname, 'config.json');
 const data = fs.readFileSync(fn);
 const conf = JSON.parse(data);
 
+const listMax = 10;
 
 passport.use(new LocalStrategy(User.authenticate()));
 
@@ -65,6 +68,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
+
+computeTrending(Vote, Comment);
 
 app.get('/user', (req, res) => {
   console.log('USER');
@@ -114,13 +119,14 @@ app.post('/login', (req, res) => {
   passport.authenticate('local', { successRedirect: '/home', failureRedirect: '/' })(req, res);
 });
 
+// Adds album to database
 app.post('/add_album', (req, res) => {
   const {
-    name, artist, mbid, tags, image,
+    name, username, artist, mbid, tags, image,
   } = req.body;
 
   const newAlbum = new Album({
-    name, artist, mbid, tags, image,
+    name, username, artist, mbid, tags, image,
   });
 
   newAlbum.save((err) => {
@@ -132,6 +138,7 @@ app.post('/add_album', (req, res) => {
   });
 });
 
+// Searches albums in database based on query
 app.get('/search_album', (req, res) => {
   console.log('in app.get/album_search');
   console.log(req.query);
@@ -144,6 +151,7 @@ app.get('/search_album', (req, res) => {
   });
 });
 
+// Adds a vote to album specified
 app.post('/vote', (req, res) => {
   const {
     username, albumObjectId, sentiment,
@@ -157,11 +165,23 @@ app.post('/vote', (req, res) => {
     if (err) {
       res.send({ success: false, message: 'Vote failed' });
     } else {
-      res.send({ success: true, message: 'Vote registered' });
+      Album.findOneAndUpdate({ _id: albumObjectId },
+        { $inc: { votesCount: 1, reactionsCount: 1, rawScore: sentiment } },
+        { new: true }).exec((error, doc) => {
+        if (!error) {
+          // eslint-disable-next-line no-param-reassign
+          doc.score = doc.rawScore / doc.votesCount;
+          doc.save();
+          res.send({ success: true, message: 'Vote registered' });
+        } else {
+          res.send({ success: false, message: 'Vote failed' });
+        }
+      });
     }
   });
 });
 
+// Gets votes based on query
 app.get('/get_votes', (req, res) => {
   console.log(req.query);
   Vote.find(req.query, (err, docs) => {
@@ -178,6 +198,7 @@ app.get('/get_votes', (req, res) => {
   });
 });
 
+// Adds a comment to album specified
 app.post('/comment', (req, res) => {
   const {
     username, albumObjectId, text,
@@ -191,11 +212,19 @@ app.post('/comment', (req, res) => {
     if (err) {
       res.send({ success: false, message: 'Comment failed' });
     } else {
-      res.send({ success: true, message: 'Comment registered' });
+      Album.findOneAndUpdate({ _id: albumObjectId },
+        { $inc: { commentsCount: 1, reactionsCount: 1 } }).exec((error) => {
+        if (!error) {
+          res.send({ success: true, message: 'Comment registered' });
+        } else {
+          res.send({ success: false, message: 'Comment failed' });
+        }
+      });
     }
   });
 });
 
+// Gets comments based on query
 app.get('/get_comments', (req, res) => {
   console.log('GET COMMENTS QUERY');
   const dbQuery = { albumObjectId: req.query['0'] };
@@ -208,6 +237,8 @@ app.get('/get_comments', (req, res) => {
   });
 });
 
+// Serves as relay between client and lastfm by relaying all requests
+// to lastfm and all responses back to client
 app.get('/get_lastfm', (req, res) => {
   const paramsObj = req.query;
   paramsObj.api_key = conf.lastfm_api_key;
@@ -229,6 +260,72 @@ app.get('/get_lastfm', (req, res) => {
       res.status(400);
       res.send();
     });
+});
+
+// Gets random list of albums from database
+app.get('/get_random', (req, res) => {
+  Album.findRandom({}, {}, { limit: listMax }, (err, results) => {
+    if (!err) {
+      console.log(results);
+      res.send(results);
+    } else {
+      res.status(400);
+      res.send();
+    }
+  });
+});
+
+// Gets most popular albums, defined as albums with most reactions (comments + votes)
+app.get('/get_most_popular', (req, res) => {
+  Album.find().sort({ reactionsCount: -1 }).limit(listMax).exec((err, docs) => {
+    if (!err) {
+      res.send(docs);
+    } else {
+      res.status(400);
+      res.send();
+    }
+  });
+});
+
+// Gets most recently added albums
+app.get('/get_last_added', (req, res) => {
+  Album.find().sort({ timestamp: -1 }).limit(listMax).exec((err, docs) => {
+    if (!err) {
+      res.send(docs);
+    } else {
+      res.status(400);
+      res.send();
+    }
+  });
+});
+
+// Gets most liked albums (best scores)
+app.get('/get_most_liked', (req, res) => {
+  Album.find().sort({ score: -1, rawScore: -1 }).limit(listMax).exec((err, docs) => {
+    if (!err) {
+      res.send(docs);
+    } else {
+      res.status(400);
+      res.send();
+    }
+  });
+});
+
+// Gets trending albums
+app.get('/get_trending', (req, res) => {
+  const trendingList = getTrendingList();
+  console.log(trendingList.slice(0, listMax));
+  Album.find({ _id: { $in: trendingList.slice(0, listMax) } }, (err, docs) => {
+    if (!err) {
+      for (const id in trendingList) {
+        if (trendingList.hasOwnProperty(id)) {
+          const thisId = trendingList[id];
+          trendingList[id] = docs.find(element => element._id == thisId);
+        }
+      }
+      res.send(trendingList);
+    }
+  });
 });
 
 server.listen(process.env.PORT || 3001);
