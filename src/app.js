@@ -33,6 +33,8 @@ const bodyParser = require('body-parser');
 const axios = require('axios');
 const fs = require('fs');
 
+const { computeTrending, getTrendingList } = require('./computeTrending.js');
+
 const fn = path.join(__dirname, 'config.json');
 const data = fs.readFileSync(fn);
 const conf = JSON.parse(data);
@@ -66,6 +68,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
+
+computeTrending(Vote, Comment);
 
 app.get('/user', (req, res) => {
   console.log('USER');
@@ -303,6 +307,23 @@ app.get('/get_most_liked', (req, res) => {
     } else {
       res.status(400);
       res.send();
+    }
+  });
+});
+
+// Gets trending albums
+app.get('/get_trending', (req, res) => {
+  const trendingList = getTrendingList();
+  console.log(trendingList.slice(0, listMax));
+  Album.find({ _id: { $in: trendingList.slice(0, listMax) } }, (err, docs) => {
+    if (!err) {
+      for (const id in trendingList) {
+        if (trendingList.hasOwnProperty(id)) {
+          const thisId = trendingList[id];
+          trendingList[id] = docs.find(element => element._id == thisId);
+        }
+      }
+      res.send(trendingList);
     }
   });
 });
