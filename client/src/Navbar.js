@@ -27,7 +27,7 @@ class Navbar extends Component {
             </li>
             <li class="nav-item">
               {this.props.component.state.loggedIn ?
-                <a class="nav-item nav-link" href="/">Your Profile</a>
+                <a class="nav-item nav-link" href="/" onClick={(e) => this.props.getUser(e)}>Your Profile</a>
                 : null}
             </li>
             <li class="nav-item">
