@@ -317,13 +317,14 @@ app.get('/get_trending', (req, res) => {
   console.log(trendingList.slice(0, listMax));
   Album.find({ _id: { $in: trendingList.slice(0, listMax) } }, (err, docs) => {
     if (!err) {
+      const responseList = [];
       for (const id in trendingList) {
         if (trendingList.hasOwnProperty(id)) {
           const thisId = trendingList[id];
-          trendingList[id] = docs.find(element => element._id == thisId);
+          responseList[id] = docs.find(element => element._id == thisId);
         }
       }
-      res.send(trendingList);
+      res.send(responseList);
     }
   });
 });

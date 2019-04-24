@@ -11,16 +11,16 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      random:[],
-      popular:[],
-      last_added:[],
-      most_liked:[],
-      trending:[],
+      random: [],
+      popular: [],
+      last_added: [],
+      most_liked: [],
+      trending: [],
     }
     this.componentWillMount = this.componentWillMount.bind(this);
   }
 
-  componentWillMount(){
+  componentWillMount() {
     axios.get('/get_random').then(response => {
       console.log('component will mount response');
       console.log(response.data);
@@ -66,9 +66,9 @@ class Home extends Component {
         trending: test
       });
     })
-    
+
   }
-  
+
   render() {
     console.log(this.props.username)
 
