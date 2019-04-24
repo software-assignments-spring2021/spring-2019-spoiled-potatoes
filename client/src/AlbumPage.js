@@ -41,7 +41,7 @@ class AlbumPage extends Component {
         <Container>
             <Row>
                 <Col>
-                <Image src={this.props.location.state.image[3]['#text']} rounded />
+                <Image src={this.props.location.state.image} rounded />
                 </Col>
                 <Col>
                 <div className="album">

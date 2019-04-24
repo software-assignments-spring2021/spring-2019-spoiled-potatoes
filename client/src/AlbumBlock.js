@@ -13,29 +13,25 @@ class AlbumBlock extends Component {
     return (  	
       <Container fluid>
           <Row>
-              <Col xs>
-              <Image src={this.props.image} thumbnail/>
+              <Col>
+              <Image src={this.props.image} rounded fluid/>
               </Col>
               <Col>
-              <h4>
+              <Row>
                 <Link to="AlbumPage">
                   {this.props.name}
                 </Link>
-              </h4>
-              <h5> 
+              </Row>
+              <Row> 
                 {this.props.artist}
-              </h5>
+              </Row>
               </Col>
           </Row>
           <Row>
-              <Col xs={{ offset: 2 }}>
-
+              <Col>
                   <Button variant="success" size="sm"> Upvote </Button>
-
                   <Button variant="danger" size="sm">Downvote</Button>
-
-                  <h5> {this.props.vote} </h5>
-
+                  <Row> {this.props.vote} </Row>
               </Col>
           </Row>
       </Container>
