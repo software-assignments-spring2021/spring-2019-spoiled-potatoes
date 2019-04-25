@@ -59,8 +59,5 @@ if (process.env.TRAVIS) {
   const connString = connection + pass + cluster;
   mongoose.connect(connString, { useNewUrlParser: true });
 } else {
-  const fn = path.join(__dirname, '../config.json');
-  const data = fs.readFileSync(fn);
-  const conf = JSON.parse(data);
-  mongoose.connect(conf.dbconf, { useNewUrlParser: true });
+  mongoose.connect(process.env.DBCONF, { useNewUrlParser: true });
 }
