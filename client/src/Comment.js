@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 //import * as bs from 'bootstrap/dist/css/bootstrap.css';
-import { Jumbotron, Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 
 // import logo from './logo.svg';
 //import './App.css';

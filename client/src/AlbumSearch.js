@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 // import logo from './logo.svg';
 //import './App.css';
-import { Image, Modal, Button, ListGroup} from 'react-bootstrap';
+import { Modal, Button, ListGroup} from 'react-bootstrap';
 // import App from './App'
 import {
   withRouter
