@@ -6,6 +6,7 @@
 /* eslint object-shorthand:0 */
 // app.js
 const express = require('express');
+require('dotenv').config();
 // const CryptoJS = require('crypto-js');
 // // this should become an environment variable or part of a config file
 // const cryptKey = 'tobereplaced';
@@ -31,13 +32,8 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const bodyParser = require('body-parser');
 const axios = require('axios');
-const fs = require('fs');
 
 const { computeTrending, getTrendingList } = require('./computeTrending.js');
-
-const fn = path.join(__dirname, 'config.json');
-const data = fs.readFileSync(fn);
-const conf = JSON.parse(data);
 
 const listMax = 10;
 
@@ -68,6 +64,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
+
+// serve build in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.resolve(__dirname, '..', 'client', 'build')));
+}
 
 computeTrending(Vote, Comment);
 
@@ -242,7 +243,7 @@ app.get('/get_comments', (req, res) => {
 // to lastfm and all responses back to client
 app.get('/get_lastfm', (req, res) => {
   const paramsObj = req.query;
-  paramsObj.api_key = conf.lastfm_api_key;
+  paramsObj.api_key = process.env.LASTFM_KEY;
   axios
     .get('http://ws.audioscrobbler.com/2.0/', {
       params: paramsObj,
@@ -318,13 +319,14 @@ app.get('/get_trending', (req, res) => {
   console.log(trendingList.slice(0, listMax));
   Album.find({ _id: { $in: trendingList.slice(0, listMax) } }, (err, docs) => {
     if (!err) {
+      const responseList = [];
       for (const id in trendingList) {
         if (trendingList.hasOwnProperty(id)) {
           const thisId = trendingList[id];
-          trendingList[id] = docs.find(element => element._id == thisId);
+          responseList[id] = docs.find(element => element._id == thisId);
         }
       }
-      res.send(trendingList);
+      res.send(responseList);
     }
   });
 });
