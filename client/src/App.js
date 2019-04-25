@@ -87,6 +87,7 @@ class App extends Component {
   }
 
   render() {
+    
     console.log(this.state.username)
     if (this.state.readyToRender) {
       if (this.state.login) {
@@ -107,7 +108,7 @@ class App extends Component {
         return (
           <div class="container">
             <Navbar logout={this.logout.bind(this)} renderRegister={this.renderRegister.bind(this)} renderLogin={this.renderLogin.bind(this)} component={this} />
-            <div class="container"><Home username={this.state.username} /></div>
+            <div class="container"><Home appComponent={this} username={this.state.username} /></div>
           </div>
         );
       }

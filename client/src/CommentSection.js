@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Jumbotron, Container, Row, Col } from 'react-bootstrap';
+import {  Container, Row, Col } from 'react-bootstrap';
 // import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
@@ -35,11 +35,11 @@ class CommentSection extends Component {
     }
 
     render() {
-      console.log('comment section');
-      console.log('comment section username: ', this.props.username)
-      console.log('comment section');
       return (  
-        <div>
+        <>
+        
+        <div class="my-3 p-3 bg-gray rounded box-shadow">
+        <h1 class="border-bottom border-gray pb-2 mb-0">Comments</h1> 
         { this.state.comments.length ? 	
         
         <Container>
@@ -52,16 +52,19 @@ class CommentSection extends Component {
         
         :
         
-        <div className="album">
-        <Jumbotron fluid>No Comments</Jumbotron>
+        <div class="comment">
+          <p>No comments</p>
         </div>
         }
         {this.props.username ? 
+          <div class="comment-div">
           <AddComment parent={this} album={this.props.album} username={this.props.username}></AddComment>
+          </div>
           :
           null
         }
     </div>
+    </>
       );
     }
   }
