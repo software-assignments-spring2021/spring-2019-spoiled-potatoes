@@ -2,9 +2,42 @@
   text-align: center;
 }
 
+body { padding-top: 70px; }
+/*
+.media {
+  background-color: #d2dff4
+}
+*/
+.comment {
+  border-bottom: 1px solid #000;
+  padding: 10px 15px;
+}
+
+.comment p {
+  font-size: 14px;
+}
+
+.comment p.user, p.timestamp {
+  font-family: "Courier New", Courier, monospace;
+}
+
+.comment p.timestamp {
+  font-size: 10px;
+  /*color: #aaa;*/
+  margin-top: 10px;
+  text-align: right;
+}
+
 .comment-div {
-  display: inline-flex;
-  margin: 1em;
+  /*
+  background-color: #4A90E2;
+  font-weight: bold;
+  padding: 20px;
+  text-align: center;
+  */
+  /*width: 200px;*/
+  box-sizing: border-box;
+  margin: 20px auto; /* Vertical  Horizontal */
 }
 
 .App-logo {
@@ -25,7 +58,7 @@
 }
 
 .album {
-  padding-top: 25px
+  background-color: lightgray;
 }
 
 

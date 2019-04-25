@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Jumbotron, Button, Container, Row, Col } from 'react-bootstrap';
 // import logo from './logo.svg';
-import './App.css';
+//import './App.css';
 import AlbumSearch from './AlbumSearch';
 import AlbumListComponent from './AlbumListComponent'
 
@@ -20,14 +20,14 @@ class Home extends Component {
     console.log(this.props.username)
 
     return (
-      <Container>
+      <Container >
         <Jumbotron>
           <h1>Welcome to Spoiled Potatoes{this.props.username ? ', ' + this.props.username : null}!</h1>
           <p>
             Review and explore more music!
           </p>
         </Jumbotron>
-        <AlbumSearch username={this.props.username} />
+        <AlbumSearch appComponent={this.props.appComponent} username={this.props.username} />
         <Row>
           <Col>
             <Row><h3>Most Popular</h3></Row>

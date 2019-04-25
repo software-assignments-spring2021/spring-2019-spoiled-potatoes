@@ -131,9 +131,10 @@ app.post('/add_album', (req, res) => {
 
   newAlbum.save((err) => {
     if (err) {
+      console.log(err);
       res.send({ added: false, message: 'Album add failed' });
     } else {
-      res.send({ added: true });
+      res.send(newAlbum);
     }
   });
 });
