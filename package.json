@@ -38,7 +38,8 @@
     "test": "nyc mocha --exit",
     "start": "nodemon src/app.js",
     "dev": "concurrently \"npm start\" \"cd client && npm start\"",
-    "dev-build": "npm install && cd client && npm install"
+    "dev-build": "npm install && cd client && npm install",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "repository": {
     "type": "git",
