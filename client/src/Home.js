@@ -26,7 +26,7 @@ class Home extends Component {
       console.log(response.data);
       var test = response.data
       for (var item in test) {
-        if (item.name == null || item.artist == null || item.iamge == null) {
+        if (item.name == null || item.artist == null || item.image == null) {
           delete test.item
         }
       }
