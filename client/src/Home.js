@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Jumbotron, Button, Container, Row, Col } from 'react-bootstrap';
+import { Jumbotron, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 // import logo from './logo.svg';
 //import './App.css';
@@ -25,11 +25,6 @@ class Home extends Component {
       console.log('component will mount response');
       console.log(response.data);
       var test = response.data
-      for (var item in test) {
-        if (item.name == null || item.artist == null || item.iamge == null) {
-          delete test.item
-        }
-      }
       this.setState({
         random: test
       });
@@ -83,29 +78,24 @@ class Home extends Component {
         <AlbumSearch appComponent={this.props.appComponent} username={this.props.username} />
         <Row>
           <Col>
-            <Row><h3>Most Popular</h3></Row>
+            <h3>Most Popular</h3>
             <Row><AlbumListComponent albums={this.state.popular} /></Row>
-            <Row><Button variant="primary">More...</Button></Row>
           </Col>
           <Col>
-            <Row><h3>Most Liked</h3></Row>
+            <h3>Most Liked</h3>
             <Row><AlbumListComponent albums={this.state.most_liked} /></Row>
-            <Row><Button variant="primary">More...</Button></Row>
           </Col>
           <Col>
-            <Row><h3>Trending</h3></Row>
+            <h3>Trending</h3>
             <Row><AlbumListComponent albums={this.state.trending} /></Row>
-            <Row><Button variant="primary">More...</Button></Row>
           </Col>
           <Col>
-            <Row><h3>Last Added</h3></Row>
+            <h3>Last Added</h3>
             <Row><AlbumListComponent albums={this.state.last_added} /></Row>
-            <Row><Button variant="primary">More...</Button></Row>
           </Col>
           <Col>
-            <Row><h3>Random</h3></Row>
+            <h3>Random</h3>
             <Row><AlbumListComponent albums={this.state.random} /></Row>
-            <Row><Button variant="primary">More...</Button></Row>
           </Col>
         </Row>
       </Container>
