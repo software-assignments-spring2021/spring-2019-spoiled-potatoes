@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 // import Cookies from 'js-cookie';
 import './App.css';
-import PotatoHeader from './potatoHeader.png'
+import PotatoHeader from './potatoHeader.png';
 
 class Navbar extends Component {
   render() {
@@ -27,7 +27,7 @@ class Navbar extends Component {
             </li>
             <li class="nav-item">
               {this.props.component.state.loggedIn ?
-                <a class="nav-item nav-link" href="/" onClick={(e) => this.props.getUser(e)}>Your Profile</a>
+                <a class="nav-item nav-link" href="./ProfilePage" onClick={(e) => this.props.getUser()}>Your Profile</a>
                 : null}
             </li>
             <li class="nav-item">
