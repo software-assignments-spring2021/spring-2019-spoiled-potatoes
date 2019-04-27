@@ -90,7 +90,7 @@ class AlbumSearch extends Component {
     this.setState({ show: true });
   }
 
-  searchDB(mbid, albumName, resObj) {
+  searchDB(mbid, albumName, imageStr, resObj) {
     //const self = this;
     let paramObj = {};
     if (mbid) {
@@ -99,7 +99,8 @@ class AlbumSearch extends Component {
       }
     } else {
       paramObj = {
-        name: albumName
+        name: albumName,
+        'image.#text': imageStr
       }
     }
     console.log(paramObj);
@@ -141,7 +142,8 @@ class AlbumSearch extends Component {
             this.setState({searchType: "Both"});
             //console.log(response.data.album);
             this.setState({
-              results: [<ListGroup.Item action onClick={() => this.searchDB(response.data.album.mbid, response.data.album.name,
+              results: [<ListGroup.Item action onClick={() => this.searchDB(response.data.album.mbid, response.data.album.name, 
+                response.data.album['image'][0]['#text'],
                 {
                   pathname: "/album/" + response.data.album.name,
                   state: response.data.album,
@@ -166,7 +168,7 @@ class AlbumSearch extends Component {
               results: response.data.topalbums.album.map(
                 item => 
                 
-                <ListGroup.Item action onClick={() => this.searchDB(item.mbid, item.name, {
+                <ListGroup.Item action onClick={() => this.searchDB(item.mbid, item.name, item['image'][0]['#text'], {
                   pathname: "/album/" + item['name'],
                   state: item,
                   username: this.props.username
@@ -188,7 +190,7 @@ class AlbumSearch extends Component {
             this.setState({
               results: response.data.results.albummatches.album.map(
                 item => 
-                <ListGroup.Item action onClick={() => this.searchDB(item.mbid, item.name, {
+                <ListGroup.Item action onClick={() => this.searchDB(item.mbid, item.name, item['image'][0]['#text'], {
                   pathname: "/album/" + item['name'],
                   state: item,
                   username: this.props.username
