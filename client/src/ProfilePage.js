@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { Image,Form,Button,Container,Row,Col } from 'react-bootstrap';
 // import logo from './logo.svg';
 import './App.css';
-import PotatoHeader from './potatoHeader.png'
 import AlbumListComponent from './AlbumListComponent'
-import axios from 'axios';
 
 const albums = [
     {name:"Name", artist:"Artist", image:[{'#text': "0", size: "small"},
@@ -17,59 +15,14 @@ const albums = [
 
 class ProfilePage extends Component {
 
-    constructor(props) {
-      super(props);
-      this.state = {
-        username: "",
-        reviewed: [],
-        added: [],
-    
-      }
-      this.componentDidMount = this.componentDidMount.bind(this)
-    }
-    
-    componentWillMount() {
-      axios.get('/user/').then(response => {
-        console.log('Get user response: ')
-        console.log(response.data)
-        if (response.data.user) {
-          console.log('Get User: There is a user saved in the server session: ')
-          this.setState({
-            username: response.data.user.username,
-          })
-        } else {
-          console.log('Get user: no user');
-          this.setState({
-            username: null,
-          })
-        }
-      })
-      axios.get('/get_random').then(response => {
-        console.log('component will mount response');
-        console.log(response.data);
-        var test = response.data
-        this.setState({
-          random: test
-        });
-      })
-      axios.get('/get_most_popular').then(response => {
-        console.log('component will mount response');
-        console.log(response.data);
-        let test = response.data
-        this.setState({
-          popular: test
-        });
-      })
-    }
-
     render() {
       console.log(this.props);
       return (  	
         <Container>
             <Row>
                 <Col>
-                    <Row><Image src={PotatoHeader} rounded /></Row>
-                    <Row>{this.state.username}</Row>
+                    <Row><Image src={this.props.location.state.image[3]['#text']} rounded /></Row>
+                    <Row>{this.props.username}</Row>
                     <Row>
                         <Col>
                             <Row><h3>Change Password</h3></Row>
