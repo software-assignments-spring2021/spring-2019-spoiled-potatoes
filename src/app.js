@@ -144,6 +144,10 @@ app.post('/add_album', (req, res) => {
 app.get('/search_album', (req, res) => {
   console.log('in app.get/album_search');
   console.log(req.query);
+  if (req.query.tags) {
+    req.query.tags = { $all: req.query.tags };
+  }
+
   Album.find(req.query, (err, docs) => {
     if (err) {
       res.send({ status: 'failure', message: 'failed to find album' });
