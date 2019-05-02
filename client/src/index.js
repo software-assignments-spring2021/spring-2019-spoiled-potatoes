@@ -5,10 +5,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import AlbumPage from './AlbumPage'
+import ProfilePage from './ProfilePage'
 //import history from './history'
 import * as serviceWorker from './serviceWorker';
-//import 'bootstrap/dist/css/bootstrap.css';
-//import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import { Route,  BrowserRouter as Router } from 'react-router-dom';
 
 
@@ -22,7 +21,8 @@ const routing = (
     ></link>
     <Router>
         <Route exact path="/" component={App} />
-        <Route path="/album/:id" component={AlbumPage} />   
+        <Route path="/album/:id" component={AlbumPage} />
+        <Route path="/profiles/:username" component={ProfilePage} />   
     </Router>
     </>
   )

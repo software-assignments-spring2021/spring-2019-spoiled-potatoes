@@ -79,23 +79,23 @@ class Home extends Component {
         <Row>
           <Col>
             <h3>Most Popular</h3>
-            <Row><AlbumListComponent albums={this.state.popular} /></Row>
+            <Row><AlbumListComponent albums={this.state.popular} username={this.props.username} /></Row>
           </Col>
           <Col>
             <h3>Most Liked</h3>
-            <Row><AlbumListComponent albums={this.state.most_liked} /></Row>
+            <Row><AlbumListComponent albums={this.state.most_liked} username={this.props.username} /></Row>
           </Col>
           <Col>
             <h3>Trending</h3>
-            <Row><AlbumListComponent albums={this.state.trending} /></Row>
+            <Row><AlbumListComponent albums={this.state.trending} username={this.props.username} /></Row>
           </Col>
           <Col>
             <h3>Last Added</h3>
-            <Row><AlbumListComponent albums={this.state.last_added} /></Row>
+            <Row><AlbumListComponent albums={this.state.last_added} username={this.props.username} /></Row>
           </Col>
           <Col>
             <h3>Random</h3>
-            <Row><AlbumListComponent albums={this.state.random} /></Row>
+            <Row><AlbumListComponent albums={this.state.random} username={this.props.username} /></Row>
           </Col>
         </Row>
       </Container>
