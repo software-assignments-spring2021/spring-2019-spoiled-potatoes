@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Image, Jumbotron, Container, Row, Col } from 'react-bootstrap';
+import { Image, Container, Row, Col } from 'react-bootstrap';
 // import logo from './logo.svg';
 //import './App.css';
-
+import Navbar from './Navbar';
 import axios from 'axios';
 import CommentSection from './CommentSection';
 
@@ -39,8 +39,10 @@ class AlbumPage extends Component {
       console.log(this.props);
       return (  	
         <div >
+        <Navbar component={this}/>
+
         <Container>
-            <Row>
+            <Row className="jumbotron-home">
                 <Col>
                 <Image src={this.props.location.state.image[3]['#text']} rounded />
                 </Col>
@@ -48,11 +50,11 @@ class AlbumPage extends Component {
                   <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
                   <div class="col-md-10 px-0">
                       <h1 class="display-4 font-italic">{this.props.location.state.name}</h1>
-                      <p class="lead my-3"> Multiple lines of text that form the lede, informing new readers quickly and efficiently about what’s most interesting in this post’s contents.</p>
                       <p class="lead mb-0">{typeof this.props.location.state.artist == "string" ? this.props.location.state.artist : this.props.location.state.artist['name']}</p>
+                      <p class="lead my-3"> Multiple lines of text that form the lede, informing new readers quickly and efficiently about what’s most interesting in this post’s contents.</p>
                   </div>
                   <div class="col-md-2 px-0">
-                    <p class="timestamp">score goes here</p>
+                    <p class="timestamp">95%</p>
                   </div>
                   </div>
                 </Col>

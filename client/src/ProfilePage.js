@@ -25,7 +25,7 @@ class ProfilePage extends Component {
                 <Col sm={6}>
                 <Jumbotron>
                     <Row className="justify-content-md-center"><h1>Your Profile</h1></Row>
-                    <Row className="justify-content-md-center"><Image src={PotatoHeader} roundedCircle /></Row>
+                    <Row className="justify-content-md-center"><Image roundedCircle /></Row>
                     <Row className="justify-content-md-center">{this.props.username}</Row>
                     <Row>
                         <Col>

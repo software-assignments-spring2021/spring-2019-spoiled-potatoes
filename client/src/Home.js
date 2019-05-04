@@ -69,7 +69,7 @@ class Home extends Component {
 
     return (
       <Container >
-        <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
+        <div class="jumbotron-home jumbotron p-4 p-md-5 text-white rounded bg-dark">
           <h1 class="display-4 font-italic">Welcome to Spoiled Potatoes{this.props.username ? ', ' + this.props.username : null}!</h1>
           <p class="lead my-3">
             Review and explore more music!
