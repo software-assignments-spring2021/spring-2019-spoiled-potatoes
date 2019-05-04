@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Jumbotron, Container, Row, Col } from 'react-bootstrap';
+import { Jumbotron, Container, Carousel, Row } from 'react-bootstrap';
 import axios from 'axios';
 // import logo from './logo.svg';
 //import './App.css';
@@ -68,7 +68,7 @@ class Home extends Component {
     console.log(this.props.username)
 
     return (
-      <Container >
+      <Container>
         <Jumbotron>
           <h1>Welcome to Spoiled Potatoes{this.props.username ? ', ' + this.props.username : null}!</h1>
           <p>
@@ -76,28 +76,28 @@ class Home extends Component {
           </p>
         </Jumbotron>
         <AlbumSearch appComponent={this.props.appComponent} username={this.props.username} />
-        <Row>
-          <Col>
-            <h3>Most Popular</h3>
-            <Row><AlbumListComponent albums={this.state.popular} username={this.props.username} /></Row>
-          </Col>
-          <Col>
-            <h3>Most Liked</h3>
-            <Row><AlbumListComponent albums={this.state.most_liked} username={this.props.username} /></Row>
-          </Col>
-          <Col>
-            <h3>Trending</h3>
-            <Row><AlbumListComponent albums={this.state.trending} username={this.props.username} /></Row>
-          </Col>
-          <Col>
-            <h3>Last Added</h3>
-            <Row><AlbumListComponent albums={this.state.last_added} username={this.props.username} /></Row>
-          </Col>
-          <Col>
-            <h3>Random</h3>
-            <Row><AlbumListComponent albums={this.state.random} username={this.props.username} /></Row>
-          </Col>
-        </Row>
+        <Carousel>
+          <Carousel.Item>
+            <Row className="justify-content-md-center"><h3>Most Popular</h3></Row>
+            <Row className="justify-content-md-center"><AlbumListComponent albums={this.state.popular} username={this.props.username} /></Row>
+          </Carousel.Item>
+          <Carousel.Item>
+            <Row className="justify-content-md-center"><h3>Most Liked</h3></Row>
+            <Row className="justify-content-md-center"><AlbumListComponent albums={this.state.most_liked} username={this.props.username} /></Row>
+          </Carousel.Item>
+          <Carousel.Item>
+            <Row className="justify-content-md-center"><h3>Trending</h3></Row>
+            <Row className="justify-content-md-center"><AlbumListComponent albums={this.state.trending} username={this.props.username} /></Row>
+          </Carousel.Item>
+          <Carousel.Item>
+            <Row className="justify-content-md-center"><h3>Last Added</h3></Row>
+            <Row className="justify-content-md-center"><AlbumListComponent albums={this.state.last_added} username={this.props.username} /></Row>
+          </Carousel.Item>
+          <Carousel.Item>
+            <Row className="justify-content-md-center"><h3>Random</h3></Row>
+            <Row className="justify-content-md-center"><AlbumListComponent albums={this.state.random} username={this.props.username} /></Row>
+          </Carousel.Item>
+        </Carousel>
       </Container>
     );
   }
