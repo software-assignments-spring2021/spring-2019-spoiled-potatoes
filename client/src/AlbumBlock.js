@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button,Card,Badge,Col,Row} from 'react-bootstrap';
+import { Button,Card, Col,Row} from 'react-bootstrap';
 // import logo from './logo.svg';
 import './App.css';
 // import axios from 'axios';
@@ -17,7 +17,7 @@ class AlbumBlock extends Component {
             <Link to="AlbumPage">{this.props.name}</Link>         
           </Card.Title>
           <Card.Subtitle className="mb-2 text-muted">{this.props.artist}</Card.Subtitle>
-            {CheckScore == null ? <Badge variant="dark">No Score</Badge> : <Badge variant="dark">{this.props.score}</Badge>}
+            {CheckScore == null ? <p>No Score</p> : <p>{this.props.score}</p>}
           <Row>
             <Col>
               <Button variant="success" size="sm"> Upvote </Button>

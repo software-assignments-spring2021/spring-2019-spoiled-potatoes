@@ -25,11 +25,8 @@ class lastfmIter {
   }
 
   next() {
-    console.log('in next');
-    console.log(this.component.state.searchParams);
     this.res += this.chunk;
     this.component.state.searchParams['page'] = this.index + 1;//state.searchParams['page'] = this.index++;
-    console.log(this.component.state.searchParams);
     this.index++;
     this.component.buildList(this.component.state.searchParams);
   }
@@ -57,6 +54,7 @@ class AlbumSearch extends Component {
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.buildTagList = this.buildTagList.bind(this);
     this.lastfmIter = new lastfmIter(50, this);
   }
 
@@ -126,6 +124,40 @@ class AlbumSearch extends Component {
     });
   }
 
+  buildTagList(tagsParam){
+    axios.get('/search_album', {params: tagsParam}).then(
+      response => {
+        if (response.status === 200){
+          console.log(response.data.docs);
+          this.setState({ searchType: "" });
+            //console.log(response.data.album);
+          this.setState({
+            results: response.data.docs.map(
+              item =>
+                <ListGroup.Item action onClick={() => this.searchDB(item.mbid, item.name, item['image'][0]['#text'], {
+                  pathname: "/album/" + item['name'],
+                  state: item,
+                  username: this.props.username
+                })} >
+                  <div class="media text-muted pt-3">
+                    <img alt="" class="mr-2 rounded" src={item['image'][1]['#text']} width={"64px"} height={"64px"} />
+                    <div class="media-body pb-3 mb-0 small lh-125 border-gray">
+                      <div class="d-flex justify-content-between align-items-center w-100">
+                        <strong class="text-gray-dark">{item['name']} - {item['artist']}</strong>
+                      </div>
+                    </div>
+                  </div>
+                </ListGroup.Item>
+            )
+          });
+        }
+      }).catch(error => {
+        console.log('album search error: ');
+        console.log(error);
+
+      });
+  }
+
   buildList(paramObj) {
     axios
       .get('/get_lastfm', {
@@ -133,8 +165,6 @@ class AlbumSearch extends Component {
       })
       .then(response => {
         if (response.status === 200) {
-          //response.
-          // update App.js state
           console.log(response.data);
 
           if (paramObj['method'] === "album.getinfo") {
@@ -203,14 +233,6 @@ class AlbumSearch extends Component {
                       </div>
                     </div>
                   </ListGroup.Item>
-                /*
-                <ListGroup.Item action onClick={() => this.searchDB(item.mbid, item.name, {
-                  pathname: "/album/" + item['name'],
-                  state: item,
-                  username: this.props.username
-                })} ><Image src={item['image'][0]['text']} thumbnail />{item['name']} - {item['artist']}
-                </ListGroup.Item>
-                */
               )
             });
           }
@@ -222,34 +244,43 @@ class AlbumSearch extends Component {
       })
   }
 
-  handleAlbumSearch(event, inputName, inputArtist) {
+  handleAlbumSearch(event, inputName, inputArtist, inputTags) {
     event.preventDefault();
 
     let paramObj = {};
 
-    if (inputName && inputArtist) {
+    if (inputTags && (!inputName && !inputArtist)){
+      let sendTags = inputTags.split(" ").map(ele => ele.toLowerCase());
+      console.log(sendTags);
       paramObj = {
-        method: "album.getinfo",
-        artist: inputArtist,
-        album: inputName,
-        format: "json",
+        tags: sendTags,
       }
-    } else if (inputArtist) {
-      paramObj = {
-        method: "artist.gettopalbums",
-        artist: inputArtist,
-        format: "json",
-      }
+      this.buildTagList(paramObj);
     } else {
-      paramObj = {
-        method: "album.search",
-        album: inputName,
-        format: "json",
+      if (inputName && inputArtist) {
+        paramObj = {
+          method: "album.getinfo",
+          artist: inputArtist,
+          album: inputName,
+          format: "json",
+        }
+      } else if (inputArtist) {
+        paramObj = {
+          method: "artist.gettopalbums",
+          artist: inputArtist,
+          format: "json",
+        }
+      } else {
+        paramObj = {
+          method: "album.search",
+          album: inputName,
+          format: "json",
+        }
       }
+      //console.log(paramObj);
+      this.setState({ searchParams: paramObj });
+      this.buildList(paramObj);
     }
-    console.log(paramObj);
-    this.setState({ searchParams: paramObj });
-    this.buildList(paramObj);
   }
 
   nextList(e) {
@@ -269,7 +300,7 @@ class AlbumSearch extends Component {
     return (
       <>
         <div>
-          <form onSubmit={(event) => this.handleAlbumSearch(event, this.state.name, this.state.artist)}>
+          <form onSubmit={(event) => this.handleAlbumSearch(event, this.state.name, this.state.artist, this.state.tags)}>
             <div class="form-group">
               <h1>Search for an album to start reviewing</h1>
               <label>
@@ -277,8 +308,10 @@ class AlbumSearch extends Component {
           <input type="text" name="name" value={this.state.name} onChange={this.handleInputChange} />
                 Artist:
           <input type="text" name="artist" value={this.state.artist} onChange={this.handleInputChange} />
+                Tags:
+          <input type="text" name="tags" value={this.state.tags} onChange={this.handleInputChange} />
               </label>
-              <input type="submit" disabled={!(this.state.name || this.state.artist)} value="Search" />
+              <input type="submit" disabled={!(this.state.name || this.state.artist || this.state.tags)} value="Search" />
             </div>
           </form>
           <div class="my-3 p-3 bg-gray rounded box-shadow">

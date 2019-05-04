@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Jumbotron, Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 // import logo from './logo.svg';
 //import './App.css';
@@ -69,12 +69,12 @@ class Home extends Component {
 
     return (
       <Container >
-        <Jumbotron>
-          <h1>Welcome to Spoiled Potatoes{this.props.username ? ', ' + this.props.username : null}!</h1>
-          <p>
+        <div class="jumbotron-home jumbotron p-4 p-md-5 text-white rounded bg-dark">
+          <h1 class="display-4 font-italic">Welcome to Spoiled Potatoes{this.props.username ? ', ' + this.props.username : null}!</h1>
+          <p class="lead my-3">
             Review and explore more music!
           </p>
-        </Jumbotron>
+        </div>
         <AlbumSearch appComponent={this.props.appComponent} username={this.props.username} />
         <Row>
           <Col>

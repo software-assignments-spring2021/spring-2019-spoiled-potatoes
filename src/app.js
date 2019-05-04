@@ -143,7 +143,7 @@ app.post('/add_album', (req, res) => {
 // Searches albums in database based on query
 app.get('/search_album', (req, res) => {
   console.log('in app.get/album_search');
-  console.log(req.query);
+  console.log(req.query.tags);
   if (req.query.tags) {
     req.query.tags = { $all: req.query.tags };
   }
