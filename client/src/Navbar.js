@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 // import Cookies from 'js-cookie';
 import './App.css';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 class Navbar extends Component {
   render() {
@@ -27,7 +27,7 @@ class Navbar extends Component {
             </li>
             <li class="nav-item">
               {this.props.component.state.loggedIn ?
-                <a class="nav-item nav-link" href={pathname}>Your Profile</a>
+                <Link to={pathname} className="nav-item nav-link">Profile</Link>
                 : null}
             </li>
             <li class="nav-item">
@@ -37,7 +37,7 @@ class Navbar extends Component {
             </li>
           </div>
         </div>
-      </nav>
+      </nav >
 
     );
   }
