@@ -44,15 +44,17 @@ class AlbumPage extends Component {
                 <Col>
                 <Image src={this.props.location.state.image[3]['#text']} rounded />
                 </Col>
-                <Col>
-                  <Jumbotron fluid>
-                    <p>
-                    Artist: {typeof this.props.location.state.artist == "string" ? this.props.location.state.artist : this.props.location.state.artist['name']}
-                  </p>
-                  <p>
-                    Album Name: {this.props.location.state.name}
-                    </p>
-                  </Jumbotron>
+                <Col xs={8}>
+                  <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
+                  <div class="col-md-10 px-0">
+                      <h1 class="display-4 font-italic">{this.props.location.state.name}</h1>
+                      <p class="lead my-3"> Multiple lines of text that form the lede, informing new readers quickly and efficiently about what’s most interesting in this post’s contents.</p>
+                      <p class="lead mb-0">{typeof this.props.location.state.artist == "string" ? this.props.location.state.artist : this.props.location.state.artist['name']}</p>
+                  </div>
+                  <div class="col-md-2 px-0">
+                    <p class="timestamp">score goes here</p>
+                  </div>
+                  </div>
                 </Col>
             </Row>
         </Container>
@@ -65,7 +67,20 @@ class AlbumPage extends Component {
     );
   }
 }
+/*
+<div class="col-md-6 px-0"></div>
 
+
+
+<Jumbotron fluid>
+                    <p>
+                    Artist: {typeof this.props.location.state.artist == "string" ? this.props.location.state.artist : this.props.location.state.artist['name']}
+                  </p>
+                  <p>
+                    Album Name: {this.props.location.state.name}
+                    </p>
+                  </Jumbotron>
+*/
 export default AlbumPage;
 
 
