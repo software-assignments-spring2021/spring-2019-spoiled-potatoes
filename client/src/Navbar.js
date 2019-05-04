@@ -2,9 +2,11 @@
 import React, { Component } from 'react';
 // import Cookies from 'js-cookie';
 import './App.css';
+import { withRouter } from 'react-router-dom';
 
 class Navbar extends Component {
   render() {
+    const pathname = "/profiles/" + this.props.component.state.username
     return (
       <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
         <a class="navbar-brand" href="/">Spoiled Potatoes</a>
@@ -25,7 +27,7 @@ class Navbar extends Component {
             </li>
             <li class="nav-item">
               {this.props.component.state.loggedIn ?
-                <a class="nav-item nav-link" href="/">Your Profile</a>
+                <a class="nav-item nav-link" href={pathname}>Your Profile</a>
                 : null}
             </li>
             <li class="nav-item">
@@ -41,5 +43,5 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar;
+export default withRouter(Navbar);
 
