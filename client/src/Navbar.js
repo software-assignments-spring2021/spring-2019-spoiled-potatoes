@@ -2,13 +2,13 @@
 import React, { Component } from 'react';
 // import Cookies from 'js-cookie';
 import './App.css';
-import PotatoHeader from './potatoHeader.png'
+import { withRouter, Link } from 'react-router-dom';
 
 class Navbar extends Component {
   render() {
+    const pathname = "/profiles/" + this.props.component.state.username
     return (
-      <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
-        <img src={PotatoHeader} alt="a web icon for home button" style = {{ height: "70px", width:"80px"}}/>
+      <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
         <a class="navbar-brand" href="/">Spoiled Potatoes</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -27,7 +27,7 @@ class Navbar extends Component {
             </li>
             <li class="nav-item">
               {this.props.component.state.loggedIn ?
-                <a class="nav-item nav-link" href="/">Your Profile</a>
+                <Link to={pathname} className="nav-item nav-link">Profile</Link>
                 : null}
             </li>
             <li class="nav-item">
@@ -37,11 +37,11 @@ class Navbar extends Component {
             </li>
           </div>
         </div>
-      </nav>
+      </nav >
 
     );
   }
 }
 
-export default Navbar;
+export default withRouter(Navbar);
 

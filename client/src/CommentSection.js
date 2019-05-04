@@ -39,7 +39,7 @@ class CommentSection extends Component {
         <>
         
         <div class="my-3 p-3 bg-gray rounded box-shadow">
-        <h1 class="border-bottom border-gray pb-2 mb-0">Comments</h1> 
+        <h1 class="border-bottom border-black pb-2 mb-0">Comments</h1> 
         { this.state.comments.length ? 	
         
         <Container>

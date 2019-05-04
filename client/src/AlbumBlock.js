@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button,Card,Badge,Col,Row} from 'react-bootstrap';
+import { Button,Card, Col,Row} from 'react-bootstrap';
 // import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';

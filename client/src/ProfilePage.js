@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Image,Form,Button,Container,Row,Col } from 'react-bootstrap';
+import { Image,Form,Button,Container,Row,Col, Jumbotron } from 'react-bootstrap';
 // import logo from './logo.svg';
 import './App.css';
 import AlbumListComponent from './AlbumListComponent'
+
 
 const albums = [
     {name:"Name", artist:"Artist", image:[{'#text': "0", size: "small"},
@@ -20,12 +21,14 @@ class ProfilePage extends Component {
       return (  	
         <Container>
             <Row>
-                <Col>
-                    <Row><Image src={this.props.location.state.image[3]['#text']} rounded /></Row>
-                    <Row>{this.props.username}</Row>
+                <Col sm={6}>
+                <Jumbotron>
+                    <Row className="justify-content-md-center"><h1>Your Profile</h1></Row>
+                    <Row className="justify-content-md-center"><Image roundedCircle /></Row>
+                    <Row className="justify-content-md-center">{this.props.username}</Row>
                     <Row>
                         <Col>
-                            <Row><h3>Change Password</h3></Row>
+                            <Row className="justify-content-md-center"><h3>Change Password</h3></Row>
                             <Form>
                                 <Form.Control placeholder="Old password" />
                                 <Form.Control placeholder="New password" />
@@ -36,9 +39,10 @@ class ProfilePage extends Component {
                             </Form>
                         </Col>
                     </Row>
+                    </Jumbotron>
                 </Col>
                 <Col>
-                    <Row><h3>Music Reviwed</h3></Row>
+                    <Row><h3>Music Reviewed</h3></Row>
                     <Row><AlbumListComponent albums={albums} /></Row>
                 </Col>
                 <Col>

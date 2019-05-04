@@ -21,8 +21,8 @@ const routing = (
     ></link>
     <Router>
         <Route exact path="/" component={App} />
-        <Route path="/album/:id" component={AlbumPage} />
-        <Route path="/profiles/:username" component={ProfilePage} />   
+        <Route path="/album/:id" component={AlbumPage} /> 
+        <Route path="/profiles/:username" component={ProfilePage} />  
     </Router>
     </>
   )

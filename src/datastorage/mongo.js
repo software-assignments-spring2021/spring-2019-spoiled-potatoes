@@ -1,13 +1,12 @@
 const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
-const fs = require('fs');
-const path = require('path');
 const random = require('mongoose-simple-random');
 
 const userSchema = new mongoose.Schema({
   username: String,
   email: String,
   timeSignedUp: { type: Date, default: Date.now },
+  albumsReactedOn: [String],
 });
 userSchema.plugin(passportLocalMongoose);
 
