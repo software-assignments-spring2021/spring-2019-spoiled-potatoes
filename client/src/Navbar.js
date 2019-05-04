@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 // import Cookies from 'js-cookie';
 import './App.css';
-import PotatoHeader from './potatoHeader.png'
 import { withRouter } from 'react-router-dom';
 
 class Navbar extends Component {
@@ -10,7 +9,6 @@ class Navbar extends Component {
     const pathname = "/profiles/" + this.props.component.state.username
     return (
       <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-        <img src={PotatoHeader} alt="a web icon for home button" style = {{ height: "70px", width:"80px"}}/>
         <a class="navbar-brand" href="/">Spoiled Potatoes</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>

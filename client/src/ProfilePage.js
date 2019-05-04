@@ -3,7 +3,6 @@ import { Image,Form,Button,Container,Row,Col, Jumbotron } from 'react-bootstrap'
 // import logo from './logo.svg';
 import './App.css';
 import AlbumListComponent from './AlbumListComponent'
-import PotatoHeader from './potatoHeader.png'
 
 
 const albums = [
