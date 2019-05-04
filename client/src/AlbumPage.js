@@ -39,8 +39,12 @@ class AlbumPage extends Component {
       console.log(this.props);
       return (  	
         <div >
-        <Navbar component={this}/>
-
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Spoiled Potatoes</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </nav>
         <Container>
             <Row className="jumbotron-home">
                 <Col>
@@ -48,13 +52,14 @@ class AlbumPage extends Component {
                 </Col>
                 <Col xs={8}>
                   <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
-                  <div class="col-md-10 px-0">
+                  <div class="row">
+                  <div class="col-md-6 px-0">
                       <h1 class="display-4 font-italic">{this.props.location.state.name}</h1>
                       <p class="lead mb-0">{typeof this.props.location.state.artist == "string" ? this.props.location.state.artist : this.props.location.state.artist['name']}</p>
-                      <p class="lead my-3"> Multiple lines of text that form the lede, informing new readers quickly and efficiently about what’s most interesting in this post’s contents.</p>
                   </div>
-                  <div class="col-md-2 px-0">
-                    <p class="timestamp">95%</p>
+                  <div class="col-md-6 px-0">
+                  <h1 class="score display-4">Album Score: 95%</h1>
+                  </div>
                   </div>
                   </div>
                 </Col>

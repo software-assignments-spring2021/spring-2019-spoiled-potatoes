@@ -8,7 +8,12 @@ body { padding-top: 70px; }
   background-color: #d2dff4
 }
 */
-
+.score {
+  height: 100%;
+  width: 100%;
+  text-align: center;  /* align the inline(-block) elements horizontally */
+  font: 0/0;         /* remove the gap between inline(-block) elements */
+}
 .jumbotron-home {
   /*padding-top: 20px; */
   margin-top: 40px
