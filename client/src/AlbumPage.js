@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Image, Container, Row, Col } from 'react-bootstrap';
 // import logo from './logo.svg';
 //import './App.css';
-import Navbar from './Navbar';
 import axios from 'axios';
 import CommentSection from './CommentSection';
 
