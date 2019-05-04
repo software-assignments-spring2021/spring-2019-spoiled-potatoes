@@ -146,6 +146,8 @@ app.get('/search_album', (req, res) => {
   console.log(req.query);
   if (req.query.tags) {
     req.query.tags = { $all: req.query.tags };
+  } else if (req.query.ids) {
+    req.query = { _id: { $in: req.query.ids } };
   }
 
   Album.find(req.query, (err, docs) => {
@@ -178,7 +180,16 @@ app.post('/vote', (req, res) => {
           // eslint-disable-next-line no-param-reassign
           doc.score = doc.rawScore / doc.votesCount;
           doc.save();
-          res.send({ success: true, message: 'Vote registered' });
+          User.findOne({ username }, (userError, user) => {
+            if (!userError) {
+              user.albumsReactedOn.indexOf(albumObjectId) === -1 ? user
+                .albumsReactedOn.push(albumObjectId) : null;
+              user.save();
+              res.send({ success: true, message: 'Vote registered' });
+            } else {
+              res.send({ success: false, message: 'Vote failed' });
+            }
+          });
         } else {
           res.send({ success: false, message: 'Vote failed' });
         }
@@ -221,7 +232,16 @@ app.post('/comment', (req, res) => {
       Album.findOneAndUpdate({ _id: albumObjectId },
         { $inc: { commentsCount: 1, reactionsCount: 1 } }).exec((error) => {
         if (!error) {
-          res.send({ success: true, message: 'Comment registered' });
+          User.findOne({ username }, (userError, user) => {
+            if (!userError) {
+              user.albumsReactedOn.indexOf(albumObjectId) === -1 ? user
+                .albumsReactedOn.push(albumObjectId) : null;
+              user.save();
+              res.send({ success: true, message: 'Comment registered' });
+            } else {
+              res.send({ success: false, message: 'Comment failed' });
+            }
+          });
         } else {
           res.send({ success: false, message: 'Comment failed' });
         }
@@ -331,6 +351,17 @@ app.get('/get_trending', (req, res) => {
         }
       }
       res.send(responseList);
+    }
+  });
+});
+
+// Gets albums reacted on by specified user
+app.get('/get_albums_reacted_on', (req, res) => {
+  Album.find({ _id: { $in: req.user.albumsReactedOn } }, (err, docs) => {
+    if (!err) {
+      res.send({ success: true, docs });
+    } else {
+      res.send({ success: false });
     }
   });
 });
