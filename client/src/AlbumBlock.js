@@ -42,9 +42,11 @@ class AlbumBlock extends Component {
 
     render() {
       const Percentage = Math.round(this.props.score*100) + '%'
-      console.log(this.props.albumObj);
+      console.log('album block object: ',this.props.albumObj);
+      const stateObj = this.props.albumObj;
+      stateObj['db_id'] = this.props.albumObj._id;
     return (   	
-        <Card border="primary" className="text-center">
+        <Card border="dark" className="text-center">
           <Card.Img variant="top" src={this.props.image} />
           <Card.Title>
             <Link to={{
