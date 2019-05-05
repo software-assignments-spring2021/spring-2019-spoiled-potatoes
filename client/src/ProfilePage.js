@@ -4,7 +4,7 @@ import { Image,Form,Button,Container,Row,Col, Jumbotron } from 'react-bootstrap'
 import './App.css';
 import axios from 'axios';
 import AlbumListComponent from './AlbumListComponent';
-import CommentSection from './CommentSection';
+//import CommentSection from './CommentSection';
 
 class ProfilePage extends Component {
 
