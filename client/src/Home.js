@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Jumbotron, Container, Carousel, Row } from 'react-bootstrap';
+import { Container, Carousel, Row } from 'react-bootstrap';
 import axios from 'axios';
 // import logo from './logo.svg';
 //import './App.css';

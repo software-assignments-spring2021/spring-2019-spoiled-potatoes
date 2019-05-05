@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button,Card, Col,Row} from 'react-bootstrap';
+import { Button,Card, Col,Row, Badge} from 'react-bootstrap';
 // import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
@@ -12,20 +12,24 @@ class AlbumBlock extends Component {
       this.sendVote =  this.sendVote.bind(this)
       this.checkVote = this.checkVote.bind(this)
       this.state = { UpVoted: false, DownVoted: false}
+      this.componentWillMount = this.componentWillMount.bind(this);
     }
     
+    componentWillMount() {
+      this.checkVote(this.props.username, this.props.id)
+    }
     sendVote(username, id, sentiment) {
       axios.post('/vote',{username, albumObjectId: id, sentiment}).then(response => {
         console.log(response.data);
       })
+      this.checkVote(this.props.username, this.props.id)
     }
 
     checkVote(username, id) {
       const params = {username, albumObjectId: id}
       axios.get('/get_votes',{ params}).then(response => {
         if (response.data.docs.length > 0) {
-          console.log(response.data.docs[0])
-          if(response.data.docs[0].sentiment == 0) {
+          if(response.data.docs[0].sentiment === 0) {
             this.setState({ DownVoted: true });
           }
           else {
@@ -37,7 +41,6 @@ class AlbumBlock extends Component {
     }
 
     render() {
-      this.checkVote(this.props.username, this.props.id)
     return (   	
         <Card border="primary" className="text-center">
           <Card.Img variant="top" src={this.props.image} />
