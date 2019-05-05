@@ -249,12 +249,31 @@ class AlbumSearch extends Component {
 
     let paramObj = {};
 
-    if (inputTags && (!inputName && !inputArtist)){
+    if (inputTags){
       let sendTags = inputTags.split(" ").map(ele => ele.toLowerCase());
       console.log(sendTags);
-      paramObj = {
-        tags: sendTags,
+      if (inputName && inputArtist) {
+        paramObj = {
+          artist: inputArtist,
+          name: inputName,
+          tags: sendTags,
+        }
+      } else if (inputName && !inputArtist) {
+        paramObj = {
+          name: inputName,
+          tags: sendTags,
+        }
+      } else if (!inputName && inputArtist){
+        paramObj = {
+          artist: inputArtist,
+          tags: sendTags,
+        }
+      } else {
+        paramObj = {
+          tags: sendTags,
+        }
       }
+      console.log(paramObj);
       this.buildTagList(paramObj);
     } else {
       if (inputName && inputArtist) {
