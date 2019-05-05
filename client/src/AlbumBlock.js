@@ -9,12 +9,15 @@ class AlbumBlock extends Component {
 
     render() {
       const CheckScore = this.props.score
-      console.log(this.state)
+      console.log('album object in block: ', this.props.albumObj);
     return (   	
         <Card border="primary" className="text-center">
           <Card.Img variant="top" src={this.props.image} />
           <Card.Title>
-            <Link to="AlbumPage">{this.props.name}</Link>         
+            <Link to={{
+              pathname: '/album/'+this.props.albumObj.name,
+              state: this.props.albumObj,
+            }}>{this.props.name}</Link>         
           </Card.Title>
           <Card.Subtitle className="mb-2 text-muted">{this.props.artist}</Card.Subtitle>
             {CheckScore == null ? <p>No Score</p> : <p>{this.props.score}</p>}
