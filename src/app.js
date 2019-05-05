@@ -213,6 +213,23 @@ app.get('/get_votes', (req, res) => {
   });
 });
 
+
+app.get('/profiles/:name', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../client/public/index.html'), (err) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+  });
+});
+
+app.get('/album/:album', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../client/public/index.html'), (err) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+  });
+});
+
 // Adds a comment to album specified
 app.post('/comment', (req, res) => {
   const {
