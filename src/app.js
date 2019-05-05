@@ -267,9 +267,7 @@ app.post('/comment', (req, res) => {
 
 // Gets comments based on query
 app.get('/get_comments', (req, res) => {
-  console.log('GET COMMENTS QUERY');
-  const dbQuery = { albumObjectId: req.query['0'] };
-  Comment.find(dbQuery, (err, docs) => {
+  Comment.find(req.query, (err, docs) => {
     if (err) {
       res.send({ success: false });
     } else {
@@ -377,6 +375,23 @@ app.get('/get_albums_reacted_on', (req, res) => {
       res.send({ success: true, docs });
     } else {
       res.send({ success: false });
+    }
+  });
+});
+
+// Changes user password
+app.post('/change_password', (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+  const { username } = req.user;
+  User.findByUsername(username).then((user) => {
+    if (user) {
+      user.changePassword(oldPassword, newPassword, (err) => {
+        if (!err) {
+          res.status(200).send({ success: true });
+        } else {
+          res.status(400).send({ success: false });
+        }
+      });
     }
   });
 });
