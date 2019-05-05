@@ -53,20 +53,22 @@ class AlbumBlock extends Component {
             }}>{this.props.name}</Link>         
           </Card.Title>
           <Card.Subtitle className="mb-2 text-muted">{this.props.artist}</Card.Subtitle>
-            {this.props.score ?
-              <Badge variant="dark">{Percentage}</Badge>
-              :
-              <Badge variant="dark">No Score</Badge> 
-            }
             {this.props.username ?
               <Card.Text>
                 {this.state.UpVoted === true ?
                 <Row>
                 <Col>
-                  <Button variant="success" size="sm" disabled> Upvote </Button>
+                  <Button variant="outline-danger" size="sm" disabled> Downvote </Button>
                 </Col>
                 <Col>
-                  <Button variant="outline-danger" size="sm" disabled> Downvote </Button>
+                  {this.props.score ?
+                  <h3><Badge variant="dark">{Percentage}</Badge></h3>
+                  :
+                  <h3><Badge variant="dark">No Score</Badge></h3>
+                  }
+                </Col>
+                <Col>
+                  <Button variant="success" size="sm" disabled> Upvote </Button>
                 </Col>
               </Row>
                 :
@@ -75,10 +77,17 @@ class AlbumBlock extends Component {
                 {this.state.DownVoted === true ?
                 <Row>
                 <Col>
-                  <Button variant="outline-success" size="sm" disabled> Upvote </Button>
+                  <Button variant="danger" size="sm" disabled> Downvote </Button>
                 </Col>
                 <Col>
-                  <Button variant="danger" size="sm" disabled> Downvote </Button>
+                  {this.props.score ?
+                  <h3><Badge variant="dark">{Percentage}</Badge></h3>
+                  :
+                  <h3><Badge variant="dark">No Score</Badge></h3>
+                  }
+                </Col>
+                <Col>
+                  <Button variant="outline-success" size="sm" disabled> Upvote </Button>
                 </Col>
                 </Row>
                 :
@@ -87,10 +96,17 @@ class AlbumBlock extends Component {
                 {this.state.UpVoted === false & this.state.DownVoted === false ?
                 <Row>
                 <Col>
-                  <Button variant="outline-success" size="sm" onClick={() => this.sendVote(this.props.username, this.props.id, 1)}> Upvote </Button>
+                  <Button variant="outline-danger" size="sm" onClick={() => this.sendVote(this.props.username, this.props.id, 0)}> Downvote </Button>
                 </Col>
                 <Col>
-                  <Button variant="outline-danger" size="sm" onClick={() => this.sendVote(this.props.username, this.props.id, 0)}> Downvote </Button>
+                  {this.props.score ?
+                  <h3><Badge variant="dark">{Percentage}</Badge></h3>
+                  :
+                  <h3><Badge variant="dark">No Score</Badge></h3>
+                  }
+                </Col>
+                <Col>
+                  <Button variant="outline-success" size="sm" onClick={() => this.sendVote(this.props.username, this.props.id, 1)}> Upvote </Button>
                 </Col>
                 </Row>
                 :
