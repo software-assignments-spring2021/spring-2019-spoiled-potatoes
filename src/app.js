@@ -149,7 +149,6 @@ app.get('/search_album', (req, res) => {
   } else if (req.query.ids) {
     req.query = { _id: { $in: req.query.ids } };
   }
-
   Album.find(req.query, (err, docs) => {
     if (err) {
       res.send({ status: 'failure', message: 'failed to find album' });

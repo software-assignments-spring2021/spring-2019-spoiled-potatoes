@@ -2,19 +2,39 @@ import React, { Component } from 'react';
 import { Image,Form,Button,Container,Row,Col, Jumbotron } from 'react-bootstrap';
 // import logo from './logo.svg';
 import './App.css';
+import axios from 'axios';
 import AlbumListComponent from './AlbumListComponent'
 
-
-const albums = [
-    {name:"Name", artist:"Artist", image:[{'#text': "0", size: "small"},
-                                          {'#text': "0", size: "medium"},
-                                          {'#text': "0", size: "large"},
-                                          {'#text': "https://static1.squarespace.com/static/5755a35501dbae3c6d1ba03e/t/5aa962b371c10bfea1ee9dca/1521050296074/Awaken_My_Love.jpg/120x120", size: "extra large"},
-                                          ]
-    }
-]
-
 class ProfilePage extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+          reviewed: [],
+          added: [],
+        }
+        this.componentWillMount = this.componentWillMount.bind(this);
+      }
+
+      componentWillMount() {
+        axios.get('/get_albums_reacted_on').then(response => {
+          console.log('component will mount response');
+          console.log(response.data);
+          var test = response.data.docs
+          this.setState({
+            reviewed: test
+          });
+        })
+        const params = {username : this.props.username}
+        axios.get('/search_album', {params}).then(response => {
+            console.log('component will mount response');
+            console.log(response.data);
+            var test = response.data.docs
+            this.setState({
+              added: test
+            });
+          })
+    }
 
     render() {
       console.log(this.props);
@@ -43,11 +63,11 @@ class ProfilePage extends Component {
                 </Col>
                 <Col>
                     <Row><h3>Music Reviewed</h3></Row>
-                    <Row><AlbumListComponent albums={albums} /></Row>
+                    <Row><AlbumListComponent albums={this.state.reviewed} /></Row>
                 </Col>
                 <Col>
                     <Row><h3>Music Added</h3></Row>
-                    <Row><AlbumListComponent albums={albums} /></Row>
+                    <Row><AlbumListComponent albums={this.state.added} /></Row>
                 </Col>
             </Row>
         </Container>
