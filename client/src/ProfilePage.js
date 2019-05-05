@@ -102,38 +102,46 @@ class ProfilePage extends Component {
   render() {
     console.log(this.props);
     return (
-      <Container>
-        <Row>
-          <Col sm={6}>
-            <Jumbotron>
-              <Row className="justify-content-md-center"><h1>Your Profile</h1></Row>
-              <Row className="justify-content-md-center"><Image roundedCircle /></Row>
-              <Row className="justify-content-md-center">{this.props.username}</Row>
-              <Row>
-                <Col>
-                  <Row className="justify-content-md-center"><h3>Change Password</h3></Row>
-                  <Form onSubmit={this.handleSubmit}>
-                    <Form.Control placeholder="Old password" type="password" name="oldPassword" value={this.state.oldPassword} required onChange={this.handleInputChange} />
-                    <Form.Control placeholder="New password" type="password" name="newPassword" value={this.state.newPassword} required onChange={this.handleInputChange} />
-                    <Form.Control placeholder="Confirm password" type="password" name="confirmPassword" value={this.state.confirmPassword} required onChange={this.handleInputChange} />
-                    <Button variant="primary" type="submit">
-                      Submit
+      <>
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+          <a class="navbar-brand" href="/">Spoiled Potatoes</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </nav>
+        <Container>
+          <Row className="jumbotron-home">
+            <Col sm={6}>
+              <Jumbotron>
+                <Row className="justify-content-md-center"><h1>Your Profile</h1></Row>
+                <Row className="justify-content-md-center"><Image roundedCircle /></Row>
+                <Row className="justify-content-md-center">{this.props.username}</Row>
+                <Row>
+                  <Col>
+                    <Row className="justify-content-md-center"><h3>Change Password</h3></Row>
+                    <Form onSubmit={this.handleSubmit}>
+                      <Form.Control placeholder="Old password" type="password" name="oldPassword" value={this.state.oldPassword} required onChange={this.handleInputChange} />
+                      <Form.Control placeholder="New password" type="password" name="newPassword" value={this.state.newPassword} required onChange={this.handleInputChange} />
+                      <Form.Control placeholder="Confirm password" type="password" name="confirmPassword" value={this.state.confirmPassword} required onChange={this.handleInputChange} />
+                      <Button variant="primary" type="submit">
+                        Submit
                     </Button>
-                  </Form>
-                </Col>
-              </Row>
-            </Jumbotron>
-          </Col>
-          <Col>
-            <Row><h3>Music Reviewed</h3></Row>
-            <Row><AlbumListComponent albums={this.state.reviewed} /></Row>
-          </Col>
-          <Col>
-            <Row><h3>Music Added</h3></Row>
-            <Row><AlbumListComponent albums={this.state.added} /></Row>
-          </Col>
-        </Row>
-      </Container>
+                    </Form>
+                  </Col>
+                </Row>
+              </Jumbotron>
+            </Col>
+            <Col>
+              <Row><h3>Music Reviewed</h3></Row>
+              <Row><AlbumListComponent albums={this.state.reviewed} /></Row>
+            </Col>
+            <Col>
+              <Row><h3>Music Added</h3></Row>
+              <Row><AlbumListComponent albums={this.state.added} /></Row>
+            </Col>
+          </Row>
+        </Container>
+      </>
     );
   }
 }
