@@ -35,7 +35,7 @@ class AlbumPage extends Component {
 
     render() {
       console.log(this.state.username);
-      console.log(this.props);
+      console.log(this.props.location.state);
       return (  	
         <div >
         <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
@@ -73,20 +73,7 @@ class AlbumPage extends Component {
     );
   }
 }
-/*
-<div class="col-md-6 px-0"></div>
 
-
-
-<Jumbotron fluid>
-                    <p>
-                    Artist: {typeof this.props.location.state.artist == "string" ? this.props.location.state.artist : this.props.location.state.artist['name']}
-                  </p>
-                  <p>
-                    Album Name: {this.props.location.state.name}
-                    </p>
-                  </Jumbotron>
-*/
 export default AlbumPage;
 
 
