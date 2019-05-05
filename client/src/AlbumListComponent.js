@@ -9,7 +9,7 @@ class AlbumListComponent extends Component {
         console.log(this.state)
         return (
             <ListGroup variant="flush">
-                <ListGroupItem>{this.props.albums.map(a => <AlbumBlock albumObj={a} name={a.name} artist={a.artist} image={a.image[3]['#text']} id = {a._id} score = {a.score} />)}</ListGroupItem>
+                <ListGroupItem>{this.props.albums.map(a => <AlbumBlock name={a.name} artist={a.artist} image={a.image[3]['#text']} id = {a._id} score = {a.score} username={this.props.username} />)} </ListGroupItem>
             </ListGroup>  
         ); 
     }

@@ -199,7 +199,6 @@ app.post('/vote', (req, res) => {
 
 // Gets votes based on query
 app.get('/get_votes', (req, res) => {
-  console.log(req.query);
   Vote.find(req.query, (err, docs) => {
     if (err) {
       res.send({ success: false });
