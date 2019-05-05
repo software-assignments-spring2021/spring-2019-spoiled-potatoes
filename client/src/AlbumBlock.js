@@ -41,6 +41,7 @@ class AlbumBlock extends Component {
     }
 
     render() {
+      const Percentage = Math.round(this.props.score*100) + '%'
     return (   	
         <Card border="primary" className="text-center">
           <Card.Img variant="top" src={this.props.image} />
@@ -49,27 +50,49 @@ class AlbumBlock extends Component {
           </Card.Title>
           <Card.Subtitle className="mb-2 text-muted">{this.props.artist}</Card.Subtitle>
             {this.props.score ?
-              <Badge variant="dark">{this.props.score}</Badge>
+              <Badge variant="dark">{Percentage}</Badge>
               :
               <Badge variant="dark">No Score</Badge> 
             }
             {this.props.username ?
-              <Row>
+              <Card.Text>
+                {this.state.UpVoted === true ?
+                <Row>
                 <Col>
-                  {this.state.UpVoted ?
-                    <Button variant="success" size="sm" disabled> Upvote </Button>
-                    :
-                    <Button variant="outline-success" size="sm" onClick={() => this.sendVote(this.props.username, this.props.id, 1)}> Upvote </Button>
-                  }
+                  <Button variant="success" size="sm" disabled> Upvote </Button>
                 </Col>
                 <Col>
-                  {this.state.DownVoted ?
-                    <Button variant="danger" size="sm" disabled> Downvote </Button>
-                    :
-                    <Button variant="outline-danger" size="sm" onClick={() => this.sendVote(this.props.username, this.props.id, 0)}> Downvote </Button>
-                  }
+                  <Button variant="outline-danger" size="sm" disabled> Downvote </Button>
                 </Col>
               </Row>
+                :
+                null
+                }
+                {this.state.DownVoted === true ?
+                <Row>
+                <Col>
+                  <Button variant="outline-success" size="sm" disabled> Upvote </Button>
+                </Col>
+                <Col>
+                  <Button variant="danger" size="sm" disabled> Downvote </Button>
+                </Col>
+                </Row>
+                :
+                null
+                }
+                {this.state.UpVoted === false & this.state.DownVoted === false ?
+                <Row>
+                <Col>
+                  <Button variant="outline-success" size="sm" onClick={() => this.sendVote(this.props.username, this.props.id, 1)}> Upvote </Button>
+                </Col>
+                <Col>
+                  <Button variant="outline-danger" size="sm" onClick={() => this.sendVote(this.props.username, this.props.id, 0)}> Downvote </Button>
+                </Col>
+                </Row>
+                :
+                null
+                }
+              </Card.Text>
               : 
               null
             }
