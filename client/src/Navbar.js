@@ -27,7 +27,10 @@ class Navbar extends Component {
             </li>
             <li class="nav-item">
               {this.props.component.state.loggedIn ?
-                <Link to={pathname} className="nav-item nav-link">Profile</Link>
+                <Link to={{
+                  pathname: pathname,
+                  state: {username: this.props.component.state.username},
+                }} className="nav-item nav-link">Profile</Link>
                 : null}
             </li>
             <li class="nav-item">

@@ -3,7 +3,8 @@ import { Image,Form,Button,Container,Row,Col, Jumbotron } from 'react-bootstrap'
 // import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
-import AlbumListComponent from './AlbumListComponent'
+import AlbumListComponent from './AlbumListComponent';
+import CommentSection from './CommentSection';
 
 class ProfilePage extends Component {
 
@@ -56,8 +57,15 @@ class ProfilePage extends Component {
     render() {
       console.log(this.props);
       return (  	
+        <>
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Spoiled Potatoes</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </nav>
         <Container>
-            <Row>
+            <Row className="jumbotron-home">
                 <Col sm={6}>
                 <Jumbotron>
                     <Row className="justify-content-md-center"><h1>Your Profile</h1></Row>
@@ -88,6 +96,7 @@ class ProfilePage extends Component {
                 </Col>
             </Row>
         </Container>
+        </>
       );
     }
   }
