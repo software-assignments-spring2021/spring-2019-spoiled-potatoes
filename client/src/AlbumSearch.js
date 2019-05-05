@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 // import logo from './logo.svg';
 //import './App.css';
-import { Modal, Button, ListGroup, Form } from 'react-bootstrap';
+import { Modal, Button, ListGroup, Form, Row } from 'react-bootstrap';
 // import App from './App'
 import {
   withRouter
@@ -320,8 +320,9 @@ class AlbumSearch extends Component {
       <>
         <div>
           <form onSubmit={(event) => this.handleAlbumSearch(event, this.state.name, this.state.artist, this.state.tags)}>
+          <Row className="justify-content-md-center">
             <div class="form-group">
-              <h1>Search for an album to start reviewing</h1>
+              <h1 class="font-italic">Search for an album to start reviewing</h1>
               <label>
                 Album Name:
           <input type="text" name="name" value={this.state.name} onChange={this.handleInputChange} />
@@ -332,6 +333,7 @@ class AlbumSearch extends Component {
               </label>
               <input type="submit" disabled={!(this.state.name || this.state.artist || this.state.tags)} value="Search" />
             </div>
+          </Row>
           </form>
           <div class="my-3 p-3 bg-gray rounded box-shadow">
             {this.state.results}
