@@ -215,19 +215,11 @@ app.get('/get_votes', (req, res) => {
 
 
 app.get('/profiles/:name', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'), (err) => {
-    if (err) {
-      res.status(500).send(err);
-    }
-  });
+  res.redirect('/');
 });
 
 app.get('/album/:album', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../client/build/index.html'), (err) => {
-    if (err) {
-      res.status(500).send(err);
-    }
-  });
+  res.redirect('/');
 });
 
 // Adds a comment to album specified
