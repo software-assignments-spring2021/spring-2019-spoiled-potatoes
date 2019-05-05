@@ -12,11 +12,37 @@ class ProfilePage extends Component {
         this.state = {
           reviewed: [],
           added: [],
+          username: "",
         }
         this.componentWillMount = this.componentWillMount.bind(this);
       }
 
       componentWillMount() {
+        axios.get('/user/').then(response => {
+          console.log('Get user response: ')
+          console.log(response.data)
+          if (response.data.user) {
+            console.log('Get User: There is a user saved in the server session: ')
+            this.setState({
+              username: response.data.user.username,
+            })
+            console.log(this.state.username)
+            const params = {username : this.state.username}
+            axios.get('/search_album', {params}).then(response => {
+              console.log('component will mount response');
+              console.log(response.data);
+              var test = response.data.docs
+              this.setState({
+                added: test
+              });
+            })
+          } else {
+              console.log('Get user: no user');
+              this.setState({
+                username: null,
+              })
+            }
+        })
         axios.get('/get_albums_reacted_on').then(response => {
           console.log('component will mount response');
           console.log(response.data);
@@ -25,15 +51,6 @@ class ProfilePage extends Component {
             reviewed: test
           });
         })
-        const params = {username : this.props.username}
-        axios.get('/search_album', {params}).then(response => {
-            console.log('component will mount response');
-            console.log(response.data);
-            var test = response.data.docs
-            this.setState({
-              added: test
-            });
-          })
     }
 
     render() {
