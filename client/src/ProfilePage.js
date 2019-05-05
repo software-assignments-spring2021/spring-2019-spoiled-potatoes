@@ -3,7 +3,8 @@ import { Image, Form, Button, Container, Row, Col, Jumbotron } from 'react-boots
 // import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
-import AlbumListComponent from './AlbumListComponent'
+import AlbumListComponent from './AlbumListComponent';
+//import CommentSection from './CommentSection';
 
 class ProfilePage extends Component {
 
@@ -147,7 +148,3 @@ class ProfilePage extends Component {
 }
 
 export default ProfilePage;
-
-
-
-

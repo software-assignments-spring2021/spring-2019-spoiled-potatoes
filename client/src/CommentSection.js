@@ -25,8 +25,9 @@ class CommentSection extends Component {
 
   getComments() {
     console.log('album query: ', this.props.album);
+    console.log('user query: ', this.props.username)
     axios.get('/get_comments', {
-      params: this.props.album
+      params: {albumObjectId: this.props.album},
     }).then(response => {
       console.log('component will mount response');
       console.log(response.data.docs);

@@ -108,7 +108,7 @@ class AlbumSearch extends Component {
           //console.log(response.data.docs);
           console.log(resObj)
           resObj.state['db_id'] = response.data.docs[0]._id;
-          console.log(resObj);
+          console.log('\n\nsearchDB resObj log ',resObj, '\n\n');
           console.log(resObj.pathname);
           console.log(this.props.history);
           this.props.history.push(resObj);

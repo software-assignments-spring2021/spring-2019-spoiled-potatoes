@@ -35,7 +35,7 @@ class AlbumPage extends Component {
 
     render() {
       console.log(this.state.username);
-      console.log(this.props.location.state);
+      console.log(this.props.location.state.db_id);
       return (  	
         <div >
         <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
