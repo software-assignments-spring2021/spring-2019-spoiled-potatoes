@@ -6,12 +6,15 @@ import AlbumBlock from './AlbumBlock'
 class AlbumListComponent extends Component {
 
     render() {
-        console.log(this.state)
         return (
+           
             <ListGroup variant="flush">
-                <ListGroupItem>{this.props.albums.map(a => <AlbumBlock name={a.name} artist={a.artist} image={a.image[3]['#text']} id = {a._id} score = {a.score} username={this.props.username} />)} </ListGroupItem>
+                {this.props.albums.length > 0 ? <ListGroupItem>{this.props.albums.map(a => <AlbumBlock albumObj={a} name={a.name} artist={a.artist} image={a.image[3]['#text']} id = {a._id} score = {a.score} username={this.props.username} />) } </ListGroupItem> : null}
             </ListGroup>  
+    
         ); 
     }
 }
+
+//
 export default AlbumListComponent;
