@@ -9,7 +9,7 @@ class AlbumListComponent extends Component {
         return (
 
             <ListGroup variant="flush">
-                {this.props.albums.length > 0 ? <ListGroupItem>{this.props.albums.map(a => <AlbumBlock albumObj={a} name={a.name} artist={a.artist} image={a.image[3]['#text']} id={a._id} score={a.score} username={this.props.username} getLists={this.props.getLists} />)} </ListGroupItem> : null}
+                {this.props.albums.length > 0 ? <ListGroupItem>{this.props.albums.map(a => <AlbumBlock albumObj={a} name={a.name} artist={a.artist} image={a.image[3]['#text']} id={a._id} score={a.score} username={this.props.username} updateScore={this.props.updateScore} />)} </ListGroupItem> : null}
             </ListGroup>
 
         );

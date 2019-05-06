@@ -362,7 +362,10 @@ app.get('/get_trending', (req, res) => {
       for (const id in trendingList) {
         if (trendingList.hasOwnProperty(id)) {
           const thisId = trendingList[id];
-          responseList[id] = docs.find(element => element._id == thisId);
+          const entry = docs.find(element => element._id == thisId);
+          if (entry) {
+            responseList[id] = entry;
+          }
         }
       }
       res.send(responseList);
