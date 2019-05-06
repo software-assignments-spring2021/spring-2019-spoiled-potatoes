@@ -134,11 +134,11 @@ class ProfilePage extends Component {
             </Col>
             <Col>
               <Row><h3>Music Reviewed</h3></Row>
-              <Row><AlbumListComponent albums={this.state.reviewed} /></Row>
+              <Row><AlbumListComponent albums={this.state.reviewed.slice(0,4)} /></Row>
             </Col>
             <Col>
               <Row><h3>Music Added</h3></Row>
-              <Row><AlbumListComponent albums={this.state.added} /></Row>
+              <Row><AlbumListComponent albums={this.state.added.slice(0,4)} /></Row>
             </Col>
           </Row>
         </Container>
