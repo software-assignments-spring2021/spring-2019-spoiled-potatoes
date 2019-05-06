@@ -85,16 +85,18 @@ body { padding-top: 70px; }
 {
   position: relative;
   content: '>';
-  right: 170px;
-  font-size: 200px;
+  right: 85px;
+  bottom: 125px;
+  font-size: 150px;
   color: #282c34;
 }
 
 .carousel-control-prev-icon:after {
   position: relative;
-  left: 53px;
+  left: 3px;
+  bottom: 125px;
   content: '<';
-  font-size: 200px;
+  font-size: 150px;
   color: #282c34;
 }
 
