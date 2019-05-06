@@ -77,6 +77,10 @@ body { padding-top: 70px; }
   color: #61dafb;
 }
 
+.carousel-indicators{
+  background-color: #282c34;
+}
+
 .carousel-control-next-icon:after
 {
   position: relative;
