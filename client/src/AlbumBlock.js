@@ -18,11 +18,15 @@ class AlbumBlock extends Component {
   componentWillMount() {
     this.checkVote(this.props.username, this.props.id)
   }
+
   sendVote(username, id, sentiment) {
     axios.post('/vote', { username, albumObjectId: id, sentiment }).then(response => {
       console.log(response.data);
       this.checkVote(this.props.username, this.props.id)
-      this.props.getLists()
+      const params = { _id: id }
+      axios.get('/search_album', { params }).then(res => {
+        this.props.updateScore(id, res.data.docs[0].score)
+      })
     })
   }
 
