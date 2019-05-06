@@ -83,31 +83,46 @@ class Home extends Component {
         <Carousel>
           <Carousel.Item>
             <Row className="justify-content-md-center"><h3>Most Popular</h3></Row>
-            <Row className="justify-content-md-center"><AlbumListComponent albums={this.state.popular} username={this.props.username} getLists={this.getLists} /></Row>
+            <Row className="justify-content-md-center">
+              <AlbumListComponent albums={this.state.popular.slice(0,2)} username={this.props.username} getLists={this.getLists} />
+              <AlbumListComponent albums={this.state.popular.slice(2,4)} username={this.props.username} getLists={this.getLists} />
+            </Row>
             <Row>.</Row>
             <Row>.</Row>
           </Carousel.Item>
           <Carousel.Item>
             <Row className="justify-content-md-center"><h3>Most Liked</h3></Row>
-            <Row className="justify-content-md-center"><AlbumListComponent albums={this.state.most_liked} username={this.props.username} getLists={this.getLists} /></Row>
+            <Row className="justify-content-md-center">
+              <AlbumListComponent albums={this.state.most_liked.slice(0,2)} username={this.props.username} getLists={this.getLists} />
+              <AlbumListComponent albums={this.state.most_liked.slice(2,4)} username={this.props.username} getLists={this.getLists} />
+            </Row>
             <Row>.</Row>
             <Row>.</Row>
-          </Carousel.Item>
+            </Carousel.Item>
           <Carousel.Item>
             <Row className="justify-content-md-center"><h3>Trending</h3></Row>
-            <Row className="justify-content-md-center"><AlbumListComponent albums={this.state.trending} username={this.props.username} getLists={this.getLists} /></Row>
+            <Row className="justify-content-md-center">
+              <AlbumListComponent albums={this.state.trending.slice(0,2)} username={this.props.username} getLists={this.getLists} />
+              <AlbumListComponent albums={this.state.trending.slice(2,4)} username={this.props.username} getLists={this.getLists} />
+            </Row>
             <Row>.</Row>
             <Row>.</Row>
           </Carousel.Item>
           <Carousel.Item>
             <Row className="justify-content-md-center"><h3>Last Added</h3></Row>
-            <Row className="justify-content-md-center"><AlbumListComponent albums={this.state.last_added} username={this.props.username} getLists={this.getLists} /></Row>
+            <Row className="justify-content-md-center">
+              <AlbumListComponent albums={this.state.last_added.slice(0,2)} username={this.props.username} getLists={this.getLists} />
+              <AlbumListComponent albums={this.state.last_added.slice(2,4)} username={this.props.username} getLists={this.getLists} />
+            </Row>
             <Row>.</Row>
             <Row>.</Row>
           </Carousel.Item>
           <Carousel.Item>
             <Row className="justify-content-md-center"><h3>Random</h3></Row>
-            <Row className="justify-content-md-center"><AlbumListComponent albums={this.state.random} username={this.props.username} getLists={this.getLists} /></Row>
+            <Row className="justify-content-md-center">
+              <AlbumListComponent albums={this.state.random.slice(0,2)} username={this.props.username} getLists={this.getLists} />
+              <AlbumListComponent albums={this.state.random.slice(2,4)} username={this.props.username} getLists={this.getLists} />
+            </Row>
             <Row>.</Row>
             <Row>.</Row>
           </Carousel.Item>
