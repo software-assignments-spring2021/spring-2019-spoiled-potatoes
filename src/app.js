@@ -381,4 +381,21 @@ app.get('/get_albums_reacted_on', (req, res) => {
   });
 });
 
+// Changes user password
+app.post('/change_password', (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+  const { username } = req.user;
+  User.findByUsername(username).then((user) => {
+    if (user) {
+      user.changePassword(oldPassword, newPassword, (err) => {
+        if (!err) {
+          res.status(200).send({ success: true });
+        } else {
+          res.status(400).send({ success: false });
+        }
+      });
+    }
+  });
+});
+
 server.listen(process.env.PORT || 3001);
