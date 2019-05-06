@@ -43,7 +43,7 @@ class AlbumBlock extends Component {
 
   render() {
     var Name = this.props.name;
-    if(Name.length > 30) {
+    if(Name.length > 27) {
       Name = Name.substring(0,30)+"...";
     }
     const Percentage = Math.round(this.props.score * 100) + '%'
@@ -51,7 +51,7 @@ class AlbumBlock extends Component {
     const stateObj = this.props.albumObj;
     stateObj['db_id'] = this.props.albumObj._id;
     return (
-      <Card border="dark" className="text-center" style={{ width: '20rem' }}>
+      <Card border="dark" className="text-center" >
         <Card.Img variant="top" src={this.props.image} />
         <Card.Title>
         <OverlayTrigger
