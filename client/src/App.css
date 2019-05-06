@@ -77,6 +77,27 @@ body { padding-top: 70px; }
   color: #61dafb;
 }
 
+.carousel-indicators{
+  background-color: #282c34;
+}
+
+.carousel-control-next-icon:after
+{
+  position: relative;
+  content: '>';
+  right: 170px;
+  font-size: 200px;
+  color: #282c34;
+}
+
+.carousel-control-prev-icon:after {
+  position: relative;
+  left: 53px;
+  content: '<';
+  font-size: 200px;
+  color: #282c34;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

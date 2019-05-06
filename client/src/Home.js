@@ -80,22 +80,32 @@ class Home extends Component {
           <Carousel.Item>
             <Row className="justify-content-md-center"><h3>Most Popular</h3></Row>
             <Row className="justify-content-md-center"><AlbumListComponent albums={this.state.popular} username={this.props.username} /></Row>
+            <Row>.</Row>
+            <Row>.</Row>
           </Carousel.Item>
           <Carousel.Item>
             <Row className="justify-content-md-center"><h3>Most Liked</h3></Row>
             <Row className="justify-content-md-center"><AlbumListComponent albums={this.state.most_liked} username={this.props.username} /></Row>
+            <Row>.</Row>
+            <Row>.</Row>
           </Carousel.Item>
           <Carousel.Item>
             <Row className="justify-content-md-center"><h3>Trending</h3></Row>
             <Row className="justify-content-md-center"><AlbumListComponent albums={this.state.trending} username={this.props.username} /></Row>
+            <Row>.</Row>
+            <Row>.</Row>
           </Carousel.Item>
           <Carousel.Item>
             <Row className="justify-content-md-center"><h3>Last Added</h3></Row>
             <Row className="justify-content-md-center"><AlbumListComponent albums={this.state.last_added} username={this.props.username} /></Row>
+            <Row>.</Row>
+            <Row>.</Row>
           </Carousel.Item>
           <Carousel.Item>
             <Row className="justify-content-md-center"><h3>Random</h3></Row>
             <Row className="justify-content-md-center"><AlbumListComponent albums={this.state.random} username={this.props.username} /></Row>
+            <Row>.</Row>
+            <Row>.</Row>
           </Carousel.Item>
         </Carousel>
       </Container>
