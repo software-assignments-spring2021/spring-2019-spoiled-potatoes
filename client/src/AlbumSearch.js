@@ -340,7 +340,7 @@ class AlbumSearch extends Component {
           </div>
           <ListGroup></ListGroup>
           {this.lastfmIter.hasPrev() ? <button onClick={(e) => this.prevList(e)}>prev</button> : null}
-          {this.lastfmIter.hasNext(this.state.currTotal) ? <button onClick={(e) => this.nextList(e)}>next</button> : null}
+          {this.lastfmIter.hasNext(this.state.currTotal) ? <Button variant="info" onClick={(e) => this.nextList(e)}>next</Button> : null}
 
         </div>
         <Modal show={this.state.show} onHide={this.handleClose}>
