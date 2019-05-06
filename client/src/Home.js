@@ -18,9 +18,14 @@ class Home extends Component {
       trending: [],
     }
     this.componentWillMount = this.componentWillMount.bind(this);
+    this.getLists = this.getLists.bind(this)
   }
 
   componentWillMount() {
+    this.getLists()
+  }
+
+  getLists() {
     axios.get('/get_random').then(response => {
       console.log('component will mount response');
       console.log(response.data);
@@ -61,7 +66,6 @@ class Home extends Component {
         trending: test
       });
     })
-
   }
 
   render() {
@@ -79,31 +83,31 @@ class Home extends Component {
         <Carousel>
           <Carousel.Item>
             <Row className="justify-content-md-center"><h3>Most Popular</h3></Row>
-            <Row className="justify-content-md-center"><AlbumListComponent albums={this.state.popular} username={this.props.username} /></Row>
+            <Row className="justify-content-md-center"><AlbumListComponent albums={this.state.popular} username={this.props.username} getLists={this.getLists} /></Row>
             <Row>.</Row>
             <Row>.</Row>
           </Carousel.Item>
           <Carousel.Item>
             <Row className="justify-content-md-center"><h3>Most Liked</h3></Row>
-            <Row className="justify-content-md-center"><AlbumListComponent albums={this.state.most_liked} username={this.props.username} /></Row>
+            <Row className="justify-content-md-center"><AlbumListComponent albums={this.state.most_liked} username={this.props.username} getLists={this.getLists} /></Row>
             <Row>.</Row>
             <Row>.</Row>
           </Carousel.Item>
           <Carousel.Item>
             <Row className="justify-content-md-center"><h3>Trending</h3></Row>
-            <Row className="justify-content-md-center"><AlbumListComponent albums={this.state.trending} username={this.props.username} /></Row>
+            <Row className="justify-content-md-center"><AlbumListComponent albums={this.state.trending} username={this.props.username} getLists={this.getLists} /></Row>
             <Row>.</Row>
             <Row>.</Row>
           </Carousel.Item>
           <Carousel.Item>
             <Row className="justify-content-md-center"><h3>Last Added</h3></Row>
-            <Row className="justify-content-md-center"><AlbumListComponent albums={this.state.last_added} username={this.props.username} /></Row>
+            <Row className="justify-content-md-center"><AlbumListComponent albums={this.state.last_added} username={this.props.username} getLists={this.getLists} /></Row>
             <Row>.</Row>
             <Row>.</Row>
           </Carousel.Item>
           <Carousel.Item>
             <Row className="justify-content-md-center"><h3>Random</h3></Row>
-            <Row className="justify-content-md-center"><AlbumListComponent albums={this.state.random} username={this.props.username} /></Row>
+            <Row className="justify-content-md-center"><AlbumListComponent albums={this.state.random} username={this.props.username} getLists={this.getLists} /></Row>
             <Row>.</Row>
             <Row>.</Row>
           </Carousel.Item>
