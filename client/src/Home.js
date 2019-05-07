@@ -102,7 +102,7 @@ class Home extends Component {
           </p>
         </div>
         <AlbumSearch appComponent={this.props.appComponent} username={this.props.username} />
-        <Carousel>
+        <Carousel className="carouselHome">
           <Carousel.Item>
             <Row className="justify-content-md-center"><h3>Most Popular</h3></Row>
             <Row className="justify-content-md-center">
@@ -120,7 +120,7 @@ class Home extends Component {
             </Row>
             <Row>.</Row>
             <Row>.</Row>
-            </Carousel.Item>
+          </Carousel.Item>
           <Carousel.Item>
             <Row className="justify-content-md-center"><h3>Trending</h3></Row>
             <Row className="justify-content-md-center">
