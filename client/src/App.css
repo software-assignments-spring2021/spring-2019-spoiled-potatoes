@@ -16,7 +16,7 @@ body { padding-top: 70px; }
 }
 .jumbotron-home {
   /*padding-top: 20px; */
-  margin-top: 40px
+  margin-top: 20px
 }
 
 .comment {
@@ -37,6 +37,10 @@ body { padding-top: 70px; }
   /*color: #aaa;*/
   margin-top: 10px;
   text-align: right;
+}
+
+.carouselHome {
+  margin-top: -50px;
 }
 
 .comment-div {
