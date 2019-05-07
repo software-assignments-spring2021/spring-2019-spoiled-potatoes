@@ -46,9 +46,10 @@ class AlbumBlock extends Component {
   }
 
   render() {
+    this.checkVote(this.props.username, this.props.id)
     var Name = this.props.name;
-    if(Name.length > 27) {
-      Name = Name.substring(0,30)+"...";
+    if (Name.length > 27) {
+      Name = Name.substring(0, 30) + "...";
     }
     const Percentage = Math.round(this.props.score * 100) + '%'
     console.log('album block object: ', this.props.albumObj);
@@ -58,22 +59,22 @@ class AlbumBlock extends Component {
       <Card border="dark" className="text-center" >
         <Card.Img variant="top" src={this.props.image} />
         <Card.Title>
-        <OverlayTrigger
-          key={Name}
-          placement={'top'}
-          overlay={
-            <Tooltip id={`tooltip-${Name}`}>
-             {this.props.name}
-            </Tooltip>
-          }
-        >
-          <Link to={{
-            pathname: '/album/' + this.props.albumObj.name,
-            state: this.props.albumObj,
-          }}>
-          {Name}
-          </Link>
-        </OverlayTrigger>
+          <OverlayTrigger
+            key={Name}
+            placement={'top'}
+            overlay={
+              <Tooltip id={`tooltip-${Name}`}>
+                {this.props.name}
+              </Tooltip>
+            }
+          >
+            <Link to={{
+              pathname: '/album/' + this.props.albumObj.name,
+              state: this.props.albumObj,
+            }}>
+              {Name}
+            </Link>
+          </OverlayTrigger>
         </Card.Title>
         <Card.Subtitle className="mb-2 text-muted">{this.props.artist}</Card.Subtitle>
         {this.props.username ?
