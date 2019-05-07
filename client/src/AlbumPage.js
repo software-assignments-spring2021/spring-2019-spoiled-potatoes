@@ -35,13 +35,13 @@ class AlbumPage extends Component {
           username: response.data.user.username,
         })
         this.checkVote(this.state.username, this.props.location.state.db_id)
-        this.getScore(this.props.location.state.db_id)
       } else {
         console.log('Get user: no user');
         this.setState({
           username: null,
         })
       }
+      this.getScore(this.props.location.state.db_id)
     })
   }
 

@@ -138,7 +138,13 @@ class AlbumBlock extends Component {
             }
           </Card.Text>
           :
-          null
+          <Col>
+            {(this.props.score || this.props.score === 0) ?
+              <h3><Badge variant="dark">{Percentage}</Badge></h3>
+              :
+              <h3><Badge variant="dark">No Score</Badge></h3>
+            }
+          </Col>
         }
       </Card>
     );
