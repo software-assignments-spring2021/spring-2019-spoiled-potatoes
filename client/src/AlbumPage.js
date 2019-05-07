@@ -21,7 +21,7 @@ class AlbumPage extends Component {
   getScore(db_id){
     const params = { _id: db_id }
     axios.get('/search_album', {params}).then(response => {
-      this.setState({score: Math.round(response.data.docs[0].score * 100) ? Math.round(response.data.docs[0].score * 100) + '%' : 'No score'})
+      this.setState({score: (response.data.docs[0].score || response.data.docs[0].score === 0) ? Math.round(response.data.docs[0].score * 100) + '%' : 'No score'})
     })
   }
 
