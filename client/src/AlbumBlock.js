@@ -85,7 +85,7 @@ class AlbumBlock extends Component {
                   <Button variant="outline-danger" size="sm" disabled> Downvote </Button>
                 </Col>
                 <Col>
-                  {this.props.score ?
+                  {(this.props.score || this.props.score === 0) ?
                     <h3><Badge variant="dark">{Percentage}</Badge></h3>
                     :
                     <h3><Badge variant="dark">No Score</Badge></h3>
@@ -104,7 +104,7 @@ class AlbumBlock extends Component {
                   <Button variant="danger" size="sm" disabled> Downvote </Button>
                 </Col>
                 <Col>
-                  {this.props.score ?
+                  {(this.props.score || this.props.score === 0) ?
                     <h3><Badge variant="dark">{Percentage}</Badge></h3>
                     :
                     <h3><Badge variant="dark">No Score</Badge></h3>
@@ -123,7 +123,7 @@ class AlbumBlock extends Component {
                   <Button variant="outline-danger" size="sm" onClick={() => this.sendVote(this.props.username, this.props.id, 0)}> Downvote </Button>
                 </Col>
                 <Col>
-                  {this.props.score ?
+                  {(this.props.score || this.props.score === 0) ?
                     <h3><Badge variant="dark">{Percentage}</Badge></h3>
                     :
                     <h3><Badge variant="dark">No Score</Badge></h3>
