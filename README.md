@@ -17,17 +17,17 @@ It is increasingly common for music fans to want to share their opinion. We are 
 2. [Gurumeher Sawhney](https://github.com/gurusawhney)
 3. [Samuel Gaylert](https://github.com/sam-gaylert) 
 4. [Jack Xu](https://github.com/jxupower)
-5. [Qingmei (Cleo) Han](https://github.com/cleoqhan)
 
 
 ## Build
-```npm run build```
+```npm run dev-build```
+
+## Run
+```npm run dev```
+
+## Environment Variables
+A .env file with environment variables is required to run the server. Please ask dev team for these variables. The .env file must be placed in the root of the repository.
 
 ## Test
 ```npm test```
 
-## Dev Build
-```npm run dev-build```
-
-## Dev Run
-```npm run dev```
